@@ -404,6 +404,7 @@
             padding: 50px;
             min-height: 500px;
             position: relative;
+            transition: opacity 0.25s ease, transform 0.25s ease;
         }
 
         .chapter-header {
@@ -478,7 +479,7 @@
         .story-text {
             font-size: 1.25em;
             margin-bottom: 40px;
-            text-align: justify;
+            text-align: left;
             background: white;
             padding: 40px;
             border-radius: 15px;
@@ -486,6 +487,7 @@
             border: 2px solid var(--dark-parchment);
             position: relative;
             animation: textReveal 1s ease-out 0.5s both;
+            overflow: hidden;
         }
 
         @keyframes textReveal {
@@ -508,6 +510,7 @@
             font-size: 4em;
             color: rgba(139, 0, 0, 0.1);
             font-family: Georgia, serif;
+            line-height: 1;
         }
 
         .story-text::before {
@@ -527,13 +530,22 @@
             position: relative;
         }
 
-        .story-text p:first-letter {
+        .story-text > p:first-of-type::first-letter {
             font-size: 3em;
             font-weight: bold;
             float: left;
             line-height: 0.9;
             margin: 5px 10px 0 0;
             color: var(--royal-red);
+        }
+
+        .story-text ul,
+        .story-text ol {
+            margin: 0 0 20px 24px;
+        }
+
+        .story-text li {
+            margin-bottom: 10px;
         }
 
         .story-text strong {
@@ -547,6 +559,7 @@
             max-width: 600px;
             margin: 30px auto;
             display: block;
+            height: auto;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             border: 5px solid var(--gold);
@@ -595,6 +608,7 @@
             display: grid;
             gap: 20px;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            align-items: stretch;
         }
 
         .choice-card {
@@ -607,12 +621,23 @@
             font: inherit;
             color: inherit;
             appearance: none;
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             animation: choiceSlide 0.6s ease-out backwards;
+        }
+
+        .choice-card:focus-visible,
+        .action-btn:focus-visible,
+        .start-btn:focus-visible,
+        .sound-toggle:focus-visible {
+            outline: 3px solid var(--gold);
+            outline-offset: 4px;
         }
 
         .choice-card:nth-child(1) { animation-delay: 0.9s; }
@@ -680,6 +705,7 @@
 
         .choice-content {
             padding: 25px;
+            flex: 1;
         }
 
         .choice-text {
@@ -767,7 +793,7 @@
         /* Écrans de fin */
         .ending-screen {
             text-align: center;
-            padding: 50px;
+            padding: 30px 0 10px;
             animation: endingReveal 1.5s ease-out;
         }
 
@@ -1040,6 +1066,8 @@
             border-radius: 20px;
             max-width: 600px;
             width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             border: 3px solid var(--gold);
             animation: modalSlideIn 0.5s ease-out;
@@ -1107,6 +1135,16 @@
                 font-size: 1.1em;
             }
 
+            .story-text::before,
+            .story-text::after {
+                display: none;
+            }
+
+            .story-text > p:first-of-type::first-letter {
+                font-size: 2.4em;
+                margin-right: 8px;
+            }
+
             .chapter-title {
                 font-size: 1.8em;
             }
@@ -1119,12 +1157,43 @@
                 grid-template-columns: 1fr;
             }
 
+            .ending-screen {
+                padding: 10px 0 0;
+            }
+
+            .ending-box {
+                padding: 28px 20px;
+            }
+
+            .ending-title {
+                font-size: 1.8em;
+            }
+
+            .ending-text {
+                font-size: 1.1em;
+                line-height: 1.7;
+            }
+
             .action-buttons {
                 flex-direction: column;
             }
 
             .action-btn {
                 width: 100%;
+            }
+
+            .sound-toggle {
+                width: 52px;
+                height: 52px;
+                right: 15px;
+                bottom: 15px;
+                font-size: 1.2em;
+            }
+
+            .notification {
+                right: 10px;
+                left: 10px;
+                max-width: none;
             }
         }
 
