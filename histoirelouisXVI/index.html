@@ -2306,23 +2306,78 @@
                     
                     <p>Le 10 août 1792, quand les sans-culottes marchent sur les Tuileries, ils ne viennent pas pour vous arrêter mais pour vous demander de prendre la tête d'une levée en masse contre l'invasion prussienne !</p>
                     
-                    <p>Vous acceptez. En septembre 1792, vous êtes à Valmy aux côtés de Dumouriez et Kellermann quand l'armée prussienne est repoussée.</p>
+                    <p>Vous acceptez. En septembre 1792, vous êtes à Valmy aux côtés de Dumouriez et Kellermann quand l'armée prussienne est repoussée. La victoire vous offre un prestige immense, mais aussi une nouvelle responsabilité.</p>
                     
-                    <p>La Convention, élue en septembre, maintient la monarchie constitutionnelle. Vous n'êtes pas un roi absolu, mais un roi aimé, respecté, légitime.</p>
+                    <p>Faut-il désormais rester au front comme roi-soldat, ou revenir à Paris pour transformer cet élan patriotique en réconciliation civique durable ?</p>
+                `,
+                choices: [
+                    {
+                        text: "Rester au front pour incarner la nation en armes",
+                        next: "roi_soldat_valmy",
+                        icon: "🎖️",
+                        badge: "patriotic",
+                        badgeText: "Front",
+                        effects: { trust: +10, nobility: -5 }
+                    },
+                    {
+                        text: "Revenir à Paris pour organiser une grande fête de réconciliation",
+                        next: "fete_reconciliation",
+                        icon: "🎉",
+                        badge: "peaceful",
+                        badgeText: "Réconciliation",
+                        effects: { trust: +15, nobility: +5 }
+                    }
+                ]
+            },
+
+            roi_soldat_valmy: {
+                title: "Le Roi-Soldat",
+                icon: "🎖️",
+                date: "1792 - 1818",
+                text: `
+                    <p>Vous choisissez de rester proche des armées. Sans redevenir un monarque absolu, vous devenez la figure tutélaire d'une France en guerre mais unie. Votre présence au front calme les soupçons et donne un visage à l'effort national.</p>
                     
-                    <p>Vous mourez en 1820, après 29 ans de règne constitutionnel paisible. Votre fils Louis XVII vous succède dans une France réconciliée.</p>
+                    <p>Les victoires successives renforcent votre prestige. La monarchie se transforme peu à peu en institution patriotique, adossée non plus à la tradition seule, mais à la défense du territoire.</p>
+                    
+                    <p>À votre mort en 1818, les vétérans de Valmy et de Jemappes défilent derrière votre cercueil. Votre fils hérite d'un royaume constitutionnel fier, stable et réconcilié avec la nation.</p>
                 `,
                 choices: [],
                 ending: {
                     type: "good",
                     icon: "🎖️",
-                    title: "🏆 BONNE FIN - Le Roi Patriote 🏆",
-                    text: "Vous avez accompli un miracle politique : transformer votre image de roi réactionnaire en celle de patriote révolutionnaire. En choisissant clairement le camp de la France contre les monarchies étrangères, vous avez sauvé votre trône, votre famille et votre pays. L'Histoire vous célèbre comme 'Louis le Patriote', le roi qui sut s'adapter sans perdre son âme.",
+                    title: "🏆 EXCELLENTE FIN - Le Roi-Soldat 🏆",
+                    text: "En partageant les risques de la guerre avec vos soldats, vous avez définitivement retourné l'opinion. Votre couronne a survécu parce qu'elle a cessé d'apparaître séparée du pays.",
                     stats: {
-                        "Popularité finale": "78%",
-                        "Stabilité": "Excellente",
+                        "Popularité finale": "84%",
+                        "Armée": "Loyale à la nation et au roi",
+                        "Stabilité": "Très solide",
+                        "Surnom": "Louis le Roi-Soldat"
+                    }
+                }
+            },
+
+            fete_reconciliation: {
+                title: "La Fête de la Réconciliation",
+                icon: "🎉",
+                date: "Automne 1792",
+                text: `
+                    <p>Vous rentrez à Paris avec un projet audacieux : transformer la victoire militaire en paix civile. Sur le Champ-de-Mars, une immense cérémonie unit députés, gardes nationaux, soldats, prêtres constitutionnels et délégations de provinces.</p>
+                    
+                    <p>Le symbole frappe les esprits. La monarchie n'est plus perçue comme un obstacle à la Révolution, mais comme le cadre dans lequel elle peut s'achever sans dévorer ses enfants.</p>
+                    
+                    <p>La Convention maintient la monarchie constitutionnelle et lance une grande réforme civique. Vous mourez en 1820, après un règne apaisé, dans une France qui n'a jamais connu la Terreur.</p>
+                `,
+                choices: [],
+                ending: {
+                    type: "good",
+                    icon: "🎉",
+                    title: "✨ EXCELLENTE FIN - La Réconciliation Nationale ✨",
+                    text: "Vous avez compris qu'une victoire militaire ne suffisait pas : il fallait aussi guérir le pays. En donnant un rite commun à la France révolutionnaire, vous avez sauvé la couronne et apaisé la mémoire nationale.",
+                    stats: {
+                        "Popularité finale": "88%",
                         "Famille royale": "En sécurité",
-                        "Héritage": "Dynastie maintenue"
+                        "Terreur évitée": "Oui",
+                        "Héritage": "Réconciliation durable"
                     }
                 }
             },
@@ -2350,21 +2405,76 @@
                     
                     <p>Votre procès en janvier 1793 se solde par... un acquittement à 380 voix contre 361 ! Vous êtes banni de France avec votre famille, mais vivants.</p>
                     
-                    <p>Vous vous exilez en Suisse, puis en Angleterre. En 1815, après la chute de Napoléon, votre fils Louis XVII est rappelé et monte sur le trône. Vous rentrez à Paris, acclamé comme le "roi martyr qui a sauvé la France de la guerre civile".</p>
+                    <p>En exil, une nouvelle question vous hante : faut-il préparer activement le retour de votre fils sur le trône, ou rester volontairement en retrait pour ne jamais rouvrir la guerre civile française ?</p>
+                `,
+                choices: [
+                    {
+                        text: "Préparer patiemment la restauration de votre fils",
+                        next: "restauration_fils",
+                        icon: "👑",
+                        badge: "balanced",
+                        badgeText: "Dynastie",
+                        effects: { nobility: +10 }
+                    },
+                    {
+                        text: "Rester en retrait et cultiver la mémoire du compromis",
+                        next: "memoire_exil",
+                        icon: "📚",
+                        badge: "honorable",
+                        badgeText: "Mémoire",
+                        effects: { trust: +10 }
+                    }
+                ]
+            },
+
+            restauration_fils: {
+                title: "Le Retour de la Dynastie",
+                icon: "👑",
+                date: "1793 - 1824",
+                text: `
+                    <p>Depuis la Suisse puis l'Angleterre, vous tissez patiemment un réseau d'appuis. Vous refusez toute aventure armée, mais vous entretenez l'idée d'une restauration modérée, constitutionnelle, compatible avec les acquis de la Révolution.</p>
                     
-                    <p>Vous mourez en 1824, entouré de vos petits-enfants, dans votre lit au château de Saint-Cloud.</p>
+                    <p>Lorsque Napoléon tombe, votre prudence est récompensée. En 1815, votre fils Louis XVII est rappelé pour régner non comme restaurateur de l'Ancien Régime, mais comme héritier d'une monarchie réconciliée avec la nation.</p>
+                    
+                    <p>Vous rentrez à Paris acclamé, non comme un revenant vengeur, mais comme l'homme qui avait préféré l'exil à la guerre civile. Vous mourez en 1824 à Saint-Cloud, entouré de vos petits-enfants.</p>
                 `,
                 choices: [],
                 ending: {
                     type: "good",
-                    icon: "🕊️",
-                    title: "✨ EXCELLENTE FIN - L'Exil Sauveur ✨",
-                    text: "Votre alliance avec les Girondins vous a sauvé la vie. Certes, vous avez perdu votre trône temporairement, mais vous avez gagné bien plus : votre vie, votre famille, et la possibilité d'un retour triomphal. L'Histoire vous considère comme un roi sage qui sut choisir le compromis plutôt que l'affrontement.",
+                    icon: "👑",
+                    title: "✨ EXCELLENTE FIN - La Restauration Modérée ✨",
+                    text: "Vous avez gagné bien plus qu'un retour : vous avez obtenu une dynastie transformée par l'exil et vaccinée contre l'absolutisme. La France retrouve des Bourbons, mais pas l'Ancien Régime.",
                     stats: {
-                        "Survie": "OUI - mort naturelle à 69 ans",
+                        "Survie": "Oui - mort naturelle à 69 ans",
                         "Famille": "Toute sauvée",
-                        "Restauration": "1815 - Succès",
+                        "Restauration": "1815 - réussie",
                         "Jugement historique": "Très positif"
+                    }
+                }
+            },
+
+            memoire_exil: {
+                title: "Le Roi du Souvenir",
+                icon: "📚",
+                date: "1793 - 1822",
+                text: `
+                    <p>Vous choisissez de ne pas agir directement sur la scène politique. À la place, vous écrivez, recevez, racontez. Votre maison d'exil devient un lieu de mémoire où viennent se rencontrer anciens girondins, libéraux britanniques et royalistes modérés.</p>
+                    
+                    <p>Peu à peu, votre image change. Vous n'êtes plus seulement le roi sauvé par hasard, mais le témoin vivant d'une autre voie révolutionnaire, moins sanglante, plus parlementaire.</p>
+                    
+                    <p>Vous ne remontez jamais sur le trône, mais vos mémoires influencent durablement la vie politique française au XIXe siècle. Vous mourez en 1822, apaisé, respecté, et presque réconcilié avec votre siècle.</p>
+                `,
+                choices: [],
+                ending: {
+                    type: "good",
+                    icon: "📚",
+                    title: "🌿 BONNE FIN - Le Roi du Souvenir 🌿",
+                    text: "En renonçant au retour dynastique immédiat, vous avez laissé une trace plus subtile mais profonde. Votre héritage n'est pas une couronne reprise, mais une mémoire politique qui inspire les modérés pendant des décennies.",
+                    stats: {
+                        "Retour sur le trône": "Non",
+                        "Influence intellectuelle": "Très forte",
+                        "Famille": "Protégée",
+                        "Mémoire publique": "Durable"
                     }
                 }
             },
@@ -2515,21 +2625,76 @@
                     
                     <p>Ce délai sauve votre vie. Pendant les semaines suivantes, des pétitions affluent de toute la France. Beaucoup demandent votre exil plutôt que votre mort.</p>
                     
-                    <p>Le 15 février 1793, la Convention vote finalement : <strong>bannissement à vie</strong>. Vous et votre famille êtes conduits à Bâle, en Suisse, sous escorte.</p>
+                    <p>Le 15 février 1793, la Convention vote finalement : <strong>bannissement à vie</strong>. Vous et votre famille êtes conduits à Bâle, en Suisse, sous escorte. Sauvé, vous devez maintenant choisir comment vivre cet exil.</p>
+                `,
+                choices: [
+                    {
+                        text: "Publier des mémoires pour défendre votre version de l'histoire",
+                        next: "memoires_exil",
+                        icon: "📝",
+                        badge: "emotional",
+                        badgeText: "Mémoires",
+                        effects: { trust: +5 }
+                    },
+                    {
+                        text: "Rester discret et attendre la restauration des Bourbons",
+                        next: "attente_bourbon",
+                        icon: "⏳",
+                        badge: "honorable",
+                        badgeText: "Patience",
+                        effects: { nobility: +10 }
+                    }
+                ]
+            },
+
+            memoires_exil: {
+                title: "Les Mémoires de Bâle",
+                icon: "📝",
+                date: "1793 - 1816",
+                text: `
+                    <p>À Bâle, puis à Brunswick et enfin en Angleterre, vous prenez la plume. Vos mémoires racontent la Révolution vue de l'intérieur, vos hésitations, vos fautes, vos peurs, mais aussi votre attachement sincère à la France.</p>
                     
-                    <p>Vous vivrez 22 ans en exil, assistant de loin aux convulsions de la France : la Terreur, le Directoire, Napoléon. Vous mourez en 1815 en Angleterre, le jour même où votre frère Louis XVIII rentre à Paris comme roi.</p>
+                    <p>Le texte circule d'abord parmi les exilés, puis dans toute l'Europe. On y découvre un homme moins opaque que le roi caricaturé par les pamphlets révolutionnaires. Votre image change lentement, mais durablement.</p>
+                    
+                    <p>Lorsque les Bourbons reviennent en 1815, vos écrits ont déjà préparé votre réhabilitation. Vous mourez en 1816, loin de Paris mais réconcilié avec une partie de l'opinion.</p>
+                `,
+                choices: [],
+                ending: {
+                    type: "good",
+                    icon: "📚",
+                    title: "✨ BONNE FIN - Le Roi Mémorialiste ✨",
+                    text: "Vous n'avez pas retrouvé votre trône, mais vous avez retrouvé une voix. Vos mémoires transforment un exil humiliant en victoire posthume sur l'oubli et la caricature.",
+                    stats: {
+                        "Survie": "Oui - 23 ans d'exil",
+                        "Famille": "Sauvée et unie",
+                        "Réhabilitation": "Progressive",
+                        "Héritage": "Mémoires lus dans toute l'Europe"
+                    }
+                }
+            },
+
+            attente_bourbon: {
+                title: "L'Attente des Bourbons",
+                icon: "⏳",
+                date: "1793 - 1815",
+                text: `
+                    <p>Vous choisissez le silence et la patience. Vous refusez de devenir un agitateur d'exil, convaincu que les événements finiront par rappeler un jour les Bourbons au pouvoir.</p>
+                    
+                    <p>Les années passent dans une retenue mélancolique. Vous observez la Terreur, le Directoire puis l'ascension de Napoléon comme on regarde un pays aimé depuis la rive opposée d'un fleuve impossible à franchir.</p>
+                    
+                    <p>En 1815, les Bourbons sont effectivement restaurés. Vous ne remontez pas sur le trône, mais vous assistez à l'entrée de votre frère dans Paris. Vous mourez peu après, avec le sentiment d'avoir au moins sauvé votre nom et les vôtres.</p>
                 `,
                 choices: [],
                 ending: {
                     type: "good",
                     icon: "🌍",
-                    title: "✨ BONNE FIN - L'Exil Honorable ✨",
-                    text: "Votre plaidoyer passionné a touché le cœur de suffisamment de députés pour sauver votre vie. Certes, vous mourrez en exil, loin de votre France bien-aimée, mais entouré de votre famille. Votre dignité face au procès vous vaut le respect posthume de l'Histoire. Des monuments seront érigés en votre honneur dès 1816.",
+                    title: "🌍 BONNE FIN - L'Exil Honorable 🌍",
+                    text: "Votre patience vous a coûté des années de nostalgie, mais elle a évité de nouvelles convulsions. Vous laissez l'image d'un roi vaincu, mais digne, dont l'exil n'a pas sombré dans la rancœur.",
                     stats: {
-                        "Survie": "OUI - 38 ans d'exil",
-                        "Famille": "Sauvée et unie",
-                        "Mort": "Naturelle en 1815",
-                        "Réhabilitation": "1816 par Louis XVIII"
+                        "Survie": "Oui - jusqu'en 1815",
+                        "Famille": "Sauvée",
+                        "Retour dynastique": "Indirect",
+                        "Réputation": "Digne et honorable"
                     }
                 }
             },
@@ -2598,23 +2763,76 @@
                     
                     <p>Le 15 janvier 1793, vous quittez la France avec Marie-Antoinette et vos enfants. Destination : Vienne, chez votre beau-frère l'empereur.</p>
                     
-                    <p>Vous vivez 30 ans en exil, mais votre famille est unie et en sécurité. Votre fils Louis XVII grandit normalement, se marie, a des enfants. Vous devenez grand-père.</p>
+                    <p>Loin de la France, une nouvelle vie commence. Votre fils grandit en sécurité, mais votre famille doit encore choisir ce qu'elle fera de son nom, de sa mémoire et de son avenir.</p>
+                `,
+                choices: [
+                    {
+                        text: "Élever votre fils loin de toute ambition dynastique",
+                        next: "dynastie_privee",
+                        icon: "🏡",
+                        badge: "peaceful",
+                        badgeText: "Vie privée",
+                        effects: { trust: +10 }
+                    },
+                    {
+                        text: "Préparer sans pression un éventuel retour de la dynastie",
+                        next: "retour_consenti",
+                        icon: "👑",
+                        badge: "balanced",
+                        badgeText: "Avenir",
+                        effects: { nobility: +10 }
+                    }
+                ]
+            },
+
+            dynastie_privee: {
+                title: "La Dynastie Privée",
+                icon: "🏡",
+                date: "1793 - 1823",
+                text: `
+                    <p>Vous refusez de faire de votre fils un drapeau politique. À Vienne, puis dans plusieurs résidences discrètes d'Autriche, vous l'élevez d'abord comme un homme, non comme un prétendant. Il apprend les langues, les sciences, l'histoire et l'art du gouvernement sans jamais être lancé dans la mêlée des conspirations.</p>
                     
-                    <p>En 1814, après la chute de Napoléon, votre fils est brièvement proposé pour le trône français, mais il décline. Il préfère une vie paisible en Autriche.</p>
+                    <p>Cette paix intérieure sauve votre famille. Louis XVII se marie, a des enfants, et construit une branche des Bourbons respectée mais non menaçante. Vous devenez grand-père dans une maison où le mot "couronne" compte moins que "foyer".</p>
                     
-                    <p>Vous mourez en 1823 à Vienne, entouré de trois générations. Votre épitaphe : "Il préféra ses enfants à sa couronne."</p>
+                    <p>Vous mourez en 1823, entouré de trois générations. Votre épitaphe semble évidente à tous ceux qui vous ont connu : <em>"Il préféra ses enfants à sa couronne."</em></p>
                 `,
                 choices: [],
                 ending: {
                     type: "good",
                     icon: "💝",
                     title: "🏆 MEILLEURE FIN FAMILIALE - L'Amour Paternel 🏆",
-                    text: "Vous avez fait le choix le plus difficile mais le plus noble : sacrifier votre couronne pour sauver vos enfants. Cette abdication volontaire, unique dans l'histoire royale, vous vaut le respect même de vos ennemis. Vous perdez votre trône mais gagnez l'essentiel : voir grandir vos enfants, connaître vos petits-enfants, mourir entouré d'amour. L'Histoire vous célèbre comme 'Louis le Bon Père'.",
+                    text: "Vous avez poussé jusqu'au bout le choix de la famille. Votre dynastie ne domine plus la France, mais elle survit, saine et unie. Vous perdez le trône et gagnez une vie que peu de rois ont connue : une vraie paix domestique.",
                     stats: {
                         "Famille": "Toute sauvée et réunie",
                         "Petits-enfants": "7",
                         "Années d'exil paisible": "30",
                         "Jugement de l'Histoire": "Extrêmement positif"
+                    }
+                }
+            },
+
+            retour_consenti: {
+                title: "Le Retour Consenti",
+                icon: "👑",
+                date: "1793 - 1816",
+                text: `
+                    <p>Sans jamais pousser votre fils à l'ambition, vous veillez à ce qu'il soit prêt si la France le rappelle un jour. Il reçoit l'éducation d'un prince constitutionnel, formé à respecter les assemblées, les libertés publiques et les limites du pouvoir.</p>
+                    
+                    <p>Lorsque l'Empire s'effondre, son nom réapparaît comme une solution crédible. Non pas le retour d'un absolutisme nostalgique, mais celui d'une dynastie qui a appris l'exil, la prudence et la mesure.</p>
+                    
+                    <p>Louis XVII finit par accepter un trône étroitement encadré. Vous voyez revenir votre nom en France sans revoir les erreurs qui l'avaient condamné. Vous mourez peu après, soulagé plus qu'ivre de revanche.</p>
+                `,
+                choices: [],
+                ending: {
+                    type: "good",
+                    icon: "👑",
+                    title: "✨ EXCELLENTE FIN - Le Retour Consenti ✨",
+                    text: "Votre abdication n'a pas seulement sauvé vos enfants : elle a permis une restauration plus humble et plus lucide. La dynastie revient transformée, et c'est précisément pour cela qu'elle survit.",
+                    stats: {
+                        "Famille": "Sauvée",
+                        "Retour dynastique": "Oui, constitutionnel",
+                        "Réputation": "Père lucide",
+                        "Héritage": "Bourbons réinventés"
                     }
                 }
             },
