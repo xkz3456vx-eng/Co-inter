@@ -929,10 +929,11 @@
 
         .ending-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 20px;
             margin: 40px 0;
             animation: statsFall 1s ease-out 1.6s both;
+            align-items: stretch;
         }
 
         @keyframes statsFall {
@@ -951,6 +952,8 @@
             background: var(--dark-parchment);
             border-radius: 10px;
             border: 2px solid var(--dark-gold);
+            min-width: 0;
+            overflow: hidden;
         }
 
         .ending-stat-label {
@@ -960,12 +963,18 @@
             text-transform: uppercase;
             font-size: 0.9em;
             letter-spacing: 1px;
+            line-height: 1.35;
+            overflow-wrap: anywhere;
         }
 
         .ending-stat-value {
-            font-size: 2em;
+            font-size: clamp(1.1em, 2.2vw, 2em);
             color: var(--royal-blue);
             font-family: 'Cinzel', serif;
+            line-height: 1.2;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+            hyphens: auto;
         }
 
         /* Boutons d'action */
@@ -1667,23 +1676,112 @@
                     
                     <p>Pendant trois mois, des émissaires font l'aller-retour entre Montmédy et Paris. Les discussions sont difficiles, houleuses. Les Jacobins comme Robespierre dénoncent une trahison. Mais les modérés tiennent bon.</p>
                     
-                    <p>Le <strong>15 octobre 1791</strong>, un accord historique est signé : la <strong>Constitution de Montmédy</strong>. Vous retournez à Paris, acclamé cette fois, car vous revenez de votre plein gré, en roi constitutionnel respecté.</p>
+                    <p>À l'automne 1791, un accord de principe se dessine enfin. Mais rien n'est encore acquis. La manière dont vous allez revenir dans le jeu politique décidera de la solidité de la paix.</p>
                     
-                    <p>Les années suivantes ne sont pas faciles. Les tensions demeurent. Mais vous évitez la guerre civile, la Terreur, l'invasion étrangère.</p>
+                    <p>Faut-il rentrer vite à Paris pour sceller le compromis devant l'Assemblée, prendre le temps de consulter les provinces, ou proclamer une amnistie générale afin d'apaiser tous les camps ?</p>
+                `,
+                choices: [
+                    {
+                        text: "Rentrer immédiatement à Paris pour faire ratifier le compromis",
+                        next: "retour_paris",
+                        icon: "🏛️",
+                        badge: "peaceful",
+                        badgeText: "Décisif",
+                        effects: { trust: +10, nobility: +5 }
+                    },
+                    {
+                        text: "Consulter les provinces avant de signer la nouvelle Constitution",
+                        next: "consultation_provinces",
+                        icon: "🗺️",
+                        badge: "balanced",
+                        badgeText: "Prudent",
+                        effects: { trust: +15, nobility: -5 }
+                    },
+                    {
+                        text: "Proclamer une amnistie générale pour apaiser le royaume",
+                        next: "amnistie_royale",
+                        icon: "🕊️",
+                        badge: "honorable",
+                        badgeText: "Clémence",
+                        effects: { trust: +20, nobility: -10 }
+                    }
+                ]
+            },
+
+            retour_paris: {
+                title: "Le Retour Triomphal",
+                icon: "🏛️",
+                date: "15 Octobre 1791",
+                text: `
+                    <p>Vous choisissez de revenir à Paris sans tarder. Le pari est risqué : la capitale vous a hué quelques mois plus tôt. Mais cette fois, vous n'entrez pas comme un prisonnier ; vous revenez comme l'artisan visible d'un compromis.</p>
                     
-                    <p>En 1815, à votre mort naturelle, vous laissez une France apaisée, réconciliée. Votre fils Louis XVII monte sur le trône d'une monarchie parlementaire stable.</p>
+                    <p>À l'Assemblée, Barnave et Lafayette orchestrent une ratification solennelle de la <strong>Constitution de Montmédy</strong>. Votre discours, bref et ferme, apaise les modérés et désarme une partie des critiques les plus virulentes.</p>
+                    
+                    <p>Les années suivantes restent tendues, mais le nouvel équilibre tient. En 1815, vous laissez une France pacifiée, protégée de la Terreur et de l'invasion étrangère. Votre fils Louis XVII hérite d'une monarchie parlementaire stable.</p>
                 `,
                 choices: [],
                 ending: {
                     type: "good",
                     icon: "👑",
-                    title: "🏆 MEILLEURE FIN - Le Roi Sage 🏆",
-                    text: "Vous avez trouvé le chemin le plus difficile mais le plus noble : celui de la sagesse et du compromis. En acceptant de partager le pouvoir tout en conservant votre dignité royale, vous avez sauvé la France de la guerre civile et de la Terreur. L'Histoire vous célèbre comme 'Louis le Sage', le roi qui a su adapter la monarchie à son temps. Votre règne est un modèle pour l'Europe entière.",
+                    title: "🏆 EXCELLENTE FIN - Le Retour Triomphal 🏆",
+                    text: "En revenant au bon moment, vous avez transformé une fuite scandaleuse en retour politique maîtrisé. Votre autorité ne repose plus sur la peur, mais sur le compromis. L'Histoire retient votre sang-froid et votre sens du timing.",
                     stats: {
-                        "Popularité finale": "85%",
-                        "Vies sauvées": "Plus de 500 000",
-                        "Stabilité du royaume": "Excellent",
-                        "Héritage historique": "Légendaire"
+                        "Popularité finale": "83%",
+                        "Vies sauvées": "Plus de 450 000",
+                        "Stabilité": "Très forte",
+                        "Héritage": "Monarchie parlementaire durable"
+                    }
+                }
+            },
+
+            consultation_provinces: {
+                title: "Le Tour du Royaume",
+                icon: "🗺️",
+                date: "Automne 1791 - Printemps 1792",
+                text: `
+                    <p>Plutôt que de vous enfermer dans un tête-à-tête parisien avec l'Assemblée, vous envoyez des commissaires dans tout le royaume. Des cahiers d'observations sont recueillis en Bretagne, en Bourgogne, en Provence et jusque dans les villes frontières.</p>
+                    
+                    <p>Cette consultation élargit la légitimité du compromis. Les députés ne peuvent plus dire que la Constitution n'est qu'une manœuvre de cour ; elle devient un pacte provincial, municipal, national.</p>
+                    
+                    <p>Quand vous rentrez enfin à Paris au printemps 1792, la tension n'a pas disparu, mais le pays entier a déjà commencé à s'approprier la nouvelle monarchie. La Révolution ralentit, s'institutionnalise, et ne bascule jamais dans la Terreur.</p>
+                `,
+                choices: [],
+                ending: {
+                    type: "good",
+                    icon: "🗺️",
+                    title: "✨ EXCELLENTE FIN - Le Roi des Provinces ✨",
+                    text: "En prenant le temps de consulter le pays réel, vous avez donné des racines profondes à la paix politique. La France se réforme sans se déchirer, et votre nom reste associé à une réconciliation nationale patiente.",
+                    stats: {
+                        "Appui provincial": "Massif",
+                        "Stabilité": "Exceptionnelle",
+                        "Guerre civile évitée": "Oui",
+                        "Surnom": "Louis le Pacificateur"
+                    }
+                }
+            },
+
+            amnistie_royale: {
+                title: "Le Pari de la Clémence",
+                icon: "🕊️",
+                date: "Novembre 1791",
+                text: `
+                    <p>Vous surprenez tout le monde en proclamant une <strong>amnistie politique</strong> pour les révolutionnaires modérés comme pour les nobles compromis mais non violents. Le royaume retient son souffle : un roi peut-il vraiment désarmer la haine par la clémence ?</p>
+                    
+                    <p>Le geste divise les ultras de votre camp, mais il désarme une partie des rancœurs. Les pamphlets perdent en virulence. Plusieurs clubs modérés acceptent même d'ouvrir des comités de conciliation locale.</p>
+                    
+                    <p>Vous ne construisez pas un pouvoir éclatant, mais un pays moins vindicatif. Cette paix imparfaite dure assez pour empêcher la spirale des massacres et des purges qui, ailleurs, auraient défiguré la Révolution.</p>
+                `,
+                choices: [],
+                ending: {
+                    type: "good",
+                    icon: "🕊️",
+                    title: "🌿 BONNE FIN - Le Roi Clément 🌿",
+                    text: "Votre amnistie n'a pas tout réglé, mais elle a changé le ton du siècle. Vous avez renoncé à la revanche pour gagner quelque chose de plus rare : une paix imparfaite, mais vivable.",
+                    stats: {
+                        "Violences politiques": "Fortement réduites",
+                        "Image du roi": "Apaisée",
+                        "Durée du règne": "Jusqu'en 1812",
+                        "Jugement historique": "Humain et sage"
                     }
                 }
             },
@@ -1852,23 +1950,76 @@
                     
                     <p>La France évite la guerre civile, la Terreur, l'exécution du roi. Les monarchies européennes, stupéfaites, ne savent comment réagir à ce roi qui a abdiqué volontairement.</p>
                     
-                    <p>En 1795, une nouvelle Constitution établit un régime parlementaire stable. Vous devenez une sorte de "sage de la République", consulté mais non décisionnaire.</p>
+                    <p>En 1795, une nouvelle Constitution doit désormais fixer votre place exacte dans le régime. Beaucoup vous admirent, mais personne ne sait encore si la République a besoin d'un arbitre moral... ou de votre retrait complet.</p>
+                `,
+                choices: [
+                    {
+                        text: "Accepter un rôle d'arbitre moral au-dessus des partis",
+                        next: "magistrat_moral",
+                        icon: "⚖️",
+                        badge: "honorable",
+                        badgeText: "Arbitre",
+                        effects: { trust: +10, nobility: -5 }
+                    },
+                    {
+                        text: "Vous retirer complètement pour laisser vivre la République seule",
+                        next: "retraite_citoyenne",
+                        icon: "🌿",
+                        badge: "peaceful",
+                        badgeText: "Retrait",
+                        effects: { trust: +5, nobility: -10 }
+                    }
+                ]
+            },
+
+            magistrat_moral: {
+                title: "Le Sage de la République",
+                icon: "⚖️",
+                date: "1795 - 1808",
+                text: `
+                    <p>Vous acceptez d'incarner une magistrature purement morale. Vous ne signez aucune loi, ne commandez aucune armée, ne distribuez aucun ministère. Mais on vous consulte dans chaque crise majeure comme on consulterait un ancien père de la nation.</p>
                     
-                    <p>À votre mort en 1808, des centaines de milliers de citoyens accompagnent votre cercueil. Vous êtes enterré au Panthéon, honneur suprême, aux côtés de Voltaire et Rousseau.</p>
+                    <p>Cette position inédite rassure les modérés sans inquiéter les républicains. Votre palais devient une maison civique ouverte aux savants, aux juristes, aux administrateurs. Versailles, lui, devient musée national et symbole d'un monde dépassé.</p>
                     
-                    <p>Votre épitaphe : <em>"Louis Capet, qui préféra son peuple à sa couronne."</em></p>
+                    <p>À votre mort en 1808, des centaines de milliers de citoyens accompagnent votre cercueil. Vous êtes enterré au Panthéon. Votre épitaphe résume toute votre trajectoire : <em>"Louis Capet, qui préféra son peuple à sa couronne."</em></p>
                 `,
                 choices: [],
                 ending: {
                     type: "good",
                     icon: "🎩",
-                    title: "✨ BONNE FIN - Le Roi Républicain ✨",
-                    text: "Vous avez accompli l'impossible : transformer la monarchie en république sans violence, en donnant l'exemple du sacrifice personnel. Les historiens débattent encore : étiez-vous un génie politique ou un homme brisé par les circonstances ? Peu importe : vous avez sauvé votre famille, votre peuple et votre honneur. La France vous vénère comme le 'Roi qui devint Citoyen'.",
+                    title: "✨ EXCELLENTE FIN - Le Magistrat Moral ✨",
+                    text: "Vous avez trouvé une place que personne n'avait imaginée pour un ancien roi : ni monarque, ni exilé, mais conscience publique. Votre exemple donne à la République une mémoire apaisée au lieu d'un martyr.",
                     stats: {
-                        "Popularité finale": "92%",
+                        "Popularité finale": "94%",
                         "Vies sauvées": "Plus de 600 000",
-                        "Famille royale": "En sécurité et respectée",
-                        "Héritage": "Monument au Panthéon"
+                        "Famille": "En sécurité",
+                        "Héritage": "Panthéon et réconciliation"
+                    }
+                }
+            },
+
+            retraite_citoyenne: {
+                title: "La Retraite du Citoyen Louis",
+                icon: "🌿",
+                date: "1795 - 1812",
+                text: `
+                    <p>Vous choisissez de disparaître volontairement de la vie publique. Installé dans une propriété discrète, vous vous consacrez à vos enfants, à la serrurerie, aux livres et à l'agronomie. La République apprend à vivre sans ombre monarchique au-dessus d'elle.</p>
+                    
+                    <p>Ce retrait impressionne durablement. Vos adversaires n'ont plus de tyran à dénoncer, vos partisans les plus exaltés n'ont plus de drapeau à brandir. Peu à peu, la politique française perd le goût de la vengeance.</p>
+                    
+                    <p>Vous mourez paisiblement en 1812, dans une France stabilisée qui n'a jamais eu besoin ni de Terreur ni d'Empire pour se refonder.</p>
+                `,
+                choices: [],
+                ending: {
+                    type: "good",
+                    icon: "🌿",
+                    title: "🌿 BONNE FIN - Le Retrait Salutaire 🌿",
+                    text: "En vous effaçant au bon moment, vous avez laissé la République se consolider seule. Votre discrétion a évité bien des rancœurs et transformé votre image en symbole de renoncement digne.",
+                    stats: {
+                        "Mort": "Paisible en 1812",
+                        "France": "Stabilisée sans Terreur",
+                        "Image publique": "Respectée",
+                        "Leçon historique": "Le pouvoir peut se quitter"
                     }
                 }
             },
@@ -2491,27 +2642,112 @@
                     
                     <p>Ce système, inspiré du modèle britannique, fonctionne étonnamment bien. Vous formez un gouvernement avec des ministres modérés acceptables pour les deux camps.</p>
                     
-                    <p>En 1792, quand la guerre éclate, votre rôle de chef des armées vous donne une légitimité nouvelle. Vous nommez des généraux compétents, supervisez la stratégie.</p>
+                    <p>Reste désormais à faire vivre cet équilibre. Les clubs modérés veulent une large coalition parlementaire. Les militaires, eux, vous pressent d'utiliser vos nouveaux pouvoirs pour discipliner durement l'Assemblée.</p>
                     
-                    <p>La victoire de Valmy (20 septembre 1792) est autant votre victoire que celle de la République. Les soldats crient "Vive le Roi !" autant que "Vive la Nation !"</p>
+                    <p>Votre prochain choix décidera si ce compromis devient un modèle durable... ou s'il se fissure sous le poids de l'autorité royale.</p>
+                `,
+                choices: [
+                    {
+                        text: "Construire une grande coalition durable avec les modérés",
+                        next: "coalition_moderee",
+                        icon: "🤝",
+                        badge: "balanced",
+                        badgeText: "Coalition",
+                        effects: { trust: +15, nobility: -5 }
+                    },
+                    {
+                        text: "Utiliser le veto royal pour imposer une ligne très ferme",
+                        next: "crise_veto",
+                        icon: "🛡️",
+                        badge: "dangerous",
+                        badgeText: "Autoritaire",
+                        effects: { trust: -15, nobility: +15 }
+                    },
+                    {
+                        text: "Créer des états provinciaux consultatifs pour équilibrer Paris",
+                        next: "etats_provinciaux",
+                        icon: "🏰",
+                        badge: "honorable",
+                        badgeText: "Institutionnel",
+                        effects: { trust: +10, nobility: +5 }
+                    }
+                ]
+            },
+
+            coalition_moderee: {
+                title: "La Coalition des Raisonnables",
+                icon: "🤝",
+                date: "1792 - 1815",
+                text: `
+                    <p>Vous parvenez à réunir autour de vous un bloc hétérogène mais solide : feuillants, constitutionnels modérés, administrateurs pragmatiques, militaires disciplinés. Aucun camp n'obtient tout, mais chacun reçoit assez pour préférer le compromis au chaos.</p>
                     
-                    <p>Les années suivantes consolidident ce régime hybride. Ce n'est ni l'absolutisme d'avant, ni la république totale. C'est un <strong>compromis à la française</strong>.</p>
+                    <p>Lorsque la guerre éclate en 1792, cette coalition réagit avec méthode. Les ministres se coordonnent, les généraux sont choisis pour leurs compétences, et la victoire de Valmy devient autant celle de la Nation que de votre monarchie limitée.</p>
                     
-                    <p>En 1804, quand Napoléon se proclame empereur dans notre chronologie, ici c'est vous qui régniez toujours, mais dans un cadre strictement constitutionnel.</p>
-                    
-                    <p>Vous mourez en 1815, après 41 ans de règne. Votre fils Louis XVII hérite d'une monarchie forte mais limitée, stable et respectée.</p>
+                    <p>À votre mort en 1815, la France possède un régime original, robuste et respecté en Europe. On parle alors du <strong>miracle français</strong> : une révolution terminée par l'organisation plutôt que par la Terreur.</p>
                 `,
                 choices: [],
                 ending: {
                     type: "good",
                     icon: "⚖️",
-                    title: "🏆 EXCELLENTE FIN - Le Roi Constitutionnel 🏆",
-                    text: "Vous avez réussi le chef-d'œuvre politique : créer une véritable monarchie constitutionnelle à la française, ni absolutiste ni républicaine. Ce système, que vous avez patiemment négocié, survit à votre mort et devient un modèle pour l'Europe. Les historiens parlent du 'miracle français' : une révolution qui s'achève par la réconciliation. Vous êtes célébré comme 'Louis l'Équitable'.",
+                    title: "🏆 EXCELLENTE FIN - Le Roi l'Équitable 🏆",
+                    text: "Vous avez transformé un compromis fragile en système politique durable. Votre génie n'a pas été de vaincre un camp, mais de rendre le pays gouvernable pour tous.",
                     stats: {
                         "Règne total": "41 ans",
                         "Stabilité": "Exceptionnelle",
                         "Modèle politique": "Exporté en Europe",
                         "Surnom": "Louis l'Équitable"
+                    }
+                }
+            },
+
+            crise_veto: {
+                title: "La Monarchie Crispée",
+                icon: "🛡️",
+                date: "1792 - 1794",
+                text: `
+                    <p>Vous choisissez d'user sans relâche de votre veto et de vos prérogatives militaires. À court terme, la noblesse se rassure et les royalistes exultent. Mais l'Assemblée se braque, les journaux s'enflamment, et Paris retrouve le goût de l'affrontement.</p>
+                    
+                    <p>Le régime ne s'effondre pas complètement, mais il devient ingouvernable. Les crises ministérielles se succèdent, les provinces se crispent, et les républicains radicaux gagnent une légitimité nouvelle en dénonçant votre raidissement.</p>
+                    
+                    <p>Vous conservez votre trône, mais au prix d'une France plus dure, plus méfiante, moins libre. Votre héritier reçoit une couronne sauvée, non réconciliée.</p>
+                `,
+                choices: [],
+                ending: {
+                    type: "bad",
+                    icon: "⚠️",
+                    title: "⚠️ FIN AMÈRE - Le Roi du Veto ⚠️",
+                    text: "Vous avez préservé l'institution, mais perdu l'esprit du compromis. L'Histoire se souvient d'un roi qui aurait pu pacifier la Révolution et qui choisit finalement de la figer dans la défiance.",
+                    stats: {
+                        "Trône": "Sauvé mais fragilisé",
+                        "Libertés publiques": "Réduites",
+                        "Climat politique": "Tendu",
+                        "Jugement historique": "Très mitigé"
+                    }
+                }
+            },
+
+            etats_provinciaux: {
+                title: "Le Royaume Décentralisé",
+                icon: "🏰",
+                date: "1792 - 1816",
+                text: `
+                    <p>Vous créez des <strong>états provinciaux consultatifs</strong> chargés de remonter les plaintes, besoins et propositions des territoires. Paris cesse d'être le seul centre de gravité du régime.</p>
+                    
+                    <p>Les provinces, enfin écoutées, s'investissent dans la nouvelle monarchie constitutionnelle. Les tensions ne disparaissent pas, mais elles se dispersent, se négocient, se canalisent. La politique française devient moins théâtrale, plus territoriale.</p>
+                    
+                    <p>À votre mort, le pays fonctionne comme une monarchie parlementaire décentralisée où les villes et régions jouent un rôle décisif. Votre fils hérite d'un royaume moins brillant que Versailles, mais infiniment plus solide.</p>
+                `,
+                choices: [],
+                ending: {
+                    type: "good",
+                    icon: "🏰",
+                    title: "✨ BONNE FIN - Le Roi des Territoires ✨",
+                    text: "En desserrant l'étau parisien, vous avez donné à la monarchie constitutionnelle des appuis durables. La France s'est apaisée par la représentation locale plutôt que par la centralisation brutale.",
+                    stats: {
+                        "Cohésion du royaume": "Très forte",
+                        "Influence des provinces": "Décisive",
+                        "Stabilité": "Durable",
+                        "Héritage": "Monarchie décentralisée"
                     }
                 }
             }
