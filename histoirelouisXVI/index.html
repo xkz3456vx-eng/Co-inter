@@ -437,8 +437,8 @@
             font-family: 'Cinzel', serif;
             font-size: 2.8em;
             color: var(--royal-red);
-            margin-bottom: 20px;
-            padding-bottom: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 30px;
             border-bottom: 3px solid var(--gold);
             position: relative;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
@@ -447,13 +447,21 @@
         .chapter-title::after {
             content: '⚜';
             position: absolute;
-            bottom: -20px;
+            bottom: -32px;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--parchment);
-            padding: 0 20px;
-            color: var(--gold);
-            font-size: 1.5em;
+            width: 64px;
+            height: 64px;
+            display: grid;
+            place-items: center;
+            background: radial-gradient(circle at 30% 30%, #fff8d9 0%, #f3e6bf 45%, #d7c28a 100%);
+            border: 3px solid var(--gold);
+            border-radius: 50%;
+            color: var(--dark-gold);
+            font-size: 1.7em;
+            line-height: 1;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.16), inset 0 0 18px rgba(255, 255, 255, 0.55);
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
         }
 
         .chapter-icon {
@@ -1147,6 +1155,15 @@
 
             .chapter-title {
                 font-size: 1.8em;
+                margin-bottom: 24px;
+                padding-bottom: 24px;
+            }
+
+            .chapter-title::after {
+                width: 52px;
+                height: 52px;
+                bottom: -26px;
+                font-size: 1.45em;
             }
 
             .choices {
