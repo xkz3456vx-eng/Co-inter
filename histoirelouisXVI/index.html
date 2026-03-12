@@ -602,6 +602,11 @@
             border: 3px solid var(--dark-gold);
             border-radius: 15px;
             padding: 0;
+            width: 100%;
+            text-align: left;
+            font: inherit;
+            color: inherit;
+            appearance: none;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
@@ -724,6 +729,26 @@
 
         .badge.risky {
             background: linear-gradient(135deg, #ff922b 0%, #f76707 100%);
+            color: white;
+        }
+
+        .badge.desperate,
+        .badge.emotional {
+            background: linear-gradient(135deg, #ff8787 0%, #e03131 100%);
+            color: white;
+        }
+
+        .badge.honorable,
+        .badge.stoic,
+        .badge.sacrifice {
+            background: linear-gradient(135deg, #74c0fc 0%, #1864ab 100%);
+            color: white;
+        }
+
+        .badge.patriotic,
+        .badge.revolutionary,
+        .badge.balanced {
+            background: linear-gradient(135deg, #ced4da 0%, #495057 100%);
             color: white;
         }
 
@@ -1346,6 +1371,47 @@
                 ]
             },
 
+            fuite_seul: {
+                title: "Le Roi en Cavale",
+                icon: "🎭",
+                date: "21 Juin 1791",
+                text: `
+                    <p>Vous choisissez la fuite solitaire. Sous un déguisement sommaire, vous quittez Paris avant l'aube, laissant Marie-Antoinette et vos enfants derrière vous. Vous gagnez quelques heures de liberté, mais au prix d'une image désastreuse : celle d'un roi qui abandonne les siens.</p>
+                    
+                    <p>Très vite, la rumeur enfle. Dans les clubs révolutionnaires, on parle d'une désertion. Chez les royalistes, on s'interroge sur votre courage. Aux yeux de tous, la monarchie semble vaciller encore davantage.</p>
+                    
+                    <p>À mesure que vous progressez vers l'Est, des officiers fidèles vous proposent trois stratégies. Rejoindre les cours étrangères et préparer la guerre. Gagner Montmédy pour négocier en position de force. Ou revenir devant l'Assemblée pour tenter une réconciliation de dernière minute.</p>
+                    
+                    <p>Vous êtes seul, sans faste, sans escorte, sans filet. Pour la première fois de votre vie, le destin du royaume repose uniquement sur votre décision personnelle.</p>
+                `,
+                choices: [
+                    {
+                        text: "Rejoindre les cours étrangères et préparer une intervention armée",
+                        next: "appel_etranger",
+                        icon: "📯",
+                        badge: "dangerous",
+                        badgeText: "Provocateur",
+                        effects: { trust: -35, nobility: +20 }
+                    },
+                    {
+                        text: "Gagner Montmédy pour négocier en position de force",
+                        next: "negociation_montmedy",
+                        icon: "⚖️",
+                        badge: "peaceful",
+                        badgeText: "Sage",
+                        effects: { trust: +10, nobility: +10 }
+                    },
+                    {
+                        text: "Revenir vers l'Assemblée et tenter une réconciliation",
+                        next: "negociation",
+                        icon: "🕊️",
+                        badge: "risky",
+                        badgeText: "Hasardeux",
+                        effects: { trust: +5, nobility: -15 }
+                    }
+                ]
+            },
+
             fuite_famille: {
                 title: "La Fuite de Varennes",
                 icon: "🚗",
@@ -1529,7 +1595,6 @@
                     text: "Vous avez trouvé le chemin le plus difficile mais le plus noble : celui de la sagesse et du compromis. En acceptant de partager le pouvoir tout en conservant votre dignité royale, vous avez sauvé la France de la guerre civile et de la Terreur. L'Histoire vous célèbre comme 'Louis le Sage', le roi qui a su adapter la monarchie à son temps. Votre règne est un modèle pour l'Europe entière.",
                     stats: {
                         "Popularité finale": "85%",
-                        "Vies sauvées": "
                         "Vies sauvées": "Plus de 500 000",
                         "Stabilité du royaume": "Excellent",
                         "Héritage historique": "Légendaire"
@@ -1765,6 +1830,47 @@
                         badge: "risky",
                         badgeText: "Courageux",
                         effects: { trust: +10 }
+                    }
+                ]
+            },
+
+            refus_collaboration: {
+                title: "Le Pari de l'Attente",
+                icon: "🚫",
+                date: "Automne 1791 - Été 1792",
+                text: `
+                    <p>Vous refusez toute réconciliation sincère avec la Révolution. En public, vous jurez fidélité à la Constitution, mais sans conviction. En privé, vous attendez qu'une crise ou une intervention étrangère renverse la situation en votre faveur.</p>
+                    
+                    <p>Chaque veto royal, chaque hésitation, chaque silence nourrit la défiance. Aux Tuileries, vos fidèles vous poussent à tenir bon. À l'Assemblée, on vous soupçonne de vouloir livrer la France aux monarchies européennes.</p>
+                    
+                    <p>Le printemps 1792 aggrave tout. La guerre approche, la Déclaration de Pillnitz hante les esprits, et Paris se radicalise. Votre immobilisme devient en lui-même une décision politique.</p>
+                    
+                    <p>Il vous reste une dernière chance de choisir clairement votre camp : l'étranger, l'ambiguïté, ou la nation.</p>
+                `,
+                choices: [
+                    {
+                        text: "Parier ouvertement sur l'aide militaire étrangère",
+                        next: "appel_etranger",
+                        icon: "📯",
+                        badge: "dangerous",
+                        badgeText: "Dangereux",
+                        effects: { trust: -35, nobility: +20 }
+                    },
+                    {
+                        text: "Continuer l'ambiguïté et temporiser encore",
+                        next: "silence_ambigu",
+                        icon: "🤐",
+                        badge: "historical",
+                        badgeText: "Historique",
+                        effects: { trust: -20, nobility: -5 }
+                    },
+                    {
+                        text: "Rompre avec l'étranger et vous rallier publiquement à la nation",
+                        next: "denonciation_pillnitz",
+                        icon: "🇫🇷",
+                        badge: "patriotic",
+                        badgeText: "Patriote",
+                        effects: { trust: +20, nobility: -10 }
                     }
                 ]
             },
@@ -2005,7 +2111,6 @@
                     
                     <p>Hélas, en 1793, les Girondins sont renversés par les Montagnards de Robespierre. Vous êtes arrêté. Mais votre alliance passée vous vaut des défenseurs acharnés.</p>
                     
-                    <p>Votre procès en janvier 1793 se solde par... un acquittement à 380 voix contre 361 ! Vous êtes b
                     <p>Votre procès en janvier 1793 se solde par... un acquittement à 380 voix contre 361 ! Vous êtes banni de France avec votre famille, mais vivants.</p>
                     
                     <p>Vous vous exilez en Suisse, puis en Angleterre. En 1815, après la chute de Napoléon, votre fils Louis XVII est rappelé et monte sur le trône. Vous rentrez à Paris, acclamé comme le "roi martyr qui a sauvé la France de la guerre civile".</p>
@@ -2326,172 +2431,295 @@
             }
         };
 
-        // État du jeu
-        let gameState = {
-            trust: 50,
-            nobility: 70,
-            decisions: []
-        };
+        function resetGameState() {
+            const soundEnabled = typeof gameState === 'object' ? gameState.soundEnabled : true;
+            gameState = {
+                trust: 50,
+                nobility: 70,
+                currentChapter: 'start',
+                chapterNumber: 0,
+                soundEnabled,
+                decisionsCount: 0,
+                historicalPath: false,
+                decisions: []
+            };
 
-        // Créer les étoiles d'arrière-plan
+            const soundToggle = document.getElementById('soundToggle');
+            if (soundToggle) {
+                soundToggle.innerHTML = gameState.soundEnabled
+                    ? '<i class="fas fa-volume-up"></i>'
+                    : '<i class="fas fa-volume-mute"></i>';
+            }
+        }
+
+        function clampStat(value) {
+            return Math.max(0, Math.min(100, value));
+        }
+
+        function updateStatsDisplay(chapter) {
+            document.getElementById('trustValue').textContent = `${gameState.trust}%`;
+            document.getElementById('nobilityValue').textContent = `${gameState.nobility}%`;
+            document.getElementById('trustBar').style.width = `${gameState.trust}%`;
+            document.getElementById('nobilityBar').style.width = `${gameState.nobility}%`;
+            document.getElementById('dateValue').textContent = chapter.date || 'Date inconnue';
+            document.getElementById('chapterCount').textContent = gameState.chapterNumber === 0 ? 'Prologue' : `Chapitre ${gameState.chapterNumber}`;
+        }
+
         function createStars() {
             const starsContainer = document.querySelector('.stars');
+            if (!starsContainer || starsContainer.children.length > 0) {
+                return;
+            }
+
             for (let i = 0; i < 100; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
-                star.style.width = Math.random() * 3 + 'px';
+                star.style.width = `${Math.random() * 3}px`;
                 star.style.height = star.style.width;
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 3}s`;
                 starsContainer.appendChild(star);
             }
         }
 
-        // Créer les particules
         function createParticles() {
-            setInterval(() => {
+            window.setInterval(() => {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.width = Math.random() * 5 + 2 + 'px';
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.width = `${Math.random() * 5 + 2}px`;
                 particle.style.height = particle.style.width;
-                particle.style.animationDuration = Math.random() * 3 + 5 + 's';
+                particle.style.animationDuration = `${Math.random() * 3 + 5}s`;
                 document.body.appendChild(particle);
 
-                setTimeout(() => particle.remove(), 8000);
+                window.setTimeout(() => particle.remove(), 8000);
             }, 300);
         }
 
-        // Afficher un chapitre
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            window.setTimeout(() => notification.remove(), 3000);
+        }
+
+        function openModal(title, content) {
+            const modal = document.getElementById('infoModal');
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <h3 style="font-family: 'Cinzel', serif; color: var(--royal-red); margin-bottom: 20px;">${title}</h3>
+                ${content}
+            `;
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('infoModal').style.display = 'none';
+        }
+
+        function buildJourneySummary() {
+            if (gameState.decisions.length === 0) {
+                return '<p>Vous n\'avez encore pris aucune décision dans cette partie.</p>';
+            }
+
+            const items = gameState.decisions.map((decision, index) => `
+                <div style="margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid rgba(0, 0, 0, 0.1);">
+                    <strong>Choix ${index + 1}</strong><br>
+                    <span>${decision.chapter}</span><br>
+                    <em>${decision.choice}</em>
+                </div>
+            `).join('');
+
+            return `
+                <p style="margin-bottom: 20px;">Voici le chemin parcouru dans cette partie.</p>
+                ${items}
+            `;
+        }
+
+        function showJourneySummary() {
+            openModal('Résumé de votre parcours', buildJourneySummary());
+        }
+
+        function renderChoices(chapter) {
+            if (!chapter.choices || chapter.choices.length === 0) {
+                return '';
+            }
+
+            const choicesHtml = chapter.choices.map((choice, index) => `
+                <button type="button" class="choice-card" onclick="makeChoice('${choice.next}', ${index})">
+                    <div class="choice-header">
+                        <div class="choice-number">${index + 1}</div>
+                        <div class="choice-icon">${choice.icon}</div>
+                    </div>
+                    <div class="choice-content">
+                        <div class="choice-text">${choice.text}</div>
+                        <div class="choice-badges">
+                            ${choice.badgeText ? `<span class="badge ${choice.badge || ''}">${choice.badgeText}</span>` : ''}
+                        </div>
+                    </div>
+                    <div class="choice-arrow"><i class="fas fa-arrow-right"></i></div>
+                </button>
+            `).join('');
+
+            return `
+                <div class="choices-container">
+                    <h3 class="choices-title">Quel chemin choisissez-vous ?</h3>
+                    <div class="choices">
+                        ${choicesHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderEnding(chapter) {
+            if (!chapter.ending) {
+                return '';
+            }
+
+            const endingStats = Object.entries(chapter.ending.stats || {}).map(([label, value]) => `
+                <div class="ending-stat">
+                    <div class="ending-stat-label">${label}</div>
+                    <div class="ending-stat-value">${value}</div>
+                </div>
+            `).join('');
+
+            return `
+                <div class="ending-screen">
+                    <div class="ending-icon">${chapter.ending.icon}</div>
+                    <div class="ending-box ${chapter.ending.type}">
+                        <h3 class="ending-title">${chapter.ending.title}</h3>
+                        <p class="ending-text">${chapter.ending.text}</p>
+                        <div class="ending-stats">
+                            ${endingStats}
+                        </div>
+                        <div class="action-buttons">
+                            <button type="button" class="action-btn continue-btn" onclick="showJourneySummary()">
+                                <span><i class="fas fa-scroll"></i> Voir mon parcours</span>
+                            </button>
+                            <button type="button" class="action-btn restart-btn" onclick="restartGame()">
+                                <span><i class="fas fa-redo"></i> Rejouer</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
         function showChapter(chapterId) {
-            const chapter = story[chapterId];
+            const chapter = chapters[chapterId];
+            const storyContainer = document.getElementById('storyContainer');
+
             if (!chapter) {
-                console.error('Chapitre introuvable:', chapterId);
+                showNotification(`Chapitre introuvable : ${chapterId}`);
                 return;
             }
 
-            // Appliquer les effets si présents
-            if (chapter.effects) {
-                if (chapter.effects.trust) gameState.trust += chapter.effects.trust;
-                if (chapter.effects.nobility) gameState.nobility += chapter.effects.nobility;
-                
-                // Limiter les valeurs entre 0 et 100
-                gameState.trust = Math.max(0, Math.min(100, gameState.trust));
-                gameState.nobility = Math.max(0, Math.min(100, gameState.nobility));
-            }
+            gameState.currentChapter = chapterId;
+            gameState.chapterNumber = chapterId === 'start' ? 0 : gameState.decisionsCount + 1;
+            updateStatsDisplay(chapter);
 
-            // Animation de sortie
-            const storyContent = document.getElementById('story-content');
-            storyContent.style.opacity = '0';
-            storyContent.style.transform = 'translateY(30px)';
+            storyContainer.style.opacity = '0';
+            storyContainer.style.transform = 'translateY(20px)';
 
-            setTimeout(() => {
-                let html = `
+            window.setTimeout(() => {
+                storyContainer.innerHTML = `
                     <div class="chapter-header">
-                        <div class="chapter-icon-large">${chapter.icon}</div>
-                        <h2 class="chapter-title">${chapter.title}</h2>
+                        <div class="chapter-number">${gameState.chapterNumber === 0 ? 'Prologue' : `Chapitre ${gameState.chapterNumber}`}</div>
+                        <h2 class="chapter-title"><span class="chapter-icon">${chapter.icon}</span>${chapter.title}</h2>
                         ${chapter.date ? `<div class="chapter-date"><i class="fas fa-calendar-alt"></i> ${chapter.date}</div>` : ''}
                     </div>
-
-                    <div class="stats-bar">
-                        <div class="stat-item">
-                            <i class="fas fa-heart"></i>
-                            <span>Confiance du peuple</span>
-                            <div class="stat-bar">
-                                <div class="stat-fill stat-fill-trust" style="width: ${gameState.trust}%"></div>
-                            </div>
-                            <span class="stat-value">${gameState.trust}%</span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="fas fa-crown"></i>
-                            <span>Soutien de la noblesse</span>
-                            <div class="stat-bar">
-                                <div class="stat-fill stat-fill-nobility" style="width: ${gameState.nobility}%"></div>
-                            </div>
-                            <span class="stat-value">${gameState.nobility}%</span>
-                        </div>
-                    </div>
-
+                    ${chapter.image ? `<img class="chapter-image" src="${chapter.image}" alt="${chapter.title}">` : ''}
                     <div class="story-text">
                         ${chapter.text}
                     </div>
+                    ${chapter.ending ? renderEnding(chapter) : renderChoices(chapter)}
                 `;
 
-                if (chapter.ending) {
-                    html += `
-                        <div class="ending ending-${chapter.ending.type}">
-                            <div class="ending-icon">${chapter.ending.icon}</div>
-                            <h3 class="ending-title">${chapter.ending.title}</h3>
-                            <p class="ending-text">${chapter.ending.text}</p>
-                            
-                            <div class="ending-stats">
-                                <h4><i class="fas fa-chart-bar"></i> Statistiques Finales</h4>
-                                ${Object.entries(chapter.ending.stats).map(([key, value]) => `
-                                    <div class="ending-stat-item">
-                                        <span class="ending-stat-label">${key}</span>
-                                        <span class="ending-stat-value">${value}</span>
-                                    </div>
-                                `).join('')}
-                            </div>
+                storyContainer.style.opacity = '1';
+                storyContainer.style.transform = 'translateY(0)';
+            }, 180);
 
-                            <button class="choice-button" onclick="restartGame()" style="margin-top: 30px; background: linear-gradient(135deg, var(--royal-blue) 0%, var(--royal-red) 100%);">
-                                <i class="fas fa-redo"></i>
-                                Rejouer l'histoire
-                            </button>
-                        </div>
-                    `;
-                } else if (chapter.choices && chapter.choices.length > 0) {
-                    html += '<div class="choices">';
-                    chapter.choices.forEach((choice, index) => {
-                        const delay = index * 0.1;
-                        const badgeClass = choice.badge || '';
-                        const badgeText = choice.badgeText || '';
-                        
-                        html += `
-                            <button class="choice-button" onclick="makeChoice('${choice.next}')" style="animation-delay: ${delay}s">
-                                <span class="choice-icon">${choice.icon}</span>
-                                <span class="choice-text">${choice.text}</span>
-                                ${choice.badge ? `<span class="${badgeClass}-badge">${badgeText}</span>` : ''}
-                            </button>
-                        `;
-                    });
-                    html += '</div>';
-                }
-
-                storyContent.innerHTML = html;
-                
-                // Animation d'entrée
-                setTimeout(() => {
-                    storyContent.style.opacity = '1';
-                    storyContent.style.transform = 'translateY(0)';
-                }, 50);
-            }, 300);
-
-            // Scroll vers le haut
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Faire un choix
-        function makeChoice(nextChapter) {
+        function applyChoiceEffects(choice) {
+            if (!choice || !choice.effects) {
+                return;
+            }
+
+            gameState.trust = clampStat(gameState.trust + (choice.effects.trust || 0));
+            gameState.nobility = clampStat(gameState.nobility + (choice.effects.nobility || 0));
+        }
+
+        function makeChoice(nextChapter, choiceIndex) {
+            const currentChapter = chapters[gameState.currentChapter];
+            const choice = currentChapter && currentChapter.choices ? currentChapter.choices[choiceIndex] : null;
+
+            if (choice) {
+                applyChoiceEffects(choice);
+                gameState.decisionsCount += 1;
+                gameState.historicalPath = gameState.historicalPath || choice.badge === 'historical';
+                gameState.decisions.push({
+                    chapter: currentChapter.title,
+                    choice: choice.text,
+                    nextChapter
+                });
+            }
+
             showChapter(nextChapter);
         }
 
-        // Recommencer le jeu
-        function restartGame() {
-            gameState = {
-                trust: 50,
-                nobility: 70,
-                decisions: []
-            };
+        function startGame() {
+            document.getElementById('startMenu').classList.add('hidden');
+            document.getElementById('statsBar').classList.remove('hidden');
+            document.getElementById('storyContainer').classList.remove('hidden');
+            resetGameState();
             showChapter('start');
         }
 
-        // Initialisation
+        function restartGame() {
+            resetGameState();
+            closeModal();
+            document.getElementById('statsBar').classList.remove('hidden');
+            document.getElementById('storyContainer').classList.remove('hidden');
+            showChapter('start');
+        }
+
+        function setupSoundToggle() {
+            const soundToggle = document.getElementById('soundToggle');
+            soundToggle.addEventListener('click', () => {
+                gameState.soundEnabled = !gameState.soundEnabled;
+                soundToggle.innerHTML = gameState.soundEnabled
+                    ? '<i class="fas fa-volume-up"></i>'
+                    : '<i class="fas fa-volume-mute"></i>';
+                showNotification(gameState.soundEnabled ? 'Son activé' : 'Son coupé');
+            });
+        }
+
+        function setupModal() {
+            const modal = document.getElementById('infoModal');
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+
+            window.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    closeModal();
+                }
+            });
+        }
+
         window.addEventListener('load', () => {
+            resetGameState();
             createStars();
             createParticles();
-            showChapter('start');
+            setupSoundToggle();
+            setupModal();
         });
     </script>
 </body>
