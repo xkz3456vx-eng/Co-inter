@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Fuite de Varennes — Dont vous êtes le héros</title>
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=IM+Fell+English:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a0f00;
+    --parch: #f2e8d0;
+    --parch-dark: #e0d0a8;
+    --parch-mid: #ecddb8;
+    --red: #8b1a1a;
+    --gold: #b8860b;
+    --gold-light: #d4a017;
+    --blue-royal: #1c2e5a;
+    --green: #2d5a1b;
+    --shadow: rgba(26,15,0,0.45);
+  }
+
+  body {
+    background: #0d0804;
+    font-family: 'Libre Baskerville', serif;
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 30px 15px 60px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Fond texturé */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(139,90,20,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 70%, rgba(139,26,26,0.10) 0%, transparent 60%),
+      repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.04) 3px, rgba(0,0,0,0.04) 4px);
+    pointer-events: none; z-index: 0;
+  }
+
+  .book {
+    max-width: 820px; width: 100%;
+    position: relative; z-index: 1;
+    animation: bookOpen 1.2s cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  @keyframes bookOpen {
+    from { opacity: 0; transform: perspective(600px) rotateX(8deg) translateY(40px); }
+    to   { opacity: 1; transform: perspective(600px) rotateX(0deg) translateY(0); }
+  }
+
+  /* Bordure décorative parchemin */
+  .page {
+    background: var(--parch);
+    border: 3px solid var(--gold);
+    box-shadow:
+      0 0 0 8px #0d0804,
+      0 0 0 10px var(--gold),
+      0 4px 60px rgba(0,0,0,0.9),
+      inset 0 0 80px rgba(184,134,11,0.07);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page::before {
+    content: '';
+    position: absolute; inset: 8px;
+    border: 1px solid rgba(184,134,11,0.35);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  /* Coins ornementaux */
+  .corner { position: absolute; width: 48px; height: 48px; z-index: 15; }
+  .corner svg { width: 100%; height: 100%; }
+  .corner-tl { top: 10px; left: 10px; }
+  .corner-tr { top: 10px; right: 10px; transform: scaleX(-1); }
+  .corner-bl { bottom: 10px; left: 10px; transform: scaleY(-1); }
+  .corner-br { bottom: 10px; right: 10px; transform: scale(-1,-1); }
+
+  /* ======================== HEADER ======================== */
+  .header {
+    background: linear-gradient(180deg, #1c0a00 0%, #2c1400 60%, #1c0a00 100%);
+    padding: 40px 60px 30px;
+    text-align: center;
+    border-bottom: 3px solid var(--gold);
+    position: relative;
+  }
+
+  .header::after {
+    content: '⚜';
+    position: absolute; bottom: -18px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.8em; color: var(--gold);
+    background: #2c1400;
+    padding: 0 16px;
+    line-height: 1;
+  }
+
+  .header h1 {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: clamp(2em, 5vw, 3.4em);
+    color: var(--gold-light);
+    text-shadow: 0 0 30px rgba(212,160,23,0.5), 2px 2px 4px rgba(0,0,0,0.8);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    animation: glowTitle 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes glowTitle {
+    from { text-shadow: 0 0 20px rgba(212,160,23,0.4), 2px 2px 4px rgba(0,0,0,0.8); }
+    to   { text-shadow: 0 0 40px rgba(212,160,23,0.8), 0 0 60px rgba(212,160,23,0.3), 2px 2px 4px rgba(0,0,0,0.8); }
+  }
+
+  .header .subtitle {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    color: rgba(212,160,23,0.75);
+    font-size: 1.05em;
+    letter-spacing: 1px;
+  }
+
+  /* ======================== STATS BAR ======================== */
+  .stats-bar {
+    background: linear-gradient(135deg, #1e1206 0%, #2a1a0a 100%);
+    padding: 14px 30px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    border-bottom: 2px solid var(--gold);
+  }
+
+  .stat {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+
+  .stat-label {
+    font-family: 'IM Fell English', serif;
+    font-size: 0.7em;
+    color: rgba(212,160,23,0.7);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  .stat-row {
+    display: flex; align-items: center; gap: 6px; width: 100%;
+  }
+
+  .stat-icon { font-size: 1em; }
+
+  .stat-track {
+    flex: 1; height: 8px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid rgba(184,134,11,0.3);
+  }
+
+  .stat-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.8s cubic-bezier(0.34,1.56,0.64,1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-fill::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent 30%, rgba(255,255,255,0.25) 60%, transparent 80%);
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer { 0%{transform:translateX(-100%)} 100%{transform:translateX(200%)} }
+
+  .fill-discret  { background: linear-gradient(90deg, #2d5a8a, #4a90d9); }
+  .fill-popular  { background: linear-gradient(90deg, #8b2020, #e05050); }
+  .fill-human    { background: linear-gradient(90deg, #2d5a1b, #5aad35); }
+  .fill-courage  { background: linear-gradient(90deg, #7a4a00, #d4850a); }
+
+  .stat-num {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 1.1em;
+    color: var(--gold-light);
+    min-width: 22px;
+    text-align: right;
+  }
+
+  /* ======================== CONTENU ======================== */
+  .content {
+    padding: 50px 60px 60px;
+    min-height: 400px;
+    position: relative;
+  }
+
+  /* Zone de chapitre */
+  .chapter { display: none; }
+  .chapter.active {
+    display: block;
+    animation: pageFlip 0.7s cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  @keyframes pageFlip {
+    from { opacity: 0; transform: translateX(30px); filter: blur(2px); }
+    to   { opacity: 1; transform: translateX(0);    filter: blur(0); }
+  }
+
+  /* Numéro et titre de bloc */
+  .bloc-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .bloc-num {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 2.4em;
+    color: var(--gold);
+    line-height: 1;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+  }
+
+  .bloc-title {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 1.25em;
+    color: var(--red);
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 2px;
+  }
+
+  /* Texte narratif */
+  .narrative {
+    background: rgba(255,255,255,0.45);
+    border: 1px solid rgba(184,134,11,0.3);
+    border-radius: 4px;
+    padding: 28px 32px;
+    margin-bottom: 32px;
+    font-size: 1.05em;
+    line-height: 1.95;
+    position: relative;
+    box-shadow: inset 0 0 40px rgba(242,232,208,0.5);
+  }
+
+  .narrative p { margin-bottom: 14px; }
+  .narrative p:last-child { margin-bottom: 0; }
+
+  .narrative strong { color: var(--red); }
+  .narrative em { color: var(--blue-royal); font-style: italic; }
+
+  /* Lettre ornée */
+  .narrative p:first-child::first-letter {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 3.5em;
+    float: left;
+    line-height: 0.75;
+    margin: 6px 8px 0 0;
+    color: var(--red);
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.2);
+  }
+
+  /* Effet de capture */
+  .capture-warning {
+    background: linear-gradient(135deg, rgba(139,26,26,0.12), rgba(139,26,26,0.06));
+    border: 1px solid rgba(139,26,26,0.35);
+    border-radius: 4px;
+    padding: 12px 18px;
+    margin-bottom: 20px;
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.9em;
+    color: var(--red);
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  /* Titre des choix */
+  .choices-header {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 1em;
+    color: rgba(26,15,0,0.55);
+    text-align: center;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+    display: flex; align-items: center; gap: 10px; justify-content: center;
+  }
+
+  .choices-header::before,
+  .choices-header::after {
+    content: '';
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* Boutons de choix */
+  .choices { display: flex; flex-direction: column; gap: 14px; }
+
+  .choice-btn {
+    background: linear-gradient(135deg, var(--parch-mid) 0%, var(--parch) 100%);
+    border: 2px solid var(--gold);
+    border-radius: 6px;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    text-align: left;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+    font-family: 'Libre Baskerville', serif;
+    position: relative;
+  }
+
+  .choice-btn::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(212,160,23,0.15), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+
+  .choice-btn:hover {
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3), 0 0 0 1px var(--gold-light);
+    border-color: var(--gold-light);
+  }
+
+  .choice-btn:hover::before { opacity: 1; }
+
+  .choice-btn:active { transform: translateY(0) scale(0.99); }
+
+  .choice-inner {
+    display: flex; align-items: stretch;
+  }
+
+  .choice-letter {
+    background: linear-gradient(180deg, #1c0a00, #2c1400);
+    color: var(--gold-light);
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 1.8em;
+    padding: 14px 18px;
+    display: flex; align-items: center; justify-content: center;
+    min-width: 60px;
+    border-right: 1px solid var(--gold);
+    letter-spacing: 0;
+  }
+
+  .choice-body {
+    padding: 14px 18px;
+    flex: 1;
+  }
+
+  .choice-text {
+    font-size: 0.95em;
+    line-height: 1.5;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  .choice-effects {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;
+  }
+
+  .effect-tag {
+    font-size: 0.72em;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  .effect-pos { background: rgba(45,90,27,0.15); color: var(--green); border: 1px solid rgba(45,90,27,0.3); }
+  .effect-neg { background: rgba(139,26,26,0.12); color: var(--red); border: 1px solid rgba(139,26,26,0.25); }
+  .effect-neu { background: rgba(28,46,90,0.1); color: var(--blue-royal); border: 1px solid rgba(28,46,90,0.2); }
+
+  .choice-destination {
+    font-size: 0.72em;
+    color: rgba(26,15,0,0.4);
+    font-style: italic;
+    margin-top: 4px;
+  }
+
+  /* ======================== FINS ======================== */
+  .ending-screen {
+    text-align: center;
+    padding: 20px 0;
+    animation: endingReveal 1.2s cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  @keyframes endingReveal {
+    from { opacity: 0; transform: scale(0.85); filter: blur(4px); }
+    to   { opacity: 1; transform: scale(1); filter: blur(0); }
+  }
+
+  .ending-emblem {
+    font-size: 4.5em;
+    margin-bottom: 16px;
+    display: block;
+    filter: drop-shadow(0 0 20px rgba(184,134,11,0.5));
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0) rotate(-3deg); }
+    50%      { transform: translateY(-12px) rotate(3deg); }
+  }
+
+  .ending-box {
+    border-radius: 8px;
+    padding: 36px 40px;
+    margin: 20px 0 30px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ending-box::before {
+    content: '';
+    position: absolute; inset: 0;
+    opacity: 0.06;
+    background: repeating-linear-gradient(
+      45deg, currentColor, currentColor 1px, transparent 1px, transparent 10px
+    );
+  }
+
+  .ending-good    { background: rgba(45,90,27,0.1);  border: 2px solid rgba(45,90,27,0.5);  color: var(--green); }
+  .ending-bad     { background: rgba(139,26,26,0.1); border: 2px solid rgba(139,26,26,0.5); color: var(--red); }
+  .ending-neutral { background: rgba(28,46,90,0.1);  border: 2px solid rgba(28,46,90,0.4);  color: var(--blue-royal); }
+
+  .ending-title {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 2.1em;
+    margin-bottom: 18px;
+    letter-spacing: 1px;
+  }
+
+  .ending-text {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 1.1em;
+    line-height: 1.85;
+    color: var(--ink);
+  }
+
+  .final-stats {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
+    margin: 24px 0;
+  }
+
+  .final-stat-card {
+    background: rgba(242,232,208,0.7);
+    border: 1px solid rgba(184,134,11,0.4);
+    border-radius: 6px;
+    padding: 14px 16px;
+    text-align: center;
+  }
+
+  .final-stat-label {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.8em;
+    color: rgba(26,15,0,0.55);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .final-stat-value {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 2em;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  /* Bouton restart */
+  .restart-btn {
+    background: linear-gradient(135deg, #1c0a00 0%, #2c1400 100%);
+    color: var(--gold-light);
+    border: 2px solid var(--gold);
+    border-radius: 6px;
+    padding: 14px 40px;
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  }
+
+  .restart-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5), 0 0 20px rgba(212,160,23,0.3);
+    color: #fff;
+  }
+
+  /* ======================== PROLOGUE / START ======================== */
+  .start-area {
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .start-area .story-intro {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 1.15em;
+    line-height: 1.9;
+    max-width: 600px;
+    margin: 0 auto 36px;
+    color: var(--ink);
+  }
+
+  .start-area .counter-legend {
+    background: rgba(255,255,255,0.5);
+    border: 1px solid rgba(184,134,11,0.35);
+    border-radius: 6px;
+    padding: 18px 24px;
+    margin: 0 auto 36px;
+    max-width: 500px;
+    text-align: left;
+  }
+
+  .start-area .counter-legend h3 {
+    font-family: 'UnifrakturMaguntia', cursive;
+    color: var(--gold);
+    font-size: 1.3em;
+    margin-bottom: 10px;
+  }
+
+  .start-area .counter-legend ul {
+    list-style: none;
+    font-size: 0.9em;
+    line-height: 1.8;
+  }
+
+  .start-area .counter-legend li::before {
+    margin-right: 8px;
+  }
+
+  .start-btn {
+    background: linear-gradient(135deg, var(--red) 0%, #5a1010 100%);
+    color: var(--gold-light);
+    border: 2px solid var(--gold);
+    border-radius: 8px;
+    padding: 18px 60px;
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 1.6em;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    letter-spacing: 2px;
+    box-shadow: 0 6px 25px rgba(0,0,0,0.5);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .start-btn::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.5s;
+  }
+
+  .start-btn:hover { transform: translateY(-4px) scale(1.04); box-shadow: 0 12px 35px rgba(0,0,0,0.6), 0 0 30px rgba(184,134,11,0.3); }
+  .start-btn:hover::before { transform: translateX(200%); }
+
+  /* Divider ornemental */
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    font-size: 1.4em;
+    margin: 24px 0 28px;
+    letter-spacing: 8px;
+    opacity: 0.7;
+  }
+
+  /* Chemin parcouru */
+  .breadcrumb {
+    display: flex; align-items: center; gap: 6px;
+    flex-wrap: wrap;
+    padding: 10px 20px;
+    background: rgba(0,0,0,0.04);
+    border-bottom: 1px solid rgba(184,134,11,0.2);
+    font-size: 0.78em;
+    color: rgba(26,15,0,0.45);
+    font-style: italic;
+  }
+
+  .breadcrumb span { color: var(--gold); }
+  .breadcrumb .sep { opacity: 0.4; }
+
+  /* Tooltip stat change */
+  .stat-change {
+    position: fixed; top: 80px; right: 20px;
+    background: #1c0a00;
+    color: var(--gold-light);
+    border: 1px solid var(--gold);
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.9em;
+    z-index: 999;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(30px);
+    transition: all 0.4s;
+    max-width: 220px;
+  }
+
+  .stat-change.show {
+    opacity: 1; transform: translateX(0);
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .content { padding: 30px 25px 40px; }
+    .header  { padding: 28px 25px 22px; }
+    .stats-bar { grid-template-columns: repeat(2,1fr); padding: 10px 15px; }
+    .choice-letter { min-width: 48px; font-size: 1.4em; padding: 10px 12px; }
+    .final-stats { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Notification stats -->
+<div class="stat-change" id="statNotif"></div>
+
+<div class="book">
+  <div class="page">
+
+    <!-- Coins -->
+    <div class="corner corner-tl">
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 4 L20 4 L4 20 Z" fill="#b8860b" opacity="0.5"/>
+        <path d="M2 2 L22 2 L2 22 Z" fill="none" stroke="#b8860b" stroke-width="1.5" opacity="0.7"/>
+        <circle cx="4" cy="4" r="2.5" fill="#b8860b" opacity="0.8"/>
+        <path d="M8 2 Q14 8 2 8" fill="none" stroke="#b8860b" stroke-width="1" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="corner corner-tr">
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 4 L20 4 L4 20 Z" fill="#b8860b" opacity="0.5"/>
+        <path d="M2 2 L22 2 L2 22 Z" fill="none" stroke="#b8860b" stroke-width="1.5" opacity="0.7"/>
+        <circle cx="4" cy="4" r="2.5" fill="#b8860b" opacity="0.8"/>
+        <path d="M8 2 Q14 8 2 8" fill="none" stroke="#b8860b" stroke-width="1" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="corner corner-bl">
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 4 L20 4 L4 20 Z" fill="#b8860b" opacity="0.5"/>
+        <path d="M2 2 L22 2 L2 22 Z" fill="none" stroke="#b8860b" stroke-width="1.5" opacity="0.7"/>
+        <circle cx="4" cy="4" r="2.5" fill="#b8860b" opacity="0.8"/>
+        <path d="M8 2 Q14 8 2 8" fill="none" stroke="#b8860b" stroke-width="1" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="corner corner-br">
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 4 L20 4 L4 20 Z" fill="#b8860b" opacity="0.5"/>
+        <path d="M2 2 L22 2 L2 22 Z" fill="none" stroke="#b8860b" stroke-width="1.5" opacity="0.7"/>
+        <circle cx="4" cy="4" r="2.5" fill="#b8860b" opacity="0.8"/>
+        <path d="M8 2 Q14 8 2 8" fill="none" stroke="#b8860b" stroke-width="1" opacity="0.5"/>
+      </svg>
+    </div>
+
+    <!-- HEADER -->
+    <div class="header">
+      <h1>La Fuite de Varennes</h1>
+      <p class="subtitle">Dont vous êtes le héros — Louis XVI, Juin 1791</p>
+    </div>
+
+    <!-- BARRE DE STATS -->
+    <div class="stats-bar" id="statsBar">
+      <div class="stat">
+        <div class="stat-label">Discrétion</div>
+        <div class="stat-row">
+          <span class="stat-icon">🎭</span>
+          <div class="stat-track"><div class="stat-fill fill-discret" id="fill-discret" style="width:0%"></div></div>
+          <span class="stat-num" id="num-discret">0</span>
+        </div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Popularité</div>
+        <div class="stat-row">
+          <span class="stat-icon">👑</span>
+          <div class="stat-track"><div class="stat-fill fill-popular" id="fill-popular" style="width:0%"></div></div>
+          <span class="stat-num" id="num-popular">0</span>
+        </div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Humanité</div>
+        <div class="stat-row">
+          <span class="stat-icon">🕊️</span>
+          <div class="stat-track"><div class="stat-fill fill-human" id="fill-human" style="width:0%"></div></div>
+          <span class="stat-num" id="num-human">0</span>
+        </div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Courage</div>
+        <div class="stat-row">
+          <span class="stat-icon">⚔️</span>
+          <div class="stat-track"><div class="stat-fill fill-courage" id="fill-courage" style="width:0%"></div></div>
+          <span class="stat-num" id="num-courage">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHEMIN PARCOURU -->
+    <div class="breadcrumb" id="breadcrumb">
+      <span>📖 Votre parcours :</span>
+      <span id="breadcrumb-path">—</span>
+    </div>
+
+    <!-- CONTENU PRINCIPAL -->
+    <div class="content">
+
+      <!-- ====== PROLOGUE ====== -->
+      <div class="chapter active" id="ch-start">
+        <div class="start-area">
+          <div class="ornament">✦ ⚜ ✦</div>
+          <p class="story-intro">
+            Vous êtes <strong>Louis XVI</strong>, Roi de France. Nous sommes le <em>20 juin 1791</em>. 
+            Cette nuit, vous tentez de fuir Paris avec votre famille royale pour atteindre la forteresse de Montmédy.
+            Le cortège royal quitte Paris discrètement — mais la ville de <strong>Varennes</strong> vous attend.
+          </p>
+          <div class="counter-legend">
+            <h3>⚖ Système de points</h3>
+            <ul>
+              <li>🎭 <strong>Discrétion</strong> : 0 ou moins = capture rapide</li>
+              <li>👑 <strong>Popularité élevée</strong> = foule moins violente</li>
+              <li>🕊️ <strong>Humanité</strong> : évite les effusions de sang</li>
+              <li>⚔️ <strong>Courage</strong> : affronter l'adversité</li>
+            </ul>
+          </div>
+          <button class="start-btn" onclick="startGame()">✦ Commencer l'Aventure ✦</button>
+        </div>
+      </div>
+
+      <!-- ====== BLOC 1 — Introduction ====== -->
+      <div class="chapter" id="ch-bloc1">
+        <div class="bloc-tag">
+          <span class="bloc-num">Bloc 1</span>
+          <span class="bloc-title">Varennes — La Ville Fatale</span>
+        </div>
+        <div class="narrative">
+          <p>
+            Louis XVI quitte Paris discrètement avec sa famille et ses gardes, avec pour objectif d'atteindre un lieu sûr loin de la Révolution. Après plusieurs heures de route, vous arrivez à la ville de Varennes. <strong>La tension est palpable</strong> : la population pourrait vous reconnaître.
+          </p>
+          <p>
+            Dans la nuit de juin, les sabots des chevaux résonnent sur les pavés. Votre cœur bat. Devant vous, les lumières de Varennes brillent d'une lueur inquiétante. <em>Il faut prendre une décision.</em>
+          </p>
+        </div>
+        <div class="choices-header">Choisissez votre action</div>
+        <div class="choices">
+          <button class="choice-btn" onclick="goTo('ch-bloc2a', {discret:-10}, 'Avancer rapidement')">
+            <div class="choice-inner">
+              <div class="choice-letter">A</div>
+              <div class="choice-body">
+                <div class="choice-text">Avancer rapidement pour quitter la ville avant d'être vu</div>
+                <div class="choice-effects">
+                  <span class="effect-tag effect-neg">Discrétion −10</span>
+                </div>
+                <div class="choice-destination">→ Bloc 2a</div>
+              </div>
+            </div>
+          </button>
+          <button class="choice-btn" onclick="goTo('ch-bloc2b', {discret:+10}, 'Ralentir et rester discret')">
+            <div class="choice-inner">
+              <div class="choice-letter">B</div>
+              <div class="choice-body">
+                <div class="choice-text">Ralentir pour rester discret et éviter de se faire remarquer</div>
+                <div class="choice-effects">
+                  <span class="effect-tag effect-pos">Discrétion +10</span>
+                </div>
+                <div class="choice-destination">→ Bloc 2b</div>
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== BLOC 2A — Avancer rapidement ====== -->
+      <div class="chapter" id="ch-bloc2a">
+        <div class="bloc-tag">
+          <span class="bloc-num">Bloc 2a</span>
+          <span class="bloc-title">Avancer Rapidement</span>
+        </div>
+        <div class="narrative">
+          <p>
+            Le cortège accélère, mais la population commence à remarquer le carrosse. <strong>Une foule se rassemble rapidement.</strong> Les gardes se préparent à tirer si nécessaire.
+          </p>
+          <p>
+            Le cocher fouette les chevaux. Les roues crissent sur les pavés. Des visages apparaissent aux fenêtres. Quelqu'un crie : <em>"Le carrosse du roi !"</em> — ou peut-être rêvez-vous ? Non. Les gens sortent dans la rue.
+          </p>
+        </div>
+        <div class="choices-header">Que faites-vous ?</div>
+        <div class="choices">
+          <button class="choice-btn" onclick="goTo('ch-bloc3a', {human:+5, discret:+5}, 'Ne pas tirer')">
+            <div class="choice-inner">
+              <div class="choice-letter">A</div>
+              <div class="choice-body">
+                <div class="choice-text">Vous ordonnez à vos gardes de ne surtout pas tirer</div>
+                <div class="choice-effects">
+                  <span class="effect-tag effect-pos">Humanité +5</span>
+                  <span class="effect-tag effect-pos">Discrétion +5</span>
+                </div>
+                <div class="choice-destination">→ Bloc 3a</div>
+              </div>
+            </div>
+          </button>
+          <button class="choice-btn" onclick="goTo('ch-bloc3b', {popular:-20, discret:-10}, 'Les gardes tirent')">
+            <div class="choice-inner">
+              <div class="choice-letter">B</div>
+              <div class="choice-body">
+                <div class="choice-text">Les gardes tirent pour se protéger et forcer le passage</div>
+                <div class="choice-effects">
+                  <span class="effect-tag effect-neg">Popularité −20</span>
+                  <span class="effect-tag effect-neg">Discrétion −10</span>
+                </div>
+                <div class="choice-destination">→ Bloc 3b</div>
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== BLOC 2B — Ralentir ====== -->
+      <div class="chapter" id="ch-bloc2b">
+        <div class="bloc-tag">
+          <span class="bloc-num">Bloc 2b</span>
+          <span class="bloc-title">Ralentir pour être Discret</span>
+        </div>
+        <div class="narrative">
+          <p>
+            La famille royale tente de se fondre dans la foule. <strong>Mais un enfant dans la rue crie : "Le roi !"</strong>, et la rumeur se répand comme une traînée de poudre.
+          </p>
+          <p>
+            Les gardes paniquent et se préparent à agir. <em>La discrétion est compromise.</em> Chaque seconde compte désormais. Les têtes se tournent vers votre carrosse. Des mains pointent.
+          </p>
+        </div>
+        <div class="choices-header">Comment réagissez-vous ?</div>
+        <div class="choices">
+          <button class="choice-btn" onclick="goTo('ch-bloc3a', {human:+5, discret:+5}, 'Ordonner de ne pas tirer')">
+            <div class="choice-inner">
+              <div class="choice-letter">A</div>
+              <div class="choice-body">
+                <div class="choice-text">Louis XVI ordonne de ne pas tirer — préserver l'innocence du peuple</div>
+                <div class="choice-effects">
+                  <span class="effect-tag effect-pos">Humanité +5</span>
+                  <span class="effect-tag effect-pos">Discrétion +5</span>
+                </div>
+                <div class="choice-destination">→ Bloc 3a</div>
+              </div>
+            </div>
+          </button>
+          <button class="choice-btn" onclick="goTo('ch-bloc3b', {popular:-20, discret:-10}, 'Les gardes tirent')">
+            <div class="choice-inner">
+              <div class="choice-letter">B</div>
+              <div class="choice-body">
+                <div class="choice-text">Les gardes tirent pour dégager la route — panique totale</div>
+                <div class="choice-effects">
+                  <span class="effect-tag effect-neg">Popularité −20</span>
+                  <span class="effect-tag effect-neg">Discrétion −10</span>
+                </div>
+                <div class="choice-destination">→ Bloc 3b</div>
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== BLOC 3A — Ne pas tirer ====== -->
+      <div class="chapter" id="ch-bloc3a">
+        <div class="bloc-tag">
+          <span class="bloc-num">Bloc 3a</span>
+          <span class="bloc-title">Ne Pas Tirer</span>
+        </div>
+        <div class="narrative">
+          <p>
+            Vous ordonnez à vos gardes de ne surtout pas tirer. <strong>La foule est surprise et hésite.</strong> Mais elle encercle le cortège, et la situation devient incontrôlable.
+          </p>
+          <p>
+            Des visages tendus se pressent contre les vitres du carrosse. Des mains frappent sur les parois. <em>"Qui êtes-vous ? Montrez-vous !"</em> — La nuit résonne de clameurs. Votre famille tremble, mais vous gardez votre calme de roi.
+          </p>
+          <p>
+            La foule grossit à chaque minute. Des torches s'allument. Il faut décider : tenter de parlementer ou accepter l'inévitable ?
+          </p>
+        </div>
+        <div class="choices-header">La foule vous encercle — que faites-vous ?</div>
+        <div class="choices">
+          <button class="choice-btn" onclick="goTo('ch-bloc4a', {popular:+15}, 'Parlementer avec la foule')">
+            <div class="choice-inner">
+              <div class="choice-letter">A</div>
+              <div class="choice-body">
+                <div class="choice-text">Vous tentez de parlementer avec la foule</div>
+                <div class="choice-effects">
+                  <span class="effect-tag effect-pos">Popularité +15</span>
+                </div>
+                <div class="choice-destination">→ Bloc 4a</div>
+              </div>
+            </div>
+          </button>
+          <button class="choice-btn" onclick="goTo('ch-bloc4b', {human:+10}, 'Se laisser capturer')">
+            <div class="choice-inner">
+              <div class="choice-letter">B</div>
+              <div class="choice-body">
+                <div class="choice-text">Se laisser capturer pour éviter un massacre</div>
+                <div class="choice-effects">
+                  <span class="effect-tag effect-pos">Humanité +10</span>
+                </div>
+                <div class="choice-destination">→ Bloc 4b</div>
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== BLOC 3B — Tirer sur la foule ====== -->
+      <div class="chapter" id="ch-bloc3b">
+        <div class="bloc-tag">
+          <span class="bloc-num">Bloc 3b</span>
+          <span class="bloc-title">Tirer sur la Foule</span>
+        </div>
+        <div class="narrative">
+          <p>
+            Les gardes ouvrent le feu. <strong>La panique éclate</strong> : certains habitants tombent, d'autres fuient dans la nuit en hurlant. Le cortège peut avancer — mais la ville devient hostile.
+          </p>
+          <p>
+            Des milices armées arrivent rapidement depuis les rues adjacentes. <em>Les coups de feu ont alerté toute la ville.</em> Le sang coule sur les pavés de Varennes. Votre fuite est désormais une course contre la mort.
+          </p>
+          <p>
+            Le carrosse s'élance dans les ruelles sombres. Derrière vous, des cris de vengeance. Devant, l'incertitude. Deux options s'offrent à vous dans ce chaos.
+          </p>
+        </div>
+        <div class="choices-header">Vous avez forcé le passage — et maintenant ?</div>
+        <div class="choices">
+          <button class="choice-btn" onclick="goTo('ch-bloc4d', {courage:-5, discret:-5}, 'Demi-tour vers Paris')">
+            <div class="choice-inner">
+              <div class="choice-letter">A</div>
+              <div class="choice-body">
+                <div class="choice-text">Faire demi-tour vers Paris — la situation est trop dangereuse</div>
+                <div class="choice-effects">
+                  <span class="effect-tag effect-neg">Courage −5</span>
+                  <span class="effect-tag effect-neg">Discrétion −5</span>
+                </div>
+                <div class="choice-destination">→ Bloc 4d</div>
+              </div>
+            </div>
+          </button>
+          <button class="choice-btn" onclick="goTo('ch-bloc4c', {discret:-10}, 'Continuer à toute vitesse')">
+            <div class="choice-inner">
+              <div class="choice-letter">B</div>
+              <div class="choice-body">
+                <div class="choice-text">Continuer la fuite à toute vitesse vers la frontière</div>
+                <div class="choice-effects">
+                  <span class="effect-tag effect-neg">Discrétion −10</span>
+                </div>
+                <div class="choice-destination">→ Bloc 4c</div>
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== BLOC 4A — Parlementer ====== -->
+      <div class="chapter" id="ch-bloc4a">
+        <div class="bloc-tag">
+          <span class="bloc-num">Bloc 4a</span>
+          <span class="bloc-title">Parlementer avec la Foule</span>
+        </div>
+        <div class="narrative">
+          <p>
+            Vous essayez de calmer les habitants depuis la portière du carrosse : <em>"Nous ne voulons aucun mal !"</em> La foule vacille. Quelques voix se font entendre pour protéger le roi.
+          </p>
+          <p>
+            Un vieux bourgeois crie : <em>"Laissez-les passer !"</em> Un autre répond : <em>"C'est notre roi, il ne doit pas fuir !"</em> Le débat gronde dans la nuit. Des femmes retiennent leurs maris. Des enfants pleurent.
+          </p>
+          <p>
+            Mais <strong>la tension atteint son paroxysme</strong>. Malgré vos efforts, des hommes armés finissent par se faire capturer. La foule vous encerne irrémédiablement.
+          </p>
+        </div>
+        <div class="ending-screen">
+          <span class="ending-emblem">👑</span>
+          <div class="ending-box ending-neutral">
+            <div class="ending-title">Capture Honorable</div>
+            <div class="ending-text">
+              Malgré vos paroles de paix, la foule de Varennes vous capture. Vous êtes remis aux autorités révolutionnaires. <strong>Louis XVI est jugé, le tribunal le condamne malgré ses excuses, et il est exécuté en 1793.</strong>
+              <br><br>Votre popularité élevée n'a pas suffi à vous sauver, mais elle vous a valu le respect de nombreux témoins. L'Histoire retiendra un roi qui refusa de faire couler le sang de son peuple.
+            </div>
+          </div>
+          <div class="final-stats" id="final-stats-4a"></div>
+          <button class="restart-btn" onclick="restartGame()">⚜ Recommencer l'Aventure ⚜</button>
+        </div>
+      </div>
+
+      <!-- ====== BLOC 4B — Se laisser capturer ====== -->
+      <div class="chapter" id="ch-bloc4b">
+        <div class="bloc-tag">
+          <span class="bloc-num">Bloc 4b</span>
+          <span class="bloc-title">Se Laisser Capturer</span>
+        </div>
+        <div class="narrative">
+          <p>
+            Pour éviter un massacre, vous vous rendez aux habitants. <em>"Je suis Louis XVI. Je me rends à vous."</em> La foule, stupéfaite par votre aveu, s'immobilise.
+          </p>
+          <p>
+            <strong>Vous êtes fait arrêter par la foule</strong> et remis aux autorités révolutionnaires. Votre famille est escortée dans la maison du procureur Sauce. Dans le silence de cette nuit de juin, une page de l'Histoire se tourne.
+          </p>
+          <p>
+            Votre geste de reddition volontaire épargne des vies. Les habitants vous regardent avec un mélange de pitié et de respect — leur roi s'est sacrifié pour éviter le sang.
+          </p>
+        </div>
+        <div class="ending-screen">
+          <span class="ending-emblem">🕊️</span>
+          <div class="ending-box ending-neutral">
+            <div class="ending-title">Le Sacrifice du Roi</div>
+            <div class="ending-text">
+              Vous avez choisi l'humanité sur la survie. <strong>Louis XVI est capturé à Varennes, jugé par la Convention et exécuté le 21 janvier 1793.</strong> Mais votre reddition volontaire pour épargner vos sujets reste gravée dans la mémoire collective comme un acte de noblesse authentique.
+              <br><br>La Révolution suit son cours tragique, mais vous n'avez pas voulu être la cause d'un massacre. L'Histoire vous absoudra de ce courage discret.
+            </div>
+          </div>
+          <div class="final-stats" id="final-stats-4b"></div>
+          <button class="restart-btn" onclick="restartGame()">⚜ Recommencer l'Aventure ⚜</button>
+        </div>
+      </div>
+
+      <!-- ====== BLOC 4C — Continuer la fuite ====== -->
+      <div class="chapter" id="ch-bloc4c">
+        <div class="bloc-tag">
+          <span class="bloc-num">Bloc 4c</span>
+          <span class="bloc-title">Poursuivre la Fuite</span>
+        </div>
+        <div class="narrative">
+          <p>
+            Vous poursuivez la fuite vers la frontière, sans vous arrêter. <strong>Les milices perdent votre trace</strong> dans les chemins de campagne. Le cortège atteint enfin la frontière, au lever du jour.
+          </p>
+          <p>
+            Des silhouettes surgissent des bois. Des uniformes blancs à croix noire : <em>des soldats loyalistes !</em> Les cavaliers du marquis de Bouillé vous accueillent. Des larmes coulent sur vos joues.
+          </p>
+          <p>
+            <strong>Vous rejoignez des troupes fidèles, hors de France.</strong> La liberté est à portée de main — mais à quel prix ?
+          </p>
+        </div>
+        <div class="ending-screen">
+          <span class="ending-emblem">🏇</span>
+          <div class="ending-box ending-good">
+            <div class="ending-title">L'Évasion Réussie !</div>
+            <div class="ending-text">
+              Vous parvenez à vous enfuir et échapper à la capture ! Grâce à votre décision audacieuse, la famille royale traverse la frontière saine et sauve. Vous vous réfugiez auprès des armées loyalistes.
+              <br><br><strong>Cependant, votre fuite a un coût lourd :</strong> en abandonnant la France et en ayant fait tirer sur le peuple, vous perdez toute légitimité aux yeux des Français. L'Assemblée vous déclare traître. La guerre civile éclate. L'Europe s'embrase.
+              <br><br>Vous avez sauvé votre vie... mais peut-être perdu votre âme de roi.
+            </div>
+          </div>
+          <div class="final-stats" id="final-stats-4c"></div>
+          <button class="restart-btn" onclick="restartGame()">⚜ Recommencer l'Aventure ⚜</button>
+        </div>
+      </div>
+
+      <!-- ====== BLOC 4D — Demi-tour vers Paris ====== -->
+      <div class="chapter" id="ch-bloc4d">
+        <div class="bloc-tag">
+          <span class="bloc-num">Bloc 4d</span>
+          <span class="bloc-title">Demi-tour vers Paris</span>
+        </div>
+        <div class="narrative">
+          <p>
+            Vous décidez de retourner vers Paris pour vous protéger. <strong>La population, avertie de votre tentative de fuite, attend le cortège pour vous capturer.</strong>
+          </p>
+          <p>
+            Le chemin du retour est long et humiliant. À chaque village, des foules silencieuses regardent passer le carrosse royal. Nul n'ose applaudir. Nul n'ose insulter. Ce silence pesant est plus terrible que la haine.
+          </p>
+          <p>
+            <em>Fin : Capture immédiate à Paris.</em> Vous êtes escorté aux Tuileries qui deviennent votre prison dorée. Les jours de la monarchie sont comptés.
+          </p>
+        </div>
+        <div class="ending-screen">
+          <span class="ending-emblem">⛓️</span>
+          <div class="ending-box ending-bad">
+            <div class="ending-title">Le Retour Honteux</div>
+            <div class="ending-text">
+              Vous revenez à Paris sous escorte, prisonnier en votre propre royaume. <strong>Louis XVI est capturé immédiatement, jugé par la Convention, et exécuté le 21 janvier 1793.</strong>
+              <br><br>Votre tentative de fuite, puis votre retour contraint, ont définitivement brisé la confiance du peuple. La Révolution n'a plus besoin de roi. La République est proclamée. Le règne de Louis XVI s'achève dans le déshonneur de n'avoir ni su fuir, ni su rester.
+            </div>
+          </div>
+          <div class="final-stats" id="final-stats-4d"></div>
+          <button class="restart-btn" onclick="restartGame()">⚜ Recommencer l'Aventure ⚜</button>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /page -->
+</div><!-- /book -->
+
+<script>
+  // ==================== ÉTAT DU JEU ====================
+  const state = {
+    discret:  0,
+    popular:  0,
+    human:    0,
+    courage:  0,
+    path: [],
+    current: 'start'
+  };
+
+  const MAX = 100;
+  const statCap = v => Math.max(-50, Math.min(MAX, v));
+
+  // ==================== NAVIGATION ====================
+  function startGame() {
+    showChapter('ch-bloc1');
+    state.path = ['Prologue'];
+    updateBreadcrumb();
+  }
+
+  function goTo(chapterId, effects, label) {
+    applyEffects(effects, label);
+    showChapter(chapterId);
+    if (label) state.path.push(label);
+    updateBreadcrumb();
+    // Remplir les stats finales si c'est une fin
+    const finalDiv = document.getElementById('final-stats-' + chapterId.replace('ch-bloc',''));
+    if (finalDiv && finalDiv.children.length === 0) populateFinalStats(finalDiv);
+  }
+
+  function showChapter(id) {
+    document.querySelectorAll('.chapter').forEach(c => c.classList.remove('active'));
+    const target = document.getElementById(id);
+    if (target) {
+      target.classList.add('active');
+      state.current = id;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  // ==================== EFFETS ====================
+  function applyEffects(effects, label) {
+    if (!effects) return;
+    const changes = [];
+
+    if (effects.discret  !== undefined) { state.discret  = statCap(state.discret  + effects.discret);  changes.push(fmt('Discrétion', effects.discret)); }
+    if (effects.popular  !== undefined) { state.popular  = statCap(state.popular  + effects.popular);  changes.push(fmt('Popularité', effects.popular)); }
+    if (effects.human    !== undefined) { state.human    = statCap(state.human    + effects.human);    changes.push(fmt('Humanité',   effects.human)); }
+    if (effects.courage  !== undefined) { state.courage  = statCap(state.courage  + effects.courage);  changes.push(fmt('Courage',    effects.courage)); }
+
+    updateBars();
+    if (changes.length) showNotif(changes.join('  '));
+  }
+
+  function fmt(name, val) {
+    return (val > 0 ? '▲ ' : '▼ ') + name + ' ' + (val > 0 ? '+' : '') + val;
+  }
+
+  // ==================== BARRES ====================
+  function updateBars() {
+    const update = (key, id) => {
+      const pct = Math.max(0, Math.min(100, ((state[key] + 50) / 150) * 100));
+      document.getElementById('fill-' + id).style.width = pct + '%';
+      document.getElementById('num-'  + id).textContent = state[key];
+    };
+    update('discret', 'discret');
+    update('popular', 'popular');
+    update('human',   'human');
+    update('courage', 'courage');
+  }
+
+  // ==================== NOTIFICATION ====================
+  let notifTimer = null;
+  function showNotif(text) {
+    const el = document.getElementById('statNotif');
+    el.textContent = text;
+    el.classList.add('show');
+    clearTimeout(notifTimer);
+    notifTimer = setTimeout(() => el.classList.remove('show'), 2800);
+  }
+
+  // ==================== BREADCRUMB ====================
+  function updateBreadcrumb() {
+    const el = document.getElementById('breadcrumb-path');
+    if (state.path.length === 0) { el.textContent = '—'; return; }
+    el.innerHTML = state.path.map((s, i) =>
+      i === state.path.length - 1
+        ? `<span>${s}</span>`
+        : `${s} <span class="sep">›</span> `
+    ).join('');
+  }
+
+  // ==================== STATS FINALES ====================
+  function populateFinalStats(container) {
+    const items = [
+      { label: 'Discrétion',  val: state.discret },
+      { label: 'Popularité',  val: state.popular },
+      { label: 'Humanité',    val: state.human   },
+      { label: 'Courage',     val: state.courage },
+    ];
+    container.innerHTML = items.map(it => `
+      <div class="final-stat-card">
+        <div class="final-stat-label">${it.label}</div>
+        <div class="final-stat-value">${it.val > 0 ? '+' : ''}${it.val}</div>
+      </div>
+    `).join('');
+  }
+
+  // ==================== RESTART ====================
+  function restartGame() {
+    state.discret = state.popular = state.human = state.courage = 0;
+    state.path = [];
+    // Réinitialiser les stats finales
+    document.querySelectorAll('[id^="final-stats-"]').forEach(el => el.innerHTML = '');
+    updateBars();
+    updateBreadcrumb();
+    showChapter('ch-start');
+  }
+
+  // Init
+  updateBars();
+</script>
+</body>
+</html>
