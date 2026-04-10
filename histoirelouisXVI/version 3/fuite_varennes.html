@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Fuite de Varennes — Dont vous êtes le héros</title>
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=IM+Fell+English:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Notification stats -->
+<div class="stat-change" id="statNotif"></div>
+
+<div class="book">
+  <div class="page">
+
+    <!-- Coins -->
+    <div class="corner corner-tl"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4 L20 4 L4 20 Z" fill="#b8860b" opacity="0.5"/><path d="M2 2 L22 2 L2 22 Z" fill="none" stroke="#b8860b" stroke-width="1.5" opacity="0.7"/><circle cx="4" cy="4" r="2.5" fill="#b8860b" opacity="0.8"/><path d="M8 2 Q14 8 2 8" fill="none" stroke="#b8860b" stroke-width="1" opacity="0.5"/></svg></div>
+    <div class="corner corner-tr"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4 L20 4 L4 20 Z" fill="#b8860b" opacity="0.5"/><path d="M2 2 L22 2 L2 22 Z" fill="none" stroke="#b8860b" stroke-width="1.5" opacity="0.7"/><circle cx="4" cy="4" r="2.5" fill="#b8860b" opacity="0.8"/><path d="M8 2 Q14 8 2 8" fill="none" stroke="#b8860b" stroke-width="1" opacity="0.5"/></svg></div>
+    <div class="corner corner-bl"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4 L20 4 L4 20 Z" fill="#b8860b" opacity="0.5"/><path d="M2 2 L22 2 L2 22 Z" fill="none" stroke="#b8860b" stroke-width="1.5" opacity="0.7"/><circle cx="4" cy="4" r="2.5" fill="#b8860b" opacity="0.8"/><path d="M8 2 Q14 8 2 8" fill="none" stroke="#b8860b" stroke-width="1" opacity="0.5"/></svg></div>
+    <div class="corner corner-br"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4 L20 4 L4 20 Z" fill="#b8860b" opacity="0.5"/><path d="M2 2 L22 2 L2 22 Z" fill="none" stroke="#b8860b" stroke-width="1.5" opacity="0.7"/><circle cx="4" cy="4" r="2.5" fill="#b8860b" opacity="0.8"/><path d="M8 2 Q14 8 2 8" fill="none" stroke="#b8860b" stroke-width="1" opacity="0.5"/></svg></div>
+
+    <!-- HEADER -->
+    <div class="header">
+      <h1>La Fuite de Varennes</h1>
+      <p class="subtitle">Dont vous êtes le héros — Louis XVI, Juin 1791</p>
+    </div>
+
+    <!-- BARRE DE STATS -->
+    <div class="stats-bar" id="statsBar">
+      <div class="stat"><div class="stat-label">Discrétion</div><div class="stat-row"><span class="stat-icon">🎭</span><div class="stat-track"><div class="stat-fill fill-discret" id="fill-discret" style="width:0%"></div></div><span class="stat-num" id="num-discret">0</span></div></div>
+      <div class="stat"><div class="stat-label">Popularité</div><div class="stat-row"><span class="stat-icon">👑</span><div class="stat-track"><div class="stat-fill fill-popular" id="fill-popular" style="width:0%"></div></div><span class="stat-num" id="num-popular">0</span></div></div>
+      <div class="stat"><div class="stat-label">Humanité</div><div class="stat-row"><span class="stat-icon">🕊️</span><div class="stat-track"><div class="stat-fill fill-human" id="fill-human" style="width:0%"></div></div><span class="stat-num" id="num-human">0</span></div></div>
+      <div class="stat"><div class="stat-label">Courage</div><div class="stat-row"><span class="stat-icon">⚔️</span><div class="stat-track"><div class="stat-fill fill-courage" id="fill-courage" style="width:0%"></div></div><span class="stat-num" id="num-courage">0</span></div></div>
+    </div>
+
+    <!-- CHEMIN PARCOURU -->
+    <div class="breadcrumb" id="breadcrumb">
+      <span>📖 Votre parcours :</span>
+      <span id="breadcrumb-path">—</span>
+    </div>
+
+    <!-- CONTENU PRINCIPAL -->
+    <div class="content">
+
+      <!-- ====== PROLOGUE ====== -->
+      <div class="chapter active" id="ch-start">
+        <div class="start-area">
+          <div class="story-image">
+            <img src="01_depart_paris.jpg" alt="Le départ discret de la famille royale des Tuileries">
+            <div class="image-caption">La nuit du 20 juin 1791 — Le destin de la monarchie se joue</div>
+          </div>
+          <div class="ornament">✦ ⚜ ✦</div>
+          <p class="story-intro">
+            Vous êtes <strong>Louis XVI</strong>, Roi de France. Nous sommes le <em>20 juin 1791</em>. 
+            Cette nuit, vous tentez de fuir Paris avec votre famille royale pour atteindre la forteresse de Montmédy.
+            Le cortège royal quitte Paris discrètement — mais la ville de <strong>Varennes</strong> vous attend.
+          </p>
+          <div class="counter-legend">
+            <h3>⚖ Système de points</h3>
+            <ul>
+              <li>🎭 <strong>Discrétion</strong> : 0 ou moins = capture rapide</li>
+              <li>👑 <strong>Popularité élevée</strong> = foule moins violente</li>
+              <li>🕊️ <strong>Humanité</strong> : évite les effusions de sang</li>
+              <li>⚔️ <strong>Courage</strong> : affronter l'adversité</li>
+            </ul>
+          </div>
+          <button class="start-btn" onclick="startGame()">✦ Commencer l'Aventure ✦</button>
+        </div>
+      </div>
+
+      <!-- ====== CHAPITRE I — Le Départ de Paris ====== -->
+      <div class="chapter" id="ch-bloc1">
+        <div class="bloc-tag">
+          <span class="bloc-num">Chapitre I</span>
+          <span class="bloc-title">Le Départ de Paris</span>
+        </div>
+        <div class="story-image">
+          <img src="02_voyage_nuit.jpg" alt="Le carrosse royal voyageant de nuit">
+          <div class="image-caption">Le carrosse royal s'élance dans la nuit — direction Montmédy</div>
+        </div>
+        <div class="narrative">
+          <p>La nuit est tombée sur Paris. Dans les couloirs sombres du palais des Tuileries, vous rassemblez votre famille en silence. Marie-Antoinette serre contre elle le petit Dauphin endormi. Madame Élisabeth, votre sœur, prie à voix basse. Madame Royale, votre fille aînée, vous regarde avec des yeux emplis de confiance.</p>
+          <p>Le plan a été préparé par le comte Axel de Fersen, fidèle parmi les fidèles. Une berline vous attend près du guichet de Marigny. <strong>Mais le danger est immense</strong> : La Fayette a posté des gardes nationaux partout. Le moindre bruit pourrait donner l'alerte.</p>
+          <p>Fersen vous murmure : <em>« Sire, il est temps. Deux options s'offrent à vous pour quitter le palais. »</em></p>
+        </div>
+        <div class="choices-header">Comment quittez-vous les Tuileries ?</div>
+        <div class="choices">
+          <button class="choice-btn" onclick="goTo('ch-bloc2a', {discret:+15, courage:+5}, 'Passage secret')">
+            <div class="choice-inner"><div class="choice-letter">A</div><div class="choice-body">
+              <div class="choice-text">Emprunter le passage secret sous le palais, plus long mais invisible aux gardes</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Discrétion +15</span><span class="effect-tag effect-pos">Courage +5</span></div>
+            </div></div>
+          </button>
+          <button class="choice-btn" onclick="goTo('ch-bloc2b', {discret:-5, courage:+10}, 'Sortie déguisés')">
+            <div class="choice-inner"><div class="choice-letter">B</div><div class="choice-body">
+              <div class="choice-text">Sortir déguisés en domestiques par la porte principale, sous le nez des gardes</div>
+              <div class="choice-effects"><span class="effect-tag effect-neg">Discrétion −5</span><span class="effect-tag effect-pos">Courage +10</span></div>
+            </div></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== CHAPITRE II-A — Passage secret ====== -->
+      <div class="chapter" id="ch-bloc2a">
+        <div class="bloc-tag">
+          <span class="bloc-num">Chapitre II</span>
+          <span class="bloc-title">Le Passage Secret</span>
+        </div>
+        <div class="story-image">
+          <img src="02_voyage_nuit.jpg" alt="Le voyage nocturne vers la liberté">
+          <div class="image-caption">La fuite dans la nuit — chaque minute compte</div>
+        </div>
+        <div class="narrative">
+          <p>Vous empruntez un étroit passage souterrain qui mène sous les jardins. L'air est humide, les murs suintent. La reine retient un cri quand une araignée tombe sur son épaule. Le Dauphin dort toujours, bercé par les pas feutrés de sa mère.</p>
+          <p>Après vingt longues minutes dans l'obscurité, vous émergez près du guichet de Marigny. <strong>La berline de Fersen est là</strong>, attelée de six chevaux, dissimulée sous les arbres. Le cocher, un homme de confiance, vous fait signe.</p>
+          <p>Mais au moment de monter, Fersen vous prévient : <em>« Sire, un problème. La berline est immense — elle attirera l'attention. Je peux trouver deux voitures plus petites, mais cela prendra une heure de plus. »</em></p>
+        </div>
+        <div class="choices-header">Quel véhicule choisissez-vous ?</div>
+        <div class="choices">
+          <button class="choice-btn" onclick="goTo('ch-bloc3', {discret:-10}, 'La grande berline')">
+            <div class="choice-inner"><div class="choice-letter">A</div><div class="choice-body">
+              <div class="choice-text">Prendre la grande berline immédiatement — chaque minute compte</div>
+              <div class="choice-effects"><span class="effect-tag effect-neg">Discrétion −10</span></div>
+            </div></div>
+          </button>
+          <button class="choice-btn" onclick="goTo('ch-bloc3', {discret:+10, courage:-5}, 'Petites voitures')">
+            <div class="choice-inner"><div class="choice-letter">B</div><div class="choice-body">
+              <div class="choice-text">Attendre les deux voitures plus discrètes — la prudence avant tout</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Discrétion +10</span><span class="effect-tag effect-neg">Courage −5</span></div>
+            </div></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== CHAPITRE II-B — Sortie déguisés ====== -->
+      <div class="chapter" id="ch-bloc2b">
+        <div class="bloc-tag">
+          <span class="bloc-num">Chapitre II</span>
+          <span class="bloc-title">La Sortie des Audacieux</span>
+        </div>
+        <div class="story-image">
+          <img src="01_depart_paris.jpg" alt="La sortie déguisée des Tuileries">
+          <div class="image-caption">Déguisés en domestiques, la famille royale franchit les portes</div>
+        </div>
+        <div class="narrative">
+          <p>Vous enfilez les vêtements d'un valet. Marie-Antoinette porte la tenue sombre d'une gouvernante. Votre sœur Élisabeth joue le rôle d'une femme de chambre. Les enfants sont emmitouflés dans des couvertures ordinaires.</p>
+          <p>Le cœur battant, vous franchissez la porte principale. Un garde national vous dévisage. <em>« Hé ! Toi ! »</em> lance-t-il. Vous vous figez. <strong>Le temps s'arrête.</strong> Puis il ajoute : <em>« Tu as oublié ta lanterne, imbécile. »</em> Et il vous en tend une. Vous murmurez un remerciement et continuez.</p>
+          <p>La berline attend au coin de la rue. <strong>Fersen vous presse</strong> : <em>« Vite, Sire. L'aube ne nous attendra pas. »</em></p>
+        </div>
+        <div class="choices-header">La berline est prête — que décidez-vous ?</div>
+        <div class="choices">
+          <button class="choice-btn" onclick="goTo('ch-bloc3', {discret:-10}, 'La grande berline')">
+            <div class="choice-inner"><div class="choice-letter">A</div><div class="choice-body">
+              <div class="choice-text">Monter directement dans la grande berline royale — pas de temps à perdre</div>
+              <div class="choice-effects"><span class="effect-tag effect-neg">Discrétion −10</span></div>
+            </div></div>
+          </button>
+          <button class="choice-btn" onclick="goTo('ch-bloc3', {discret:+10, courage:-5}, 'Petites voitures')">
+            <div class="choice-inner"><div class="choice-letter">B</div><div class="choice-body">
+              <div class="choice-text">Demander à Fersen de trouver des voitures plus modestes pour passer inaperçus</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Discrétion +10</span><span class="effect-tag effect-neg">Courage −5</span></div>
+            </div></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== CHAPITRE III — Le Voyage de Nuit ====== -->
+      <div class="chapter" id="ch-bloc3">
+        <div class="bloc-tag">
+          <span class="bloc-num">Chapitre III</span>
+          <span class="bloc-title">Le Voyage dans la Nuit</span>
+        </div>
+        <div class="story-image">
+          <img src="02_voyage_nuit.jpg" alt="Le voyage nocturne de la famille royale">
+          <div class="image-caption">La berline royale fuyant Paris dans la nuit</div>
+        </div>
+        <div class="narrative">
+          <p>Le cortège s'élance dans la nuit noire. Les routes de France défilent sous les roues. À Bondy, on change les chevaux. À Meaux, la reine s'endort enfin. Le Dauphin rêve, ignorant le destin qui se joue.</p>
+          <p>Les heures passent. L'aube se lève sur la campagne champenoise. Les villages s'éveillent. À Châlons-en-Champagne, un maître de poste vous dévisage longuement en changeant les chevaux. <strong>Vous reconnaît-il ?</strong> Il ne dit rien… pour l'instant.</p>
+          <p>Plus loin, à Sainte-Menehould, le maître de poste <strong>Jean-Baptiste Drouet</strong> compare votre visage à l'assignat qu'il tient en main — un billet portant le profil du roi. Ses yeux s'écarquillent. <em>Il sait.</em></p>
+          <p>Drouet enfourche un cheval et galope vers Varennes pour vous devancer. <strong>La course contre la montre commence.</strong></p>
+        </div>
+        <div class="choices-header">On vous a peut-être reconnu — que faites-vous ?</div>
+        <div class="choices">
+          <button class="choice-btn" onclick="goTo('ch-bloc4a', {discret:+10, courage:+5}, 'Chemins de traverse')">
+            <div class="choice-inner"><div class="choice-letter">A</div><div class="choice-body">
+              <div class="choice-text">Changer d'itinéraire par les chemins de traverse pour semer d'éventuels poursuivants</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Discrétion +10</span><span class="effect-tag effect-pos">Courage +5</span></div>
+            </div></div>
+          </button>
+          <button class="choice-btn" onclick="goTo('ch-bloc4b', {discret:-10, courage:+10}, 'Foncer vers Varennes')">
+            <div class="choice-inner"><div class="choice-letter">B</div><div class="choice-body">
+              <div class="choice-text">Foncer à toute vitesse vers Varennes — la frontière est si proche</div>
+              <div class="choice-effects"><span class="effect-tag effect-neg">Discrétion −10</span><span class="effect-tag effect-pos">Courage +10</span></div>
+            </div></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== CHAPITRE IV-A — Chemins de traverse ====== -->
+      <div class="chapter" id="ch-bloc4a">
+        <div class="bloc-tag">
+          <span class="bloc-num">Chapitre IV</span>
+          <span class="bloc-title">Les Chemins de Traverse</span>
+        </div>
+        <div class="story-image">
+          <img src="02_voyage_nuit.jpg" alt="La berline dans les chemins de traverse">
+          <div class="image-caption">Les chemins de traverse — un itinéraire risqué dans la nuit</div>
+        </div>
+        <div class="narrative">
+          <p>Vous ordonnez au cocher de quitter la route principale. La berline s'enfonce dans des sentiers boueux et étroits bordés de forêts sombres. Les branches griffent les parois du carrosse. Marie-Antoinette serre le Dauphin plus fort.</p>
+          <p>L'obscurité est totale. Soudain, <strong>une roue se brise</strong> dans une ornière profonde ! Le carrosse s'arrête brutalement. Le cocher jure. Il faudra au moins une heure pour réparer.</p>
+          <p>Pendant ce temps, au loin, vous entendez le galop de Drouet qui file vers Varennes par la route principale. <em>Vous avez gagné de la discrétion, mais perdu un temps précieux.</em></p>
+          <p>La roue est finalement réparée. Vous reprenez votre route et arrivez aux abords de Varennes. Il est presque minuit. La ville semble endormie… ou vous guette-t-elle ?</p>
+        </div>
+        <div class="choices-header">Vous approchez de Varennes — comment entrez-vous ?</div>
+        <div class="choices">
+          <button class="choice-btn" onclick="goTo('ch-bloc5a', {discret:+10, human:+5}, 'Contourner la ville')">
+            <div class="choice-inner"><div class="choice-letter">A</div><div class="choice-body">
+              <div class="choice-text">Contourner Varennes par les champs pour éviter le centre-ville</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Discrétion +10</span><span class="effect-tag effect-pos">Humanité +5</span></div>
+            </div></div>
+          </button>
+          <button class="choice-btn" onclick="goTo('ch-bloc5b', {discret:-5, courage:+10}, 'Traverser au galop')">
+            <div class="choice-inner"><div class="choice-letter">B</div><div class="choice-body">
+              <div class="choice-text">Traverser Varennes au galop — chaque détour est du temps perdu</div>
+              <div class="choice-effects"><span class="effect-tag effect-neg">Discrétion −5</span><span class="effect-tag effect-pos">Courage +10</span></div>
+            </div></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== CHAPITRE IV-B — Foncer vers Varennes ====== -->
+      <div class="chapter" id="ch-bloc4b">
+        <div class="bloc-tag">
+          <span class="bloc-num">Chapitre IV</span>
+          <span class="bloc-title">La Course vers Varennes</span>
+        </div>
+        <div class="story-image">
+          <img src="03_foule_varennes.jpg" alt="La course vers Varennes">
+          <div class="image-caption">Les chevaux lancés au galop vers Varennes</div>
+        </div>
+        <div class="narrative">
+          <p>Le cocher fouette les chevaux avec rage. La berline bondit sur la route, les passagers sont secoués violemment. Les enfants se réveillent en pleurant. Marie-Antoinette vous lance un regard où se mêlent la peur et la confiance.</p>
+          <p>Les villages défilent dans la nuit : Clermont, Islettes… À chaque relais, vous perdez de précieuses minutes. <strong>Les chevaux sont épuisés.</strong> Les postillons murmurent entre eux — ils ont reconnu la livrée royale.</p>
+          <p>Enfin, Varennes apparaît au détour d'un virage. Mais quelque chose cloche : <em>un barrage de charrettes bloque l'entrée du pont !</em> Drouet vous a devancé. La ville est alertée. Des lumières s'allument aux fenêtres.</p>
+        </div>
+        <div class="choices-header">Le pont est barricadé — que faites-vous ?</div>
+        <div class="choices">
+          <button class="choice-btn" onclick="goTo('ch-bloc5b', {courage:+15, discret:-10}, 'Forcer le barrage')">
+            <div class="choice-inner"><div class="choice-letter">A</div><div class="choice-body">
+              <div class="choice-text">Ordonner de forcer le barrage — la liberté est de l'autre côté</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Courage +15</span><span class="effect-tag effect-neg">Discrétion −10</span></div>
+            </div></div>
+          </button>
+          <button class="choice-btn" onclick="goTo('ch-bloc5a', {human:+10, popular:+5}, 'Parlementer')">
+            <div class="choice-inner"><div class="choice-letter">B</div><div class="choice-body">
+              <div class="choice-text">Descendre du carrosse et tenter de parlementer avec les habitants</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Humanité +10</span><span class="effect-tag effect-pos">Popularité +5</span></div>
+            </div></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== CHAPITRE V-A — Face au peuple ====== -->
+      <div class="chapter" id="ch-bloc5a">
+        <div class="bloc-tag">
+          <span class="bloc-num">Chapitre V</span>
+          <span class="bloc-title">Face au Peuple</span>
+        </div>
+        <div class="story-image">
+          <img src="03_foule_varennes.jpg" alt="La foule se rassemble autour du carrosse royal">
+          <div class="image-caption">La foule de Varennes encercle la berline royale</div>
+        </div>
+        <div class="narrative">
+          <p>Malgré vos efforts, la nouvelle de votre passage s'est répandue. Le tocsin sonne dans la nuit ! Les habitants de Varennes sortent dans les rues, armés de fourches, de piques et de vieux mousquets. Des torches éclairent la scène d'une lumière tremblante et orangée.</p>
+          <p>Le procureur de la commune, <strong>Jean-Baptiste Sauce</strong>, s'approche du carrosse. C'est un homme simple, un épicier devenu magistrat par la force des événements. Il vous demande poliment vos papiers. Votre faux passeport indique que vous êtes la « baronne de Korff ».</p>
+          <p>Sauce examine le document, hésite. La foule gronde derrière lui. Un vieil homme lance : <em>« C'est le roi ! J'ai servi à Versailles, je le reconnais ! »</em> Sauce vous regarde droit dans les yeux.</p>
+        </div>
+        <div class="choices-header">Sauce vous demande votre identité — que répondez-vous ?</div>
+        <div class="choices">
+          <button class="choice-btn" onclick="goTo('ch-bloc6a', {discret:+5, human:-5}, 'Nier son identité')">
+            <div class="choice-inner"><div class="choice-letter">A</div><div class="choice-body">
+              <div class="choice-text">Nier fermement — « Je suis la baronne de Korff, en voyage avec ma famille »</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Discrétion +5</span><span class="effect-tag effect-neg">Humanité −5</span></div>
+            </div></div>
+          </button>
+          <button class="choice-btn" onclick="goTo('ch-bloc6b', {popular:+15, courage:+10, discret:-20}, 'Révéler son identité')">
+            <div class="choice-inner"><div class="choice-letter">B</div><div class="choice-body">
+              <div class="choice-text">Révéler votre identité royale — « Oui, je suis votre roi. »</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Popularité +15</span><span class="effect-tag effect-pos">Courage +10</span><span class="effect-tag effect-neg">Discrétion −20</span></div>
+            </div></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== CHAPITRE V-B — Traversée forcée ====== -->
+      <div class="chapter" id="ch-bloc5b">
+        <div class="bloc-tag">
+          <span class="bloc-num">Chapitre V</span>
+          <span class="bloc-title">Le Forçage du Passage</span>
+        </div>
+        <div class="story-image">
+          <img src="04_arrestation_varennes.jpg" alt="Le forçage du passage à Varennes">
+          <div class="image-caption">La confrontation avec la foule de Varennes</div>
+        </div>
+        <div class="narrative">
+          <p>Le carrosse s'élance vers le centre de Varennes. Les chevaux hennissent, les pavés résonnent dans la nuit. <strong>Mais le pont sur l'Aire est barricadé !</strong> Des charrettes renversées et des tonneaux bloquent le passage.</p>
+          <p>Vos gardes du corps, les trois mousquetaires déguisés en courriers, tirent leurs épées. La foule recule un instant, terrorisée. Mais ils sont des centaines et vous n'êtes qu'une poignée.</p>
+          <p>Le procureur Sauce arrive en courant, suivi de la Garde nationale locale. Il lève la main : <em>« Au nom de la Nation, arrêtez-vous ! »</em> Derrière lui, des hommes armés pointent leurs fusils vers la berline. <strong>Marie-Antoinette pousse un cri.</strong></p>
+        </div>
+        <div class="choices-header">Vos gardes sont prêts à se battre — que leur ordonnez-vous ?</div>
+        <div class="choices">
+          <button class="choice-btn" onclick="goTo('ch-bloc6c', {human:+10, popular:+10}, 'Ranger les armes')">
+            <div class="choice-inner"><div class="choice-letter">A</div><div class="choice-body">
+              <div class="choice-text">Ordonner à vos gardes de ranger leurs armes — vous refusez le sang</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Humanité +10</span><span class="effect-tag effect-pos">Popularité +10</span></div>
+            </div></div>
+          </button>
+          <button class="choice-btn" onclick="goTo('ch-bloc6d', {popular:-25, courage:+15, human:-15}, 'Charger')">
+            <div class="choice-inner"><div class="choice-letter">B</div><div class="choice-body">
+              <div class="choice-text">Ordonner de charger à travers la barricade — la liberté ou la mort</div>
+              <div class="choice-effects"><span class="effect-tag effect-neg">Popularité −25</span><span class="effect-tag effect-pos">Courage +15</span><span class="effect-tag effect-neg">Humanité −15</span></div>
+            </div></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== CHAPITRE VI-A — Nier son identité ====== -->
+      <div class="chapter" id="ch-bloc6a">
+        <div class="bloc-tag"><span class="bloc-num">Chapitre VI</span><span class="bloc-title">Le Mensonge du Roi</span></div>
+        <div class="story-image">
+          <img src="05_maison_sauce.jpg" alt="Le roi face au procureur Sauce">
+          <div class="image-caption">Face au procureur Sauce — le mensonge tiendra-t-il ?</div>
+        </div>
+        <div class="narrative">
+          <p>Vous maintenez votre couverture : <em>« Je suis la baronne de Korff, et j'exige qu'on nous laisse passer ! »</em> Sauce hésite. Le document semble en ordre. Mais la foule n'est pas dupe.</p>
+          <p>Un ancien soldat s'avance et désigne un assignat : <strong>« Regardez ! C'est le même visage ! »</strong> Le murmure parcourt la foule comme une vague. Sauce se tourne vers vous, embarrassé. <em>« Madame… ou plutôt, Sire… je dois vous demander de patienter chez moi, le temps de vérifier. »</em></p>
+          <p>Il est inutile de résister davantage. On vous conduit dans la maison de Sauce, épicier de son état, transformée en prison improvisée pour un roi.</p>
+        </div>
+        <div class="choices-header">Vous êtes conduit chez Sauce — comment réagissez-vous ?</div>
+        <div class="choices">
+          <button class="choice-btn" onclick="goTo('ch-bloc7a', {popular:+10, human:+10}, 'Accepter avec dignité')">
+            <div class="choice-inner"><div class="choice-letter">A</div><div class="choice-body">
+              <div class="choice-text">Accepter avec dignité royale — garder la tête haute face à l'adversité</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Popularité +10</span><span class="effect-tag effect-pos">Humanité +10</span></div>
+            </div></div>
+          </button>
+          <button class="choice-btn" onclick="goTo('ch-bloc7b', {courage:+15, discret:+5}, 'Tenter de corrompre')">
+            <div class="choice-inner"><div class="choice-letter">B</div><div class="choice-body">
+              <div class="choice-text">Tenter de corrompre Sauce — offrir de l'or pour qu'il vous laisse partir</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Courage +15</span><span class="effect-tag effect-pos">Discrétion +5</span></div>
+            </div></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== CHAPITRE VI-B — Révéler son identité ====== -->
+      <div class="chapter" id="ch-bloc6b">
+        <div class="bloc-tag"><span class="bloc-num">Chapitre VI</span><span class="bloc-title">Le Roi se Dévoile</span></div>
+        <div class="story-image">
+          <img src="04_arrestation_varennes.jpg" alt="L'arrestation de la famille royale">
+          <div class="image-caption">Le roi reconnu et arrêté par les habitants de Varennes</div>
+        </div>
+        <div class="narrative">
+          <p>Vous descendez du carrosse avec toute la majesté dont vous êtes capable. <em>« Mes amis, oui, je suis votre roi. »</em> Un silence de mort tombe sur la place. Puis un murmure émerveillé parcourt la foule.</p>
+          <p>Des hommes retirent leur chapeau. Des femmes font la révérence par habitude. Un vieil homme tombe à genoux. <strong>Mais d'autres serrent leurs armes plus fort.</strong> La Nation et le Roi se font face dans la nuit de Varennes.</p>
+          <p>Sauce, profondément troublé, vous invite chez lui : <em>« Sire, venez vous reposer chez moi. Il fait froid pour les enfants. Nous verrons demain. »</em> C'est une invitation qui ressemble à une arrestation.</p>
+        </div>
+        <div class="choices-header">Sauce vous invite chez lui — que faites-vous ?</div>
+        <div class="choices">
+          <button class="choice-btn" onclick="goTo('ch-bloc7a', {popular:+10, human:+10}, 'Accepter')">
+            <div class="choice-inner"><div class="choice-letter">A</div><div class="choice-body">
+              <div class="choice-text">Accepter son hospitalité — montrer que le roi est aussi un père de famille</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Popularité +10</span><span class="effect-tag effect-pos">Humanité +10</span></div>
+            </div></div>
+          </button>
+          <button class="choice-btn" onclick="goTo('ch-bloc7c', {courage:+20, popular:+5}, 'Haranguer la foule')">
+            <div class="choice-inner"><div class="choice-letter">B</div><div class="choice-body">
+              <div class="choice-text">Profiter du moment pour haranguer la foule — rallier le peuple à votre cause</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Courage +20</span><span class="effect-tag effect-pos">Popularité +5</span></div>
+            </div></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== CHAPITRE VI-C — Ranger les armes ====== -->
+      <div class="chapter" id="ch-bloc6c">
+        <div class="bloc-tag"><span class="bloc-num">Chapitre VI</span><span class="bloc-title">La Sagesse du Roi</span></div>
+        <div class="story-image">
+          <img src="04_arrestation_varennes.jpg" alt="Le roi ordonne de ranger les armes">
+          <div class="image-caption">Le roi ordonne la paix face au peuple armé</div>
+        </div>
+        <div class="narrative">
+          <p><em>« Rangez vos armes, messieurs. Je ne veux pas qu'une seule goutte de sang français coule par ma faute. »</em> Vos gardes obéissent, à contrecœur. La foule, stupéfaite par cette noblesse, baisse aussi ses armes.</p>
+          <p>Le procureur Sauce s'avance, visiblement ému. <strong>Il reconnaît votre visage</strong> — le roi qu'il a vu sur les assignats, sur les gravures. Mais il voit aussi un père qui protège ses enfants endormis.</p>
+          <p><em>« Sire… venez chez moi. Les enfants ont besoin de repos. Nous réglerons cette affaire au matin. »</em></p>
+        </div>
+        <div class="choices-header">Vous êtes reconnu — que faites-vous ?</div>
+        <div class="choices">
+          <button class="choice-btn" onclick="goTo('ch-bloc7a', {popular:+10, human:+5}, 'Suivre Sauce')">
+            <div class="choice-inner"><div class="choice-letter">A</div><div class="choice-body">
+              <div class="choice-text">Suivre Sauce chez lui avec dignité — accepter la situation</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Popularité +10</span><span class="effect-tag effect-pos">Humanité +5</span></div>
+            </div></div>
+          </button>
+          <button class="choice-btn" onclick="goTo('ch-bloc7b', {courage:+10, discret:+5}, 'Négocier')">
+            <div class="choice-inner"><div class="choice-letter">B</div><div class="choice-body">
+              <div class="choice-text">Tenter de négocier : promettre des récompenses en échange de votre liberté</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Courage +10</span><span class="effect-tag effect-pos">Discrétion +5</span></div>
+            </div></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== CHAPITRE VI-D — Charger la barricade ====== -->
+      <div class="chapter" id="ch-bloc6d">
+        <div class="bloc-tag"><span class="bloc-num">Chapitre VI</span><span class="bloc-title">La Charge Désespérée</span></div>
+        <div class="story-image">
+          <img src="04_arrestation_varennes.jpg" alt="La charge contre la barricade">
+          <div class="image-caption">La charge désespérée contre la barricade de Varennes</div>
+        </div>
+        <div class="narrative">
+          <p><em>« En avant ! »</em> Vos gardes éperonnent leurs chevaux et chargent la barricade. Des coups de feu éclatent dans la nuit ! Un garde tombe de sa monture. La foule hurle et se disperse dans la panique.</p>
+          <p>Le carrosse percute les charrettes, les tonneaux volent en éclats. <strong>Mais le passage est trop étroit !</strong> La berline reste coincée. Les chevaux se cabrent, affolés par les cris et les coups de feu. Marie-Antoinette protège les enfants de son corps.</p>
+          <p>En quelques minutes, la Garde nationale vous encercle. Des dizaines de fusils pointés sur vous. <strong>Un soldat blesse l'un de vos gardes.</strong> Le sang coule sur les pavés de Varennes. C'est terminé.</p>
+        </div>
+        <div class="choices-header">Vous êtes encerclé — dernier choix</div>
+        <div class="choices">
+          <button class="choice-btn" onclick="goTo('ch-fin-honteux', {human:+15, popular:-10}, 'Se rendre')">
+            <div class="choice-inner"><div class="choice-letter">A</div><div class="choice-body">
+              <div class="choice-text">Vous rendre immédiatement pour arrêter le bain de sang</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Humanité +15</span><span class="effect-tag effect-neg">Popularité −10</span></div>
+            </div></div>
+          </button>
+          <button class="choice-btn" onclick="goTo('ch-fin-tragique', {courage:+20, human:-20, popular:-20}, 'Combattre')">
+            <div class="choice-inner"><div class="choice-letter">B</div><div class="choice-body">
+              <div class="choice-text">Ordonner à vos gardes de combattre jusqu'au bout — mourir en roi</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Courage +20</span><span class="effect-tag effect-neg">Humanité −20</span><span class="effect-tag effect-neg">Popularité −20</span></div>
+            </div></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== CHAPITRE VII-A — Chez Sauce ====== -->
+      <div class="chapter" id="ch-bloc7a">
+        <div class="bloc-tag"><span class="bloc-num">Chapitre VII</span><span class="bloc-title">La Maison Sauce</span></div>
+        <div class="story-image">
+          <img src="05_maison_sauce.jpg" alt="La famille royale chez le procureur Sauce">
+          <div class="image-caption">La famille royale retenue dans la maison de l'épicier Sauce</div>
+        </div>
+        <div class="narrative">
+          <p>La maison de Sauce est petite, encombrée de tonneaux et de marchandises. L'épicière, Madame Sauce, s'affaire à préparer un lit pour les enfants royaux. Elle est émue de voir la reine, si belle et si pâle, bercer le Dauphin dans cette arrière-boutique misérable.</p>
+          <p>Marie-Antoinette murmure : <em>« Mon Dieu, en sommes-nous réduits à cela ? »</em> Mais Madame Sauce apporte du lait chaud pour les enfants, et la reine la remercie avec une grâce qui touche tous les témoins.</p>
+          <p>Les heures passent. La nuit s'écoule dans une attente insupportable. <strong>Deux émissaires de l'Assemblée nationale</strong> arrivent à l'aube avec un décret formel : le roi doit rentrer à Paris. Mais le marquis de Bouillé, votre allié, a aussi envoyé un message — ses hussards approchent.</p>
+          <p><strong>C'est une course entre les révolutionnaires et les royalistes.</strong> Que faites-vous ?</p>
+        </div>
+        <div class="choices-header">L'aube se lève — une dernière chance</div>
+        <div class="choices">
+          <button class="choice-btn" onclick="goTo('ch-bloc8a', {human:+15, popular:+10, courage:-5}, 'Obéir au décret')">
+            <div class="choice-inner"><div class="choice-letter">A</div><div class="choice-body">
+              <div class="choice-text">Obéir au décret de l'Assemblée — accepter le retour à Paris avec dignité</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Humanité +15</span><span class="effect-tag effect-pos">Popularité +10</span><span class="effect-tag effect-neg">Courage −5</span></div>
+            </div></div>
+          </button>
+          <button class="choice-btn" onclick="goTo('ch-bloc8b', {courage:+20, discret:-10}, 'Attendre les hussards')">
+            <div class="choice-inner"><div class="choice-letter">B</div><div class="choice-body">
+              <div class="choice-text">Gagner du temps en attendant les hussards de Bouillé — l'évasion est encore possible</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Courage +20</span><span class="effect-tag effect-neg">Discrétion −10</span></div>
+            </div></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== CHAPITRE VII-B — Corrompre ====== -->
+      <div class="chapter" id="ch-bloc7b">
+        <div class="bloc-tag"><span class="bloc-num">Chapitre VII</span><span class="bloc-title">L'Or du Roi</span></div>
+        <div class="story-image">
+          <img src="05_maison_sauce.jpg" alt="Tentative de corruption chez Sauce">
+          <div class="image-caption">Dans l'arrière-boutique de Sauce — l'or contre la liberté</div>
+        </div>
+        <div class="narrative">
+          <p>Dans l'intimité de la maison Sauce, vous tentez votre chance. Vous sortez une bourse lourde d'or et la posez sur la table. <em>« Monsieur Sauce, une fortune pour vous et votre famille. Laissez-nous partir avant l'aube. »</em></p>
+          <p>Sauce regarde l'or, puis vous, puis l'or à nouveau. Ses mains tremblent. <strong>C'est plus d'argent qu'il n'en verra jamais.</strong> Sa femme lui saisit le bras : <em>« Prends-le ! Qu'est-ce que ça peut faire ? »</em></p>
+          <p>Mais Sauce secoue la tête : <em>« Je ne puis, Sire. La Garde nationale est devant ma porte. Si je vous laisse partir, c'est moi qu'on pendra. »</em> Il repousse la bourse. <strong>L'or n'achète pas la liberté.</strong></p>
+          <p>L'aube approche. Les émissaires de l'Assemblée arrivent bientôt.</p>
+        </div>
+        <div class="choices-header">La corruption a échoué — que reste-t-il ?</div>
+        <div class="choices">
+          <button class="choice-btn" onclick="goTo('ch-bloc8a', {human:+10, popular:+5}, 'Accepter son sort')">
+            <div class="choice-inner"><div class="choice-letter">A</div><div class="choice-body">
+              <div class="choice-text">Accepter votre sort — le roi doit savoir perdre avec grâce</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Humanité +10</span><span class="effect-tag effect-pos">Popularité +5</span></div>
+            </div></div>
+          </button>
+          <button class="choice-btn" onclick="goTo('ch-bloc8b', {courage:+15, discret:-5}, 'Fuir par la fenêtre')">
+            <div class="choice-inner"><div class="choice-letter">B</div><div class="choice-body">
+              <div class="choice-text">Tenter de fuir par la fenêtre arrière pendant que les gardes changent de poste</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Courage +15</span><span class="effect-tag effect-neg">Discrétion −5</span></div>
+            </div></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== CHAPITRE VII-C — Haranguer ====== -->
+      <div class="chapter" id="ch-bloc7c">
+        <div class="bloc-tag"><span class="bloc-num">Chapitre VII</span><span class="bloc-title">Le Discours du Roi</span></div>
+        <div class="story-image">
+          <img src="03_foule_varennes.jpg" alt="Le roi harangue la foule">
+          <div class="image-caption">Le roi harangue le peuple de Varennes depuis son carrosse</div>
+        </div>
+        <div class="narrative">
+          <p>Vous montez sur le marchepied du carrosse pour dominer la foule. Le silence se fait. Toutes les torches éclairent votre visage. <strong>C'est le moment de vérité.</strong></p>
+          <p><em>« Peuple de Varennes ! Je suis Louis, votre roi, et aussi votre père. Je ne fuis pas mon peuple — je fuis ceux qui veulent détruire la France ! Les factieux de Paris veulent ma tête, mais c'est la vôtre qu'ils prendront ensuite ! »</em></p>
+          <p>Des voix s'élèvent : certaines crient « Vive le Roi ! », d'autres « Vive la Nation ! ». La foule est divisée. Un moment de flottement extraordinaire où l'Histoire hésite. Sauce saisit votre bras : <em>« Sire, venez chez moi. La nuit porte conseil. »</em></p>
+        </div>
+        <div class="choices-header">Votre discours a semé le doute — que faites-vous ?</div>
+        <div class="choices">
+          <button class="choice-btn" onclick="goTo('ch-bloc8b', {courage:+15, popular:+10}, 'Continuer le discours')">
+            <div class="choice-inner"><div class="choice-letter">A</div><div class="choice-body">
+              <div class="choice-text">Continuer votre discours — tenter de retourner la foule en votre faveur</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Courage +15</span><span class="effect-tag effect-pos">Popularité +10</span></div>
+            </div></div>
+          </button>
+          <button class="choice-btn" onclick="goTo('ch-bloc7a', {human:+10}, 'Suivre Sauce')">
+            <div class="choice-inner"><div class="choice-letter">B</div><div class="choice-body">
+              <div class="choice-text">Suivre Sauce chez lui — protéger votre famille d'abord</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Humanité +10</span></div>
+            </div></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== CHAPITRE VIII-A — Retour à Paris ====== -->
+      <div class="chapter" id="ch-bloc8a">
+        <div class="bloc-tag"><span class="bloc-num">Chapitre VIII</span><span class="bloc-title">Le Long Retour</span></div>
+        <div class="story-image">
+          <img src="06_retour_paris.jpg" alt="Le retour de Louis XVI à Paris">
+          <div class="image-caption">Retour de Varennes — Arrivée de Louis XVI à Paris, le 25 juin 1791</div>
+        </div>
+        <div class="narrative">
+          <p>Le cortège reprend la route vers Paris, escorté par des milliers de gardes nationaux et une foule immense. Le voyage du retour est une épreuve d'humiliation. Trois jours de route sous la chaleur de juin, dans un silence de plomb.</p>
+          <p>À chaque village, la foule se masse en silence sur les bords de la route. <strong>Personne n'ôte son chapeau.</strong> C'est l'ordre de l'Assemblée : ne montrer aucun signe de respect au roi fugitif. Ce silence est plus terrible que la haine.</p>
+          <p>Marie-Antoinette, épuisée, découvre une mèche de cheveux blancs dans son reflet — elle a vieilli de dix ans en trois jours. Le petit Dauphin demande : <em>« Papa, pourquoi les gens ne nous aiment plus ? »</em></p>
+          <p>Aux portes de Paris, la foule est dense, menaçante, mais disciplinée. <strong>Des affiches proclament : « Quiconque applaudira le roi sera battu. Quiconque l'insultera sera pendu. »</strong> Le 25 juin 1791, vous entrez aux Tuileries — non plus en roi, mais en prisonnier.</p>
+        </div>
+        <div class="ending-screen">
+          <span class="ending-emblem">⛓️</span>
+          <div class="ending-box ending-neutral">
+            <div class="ending-title">Le Roi Prisonnier</div>
+            <div class="ending-text">Vous êtes ramené à Paris, où l'Assemblée nationale vous suspend temporairement de vos fonctions. Officiellement, on prétend que vous avez été « enlevé » — un mensonge de convenance pour préserver la monarchie constitutionnelle un temps encore.<br><br><strong>Mais la confiance est brisée à jamais.</strong> Le peuple sait désormais que son roi a voulu fuir. Le 10 août 1792, les Tuileries sont prises d'assaut. Le 21 janvier 1793, vous montez à l'échafaud avec le courage d'un homme qui a fait la paix avec son destin.<br><br>Votre dignité lors du retour et votre refus de faire couler le sang vous valent le respect de certains — même parmi vos ennemis. L'Histoire retiendra un roi honnête, dépassé par son époque, mais jamais cruel.</div>
+          </div>
+          <div class="final-stats" id="final-stats-8a"></div>
+          <button class="restart-btn" onclick="restartGame()">⚜ Recommencer l'Aventure ⚜</button>
+        </div>
+      </div>
+
+      <!-- ====== CHAPITRE VIII-B — Attendre les hussards ====== -->
+      <div class="chapter" id="ch-bloc8b">
+        <div class="bloc-tag"><span class="bloc-num">Chapitre VIII</span><span class="bloc-title">Le Dernier Espoir</span></div>
+        <div class="story-image">
+          <img src="07_fuite_reussie.jpg" alt="Les hussards arrivent à Varennes">
+          <div class="image-caption">Les hussards de Bouillé — le dernier espoir du roi</div>
+        </div>
+        <div class="narrative">
+          <p>Vous gagnez du temps. Chaque minute qui passe rapproche les hussards du marquis de Bouillé. Vous posez des questions, demandez à manger, réclamez du vin pour les enfants. Sauce, embarrassé, obtempère.</p>
+          <p>Soudain, le bruit de sabots ! <strong>Quarante hussards de Bouillé arrivent à Varennes !</strong> Leur colonel, le vicomte de Damas, entre dans la maison Sauce, l'épée au poing : <em>« Sire, nous sommes là ! Donnez l'ordre et nous vous libérons ! »</em></p>
+          <p>Mais dehors, des milliers d'habitants encerclent la maison. La Garde nationale a braqué un canon sur la porte. <strong>Si les hussards chargent, ce sera un massacre.</strong> Les soldats eux-mêmes hésitent — fraterniseront-ils avec le peuple ou obéiront-ils ?</p>
+        </div>
+        <div class="choices-header">Les hussards sont là — l'ultime décision</div>
+        <div class="choices">
+          <button class="choice-btn" onclick="goTo('ch-fin-fuite', {courage:+20, human:-10, discret:-15}, 'Ordonner la libération')">
+            <div class="choice-inner"><div class="choice-letter">A</div><div class="choice-body">
+              <div class="choice-text">Ordonner aux hussards de vous libérer par la force — c'est maintenant ou jamais</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Courage +20</span><span class="effect-tag effect-neg">Humanité −10</span><span class="effect-tag effect-neg">Discrétion −15</span></div>
+            </div></div>
+          </button>
+          <button class="choice-btn" onclick="goTo('ch-bloc8a', {human:+20, popular:+10, courage:-10}, 'Renoncer')">
+            <div class="choice-inner"><div class="choice-letter">B</div><div class="choice-body">
+              <div class="choice-text">Renoncer — « Je ne veux pas qu'un seul homme meure pour moi cette nuit »</div>
+              <div class="choice-effects"><span class="effect-tag effect-pos">Humanité +20</span><span class="effect-tag effect-pos">Popularité +10</span><span class="effect-tag effect-neg">Courage −10</span></div>
+            </div></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== FIN — Fuite réussie ====== -->
+      <div class="chapter" id="ch-fin-fuite">
+        <div class="bloc-tag"><span class="bloc-num">Épilogue</span><span class="bloc-title">L'Évasion</span></div>
+        <div class="story-image">
+          <img src="07_fuite_reussie.jpg" alt="La fuite réussie du roi">
+          <div class="image-caption">Une fin alternative : le roi parvient à s'échapper</div>
+        </div>
+        <div class="narrative">
+          <p>Les hussards chargent ! Le canon tonne, mais le tir passe au-dessus du carrosse. Dans la confusion, vos soldats ouvrent un passage. La berline s'élance hors de Varennes dans un fracas de sabots et de cris.</p>
+          <p>Vous galopez vers la frontière. Le soleil se lève sur la Meuse. <strong>Les couleurs de l'Autriche apparaissent au loin.</strong> Marie-Antoinette pleure de soulagement. Le Dauphin s'exclame : <em>« Papa, on a gagné ? »</em></p>
+          <p>Vous êtes libre. Mais derrière vous, la France s'embrase.</p>
+        </div>
+        <div class="ending-screen">
+          <span class="ending-emblem">🏇</span>
+          <div class="ending-box ending-good">
+            <div class="ending-title">L'Évasion Réussie !</div>
+            <div class="ending-text">Vous parvenez à fuir Varennes grâce à l'intervention des hussards de Bouillé. La famille royale traverse la frontière et se réfugie auprès des armées autrichiennes. Vous êtes libre.<br><br><strong>Mais à quel prix ?</strong> Le sang a coulé à Varennes. L'Assemblée vous déclare traître à la Nation. La guerre civile éclate, puis la guerre européenne. Des milliers meurent dans les batailles qui suivent.<br><br>Vous avez sauvé votre famille… mais l'Histoire vous jugera comme le roi qui a abandonné son peuple. La France ne vous pardonnera jamais — et peut-être que vous non plus.</div>
+          </div>
+          <div class="final-stats" id="final-stats-fin-fuite"></div>
+          <button class="restart-btn" onclick="restartGame()">⚜ Recommencer l'Aventure ⚜</button>
+        </div>
+      </div>
+
+      <!-- ====== FIN — Retour honteux ====== -->
+      <div class="chapter" id="ch-fin-honteux">
+        <div class="bloc-tag"><span class="bloc-num">Épilogue</span><span class="bloc-title">Le Retour dans le Sang</span></div>
+        <div class="story-image">
+          <img src="06_retour_paris.jpg" alt="Le retour humiliant à Paris">
+          <div class="image-caption">Le cortège royal ramené à Paris sous escorte armée</div>
+        </div>
+        <div class="narrative">
+          <p>Vous vous rendez après la violence. Le retour à Paris est un calvaire. La foule, informée des coups de feu, vous accueille avec une haine froide. Des pierres sont lancées sur le carrosse. Marie-Antoinette est blessée au front.</p>
+          <p>L'Assemblée vous suspend de toutes vos fonctions. La monarchie est morte — il ne reste que l'attente de l'échafaud.</p>
+        </div>
+        <div class="ending-screen">
+          <span class="ending-emblem">⛓️</span>
+          <div class="ending-box ending-bad">
+            <div class="ending-title">Le Retour dans le Sang</div>
+            <div class="ending-text">Votre tentative de fuite s'est terminée dans la violence et le déshonneur. Le sang versé à Varennes scelle votre destin. <strong>Louis XVI est jugé par la Convention, reconnu coupable de conspiration, et exécuté le 21 janvier 1793.</strong><br><br>La violence que vous avez autorisée contre votre propre peuple est devenue l'argument décisif de votre condamnation. Les Montagnards citent Varennes comme preuve que le roi était l'ennemi du peuple. Votre épouse suivra le même chemin le 16 octobre.<br><br>L'Histoire retiendra un roi qui, dans sa fuite, a montré qu'il ne comprenait pas son époque. La Révolution n'a plus eu besoin de justification.</div>
+          </div>
+          <div class="final-stats" id="final-stats-fin-honteux"></div>
+          <button class="restart-btn" onclick="restartGame()">⚜ Recommencer l'Aventure ⚜</button>
+        </div>
+      </div>
+
+      <!-- ====== FIN — Mort tragique ====== -->
+      <div class="chapter" id="ch-fin-tragique">
+        <div class="bloc-tag"><span class="bloc-num">Épilogue</span><span class="bloc-title">La Fin Tragique</span></div>
+        <div class="story-image">
+          <img src="04_arrestation_varennes.jpg" alt="La nuit de sang à Varennes">
+          <div class="image-caption">La nuit de sang — le combat désespéré à Varennes</div>
+        </div>
+        <div class="narrative">
+          <p>Vos gardes se battent avec l'énergie du désespoir. Mais face à des centaines d'hommes en armes, le combat est inégal. <strong>Un par un, vos fidèles tombent.</strong> Le sang royal coule sur les pavés de Varennes.</p>
+          <p>Vous-même êtes blessé à l'épaule par un coup de baïonnette. Marie-Antoinette couvre les enfants de son corps. Le Dauphin hurle de terreur. <em>C'est la fin.</em></p>
+          <p>Quand le calme revient, on vous traîne hors du carrosse. Votre famille est arrachée de vos bras. Le retour à Paris sera le plus humiliant de l'Histoire de France.</p>
+        </div>
+        <div class="ending-screen">
+          <span class="ending-emblem">💀</span>
+          <div class="ending-box ending-bad">
+            <div class="ending-title">La Nuit de Sang</div>
+            <div class="ending-text">La violence de Varennes marque la fin définitive de la monarchie française. <strong>Louis XVI est jugé comme tyran sanguinaire et exécuté dans l'opprobre le 21 janvier 1793.</strong> Marie-Antoinette subit le même sort.<br><br>Votre choix de combattre le peuple a donné raison à tous ceux qui vous accusaient d'être un despote. Les morts de Varennes deviennent des martyrs de la Révolution. Votre nom est maudit.<br><br>Cette fin est la plus tragique de toutes — ni courage véritable, ni humanité, ni sagesse. Seulement la peur d'un homme acculé qui a choisi la violence au lieu de la grandeur.</div>
+          </div>
+          <div class="final-stats" id="final-stats-fin-tragique"></div>
+          <button class="restart-btn" onclick="restartGame()">⚜ Recommencer l'Aventure ⚜</button>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /page -->
+</div><!-- /book -->
+
+<script src="script.js"></script>
+</body>
+</html>
