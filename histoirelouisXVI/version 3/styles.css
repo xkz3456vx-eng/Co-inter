@@ -15,6 +15,7 @@
 
 body {
   background: #0d0804;
+  font-family: 'Libre Baskerville', serif;
   color: var(--ink);
   min-height: 100vh;
   display: flex;
@@ -101,7 +102,7 @@ body::before {
   background: #2c1400;
   padding: 0 16px;
   line-height: 1;
-}t
+}
 
 .header h1 {
   font-family: 'IM Fell English', cursive;
