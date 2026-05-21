@@ -105,7 +105,7 @@ body::before {
 }
 
 .header h1 {
-  font-family: 'UnifrakturMaguntia', cursive;
+  font-family: 'IM Fell English', cursive;
   font-size: clamp(2em, 5vw, 3.4em);
   color: var(--gold-light);
   text-shadow: 0 0 30px rgba(212,160,23,0.5), 2px 2px 4px rgba(0,0,0,0.8);
