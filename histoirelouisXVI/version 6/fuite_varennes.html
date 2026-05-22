@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Fuite de Varennes — Livre dont vous êtes le héros</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        display: ['"Playfair Display"', 'serif'],
+        body: ['"Source Sans 3"', 'sans-serif'],
+      },
+      colors: {
+        parch: { 50:'#faf8f3', 100:'#f3efe4', 200:'#e8e0cc', 300:'#d4c9a8' },
+        royal: { blue:'#1e3a5f', red:'#8b1a1a', gold:'#b8860b' },
+      },
+      keyframes: {
+        fadeUp: { from:{opacity:0,transform:'translateY(12px)'}, to:{opacity:1,transform:'translateY(0)'} },
+        slideIn: { from:{opacity:0,transform:'translateX(-10px)'}, to:{opacity:1,transform:'translateX(0)'} },
+      },
+      animation: {
+        'fade-up': 'fadeUp 0.5s ease-out both',
+        'fade-up-d1': 'fadeUp 0.5s ease-out 0.1s both',
+        'fade-up-d2': 'fadeUp 0.5s ease-out 0.2s both',
+        'fade-up-d3': 'fadeUp 0.5s ease-out 0.3s both',
+        'fade-up-d4': 'fadeUp 0.5s ease-out 0.4s both',
+        'fade-up-d5': 'fadeUp 0.5s ease-out 0.5s both',
+        'slide-in': 'slideIn 0.4s ease-out both',
+      }
+    }
+  }
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-stone-800 font-body text-stone-900 min-h-screen">
+
+<!-- ======== TOP BAR ======== -->
+<header class="bg-stone-900/95 border-b border-royal-gold/30 px-6 py-2.5 flex items-center justify-between sticky top-0 z-50 backdrop-blur-sm">
+  <nav class="flex items-center gap-2 text-xs text-stone-400">
+    <span>Accueil</span><span class="text-stone-600">›</span>
+    <span class="text-parch-200">Livre dont vous êtes le héros</span>
+  </nav>
+  <div class="flex items-center gap-3">
+    <span class="font-display text-sm text-parch-200 tracking-wide">Livre dont vous êtes le héros</span>
+    <div class="flex gap-0.5 ml-2">
+      <span class="w-2.5 h-4 bg-blue-700 rounded-sm"></span>
+      <span class="w-2.5 h-4 bg-white rounded-sm"></span>
+      <span class="w-2.5 h-4 bg-red-700 rounded-sm"></span>
+    </div>
+  </div>
+  <div class="w-8 h-8 rounded-full bg-royal-red/80 border border-royal-gold/50 flex items-center justify-center text-parch-100 text-xs">⚜</div>
+</header>
+
+<!-- ======== MAIN LAYOUT 3 COLS ======== -->
+<div class="flex min-h-[calc(100vh-45px)]">
+
+  <!-- ===== LEFT SIDEBAR — Map & Path ===== -->
+  <aside class="w-64 bg-parch-100 border-r border-stone-300/60 flex flex-col shrink-0 hidden lg:flex">
+    <!-- Volume tag -->
+    <div class="px-5 pt-5 pb-3">
+      <span class="text-[10px] uppercase tracking-[3px] text-royal-red font-semibold bg-royal-red/10 px-2.5 py-1 rounded">Volume I</span>
+      <h2 class="font-display text-xl font-bold mt-2.5 leading-tight text-stone-800">Livre dont vous<br>êtes le héros</h2>
+    </div>
+
+    <!-- Mini map placeholder -->
+    <div class="mx-4 rounded-lg bg-parch-200 border border-stone-300/50 h-44 relative overflow-hidden shadow-sm">
+      <div class="absolute inset-0 opacity-30 bg-[linear-gradient(45deg,transparent_40%,rgba(139,26,26,0.1)_50%,transparent_60%)]"></div>
+      <div class="p-3 text-[10px] text-stone-500 uppercase tracking-widest">Carte — Île-de-France</div>
+      <!-- Simplified map dots -->
+      <div class="absolute bottom-8 left-8 flex flex-col gap-1 items-start">
+        <div class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-royal-red animate-pulse"></span>
+          <span class="text-[9px] text-stone-600 font-semibold">Paris</span>
+        </div>
+      </div>
+      <div class="absolute top-16 right-6 flex items-center gap-1.5">
+        <span class="w-2 h-2 rounded-full bg-stone-400"></span>
+        <span class="text-[9px] text-stone-500">Varennes</span>
+      </div>
+      <!-- Path line -->
+      <div class="absolute bottom-10 left-10 w-24 h-px bg-gradient-to-r from-royal-red/50 to-stone-400/30 rotate-[-35deg] origin-left"></div>
+    </div>
+
+    <!-- Your Path -->
+    <div class="px-5 pt-5 flex-1">
+      <h3 class="font-display text-sm font-bold text-stone-700 mb-2">Votre Parcours</h3>
+      <div id="sidebar-path" class="text-xs text-stone-500 leading-relaxed space-y-1">
+        <p class="italic">Votre aventure commence bientôt…</p>
+      </div>
+    </div>
+
+    <!-- Candle decoration -->
+    <div class="px-5 pb-5 text-center">
+      <span class="text-2xl opacity-40">🕯</span>
+    </div>
+  </aside>
+
+  <!-- ===== CENTER — Main Story ===== -->
+  <main class="flex-1 bg-parch-50 overflow-y-auto" id="mainContent">
+    <div class="max-w-2xl mx-auto px-6 py-8">
+
+      <!-- ====== PROLOGUE ====== -->
+      <section class="chapter active" id="ch-start">
+        <div class="animate-fade-up">
+          <div class="rounded-lg overflow-hidden shadow-md border border-stone-300/40 mb-8">
+            <img src="01_depart_paris.jpg" alt="Le départ des Tuileries" class="w-full h-auto object-cover">
+          </div>
+        </div>
+
+        <div class="text-center mb-10 animate-fade-up-d1">
+          <div class="flex justify-center gap-1 mb-4">
+            <span class="w-8 h-0.5 bg-blue-700/40 rounded"></span>
+            <span class="w-8 h-0.5 bg-stone-300 rounded"></span>
+            <span class="w-8 h-0.5 bg-red-700/40 rounded"></span>
+          </div>
+          <h1 class="font-display text-3xl font-bold text-stone-800 mb-2">La Fuite de Varennes</h1>
+          <p class="text-sm text-stone-500 italic font-display">Dont vous êtes le héros — Louis XVI, Juin 1791</p>
+        </div>
+
+        <div class="bg-parch-100/60 border border-stone-200 rounded-lg p-6 mb-8 shadow-sm animate-fade-up-d2">
+          <p class="font-body text-[15px] leading-7 text-stone-700">
+            Vous êtes <strong class="text-stone-900">Louis XVI</strong>, Roi de France. Nous sommes le <em class="text-royal-blue not-italic font-semibold">20 juin 1791</em>.
+            Cette nuit, vous tentez de fuir Paris avec votre famille royale pour atteindre la forteresse de Montmédy.
+            Le cortège royal quitte Paris discrètement — mais la ville de <strong class="text-stone-900">Varennes</strong> vous attend.
+          </p>
+        </div>
+
+        <!-- Points system -->
+        <div class="bg-parch-100/40 border border-stone-200 rounded-lg p-5 mb-8 shadow-sm animate-fade-up-d3">
+          <h3 class="font-display text-sm font-bold text-stone-700 mb-3 text-center uppercase tracking-wider">Système de points</h3>
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div class="flex items-center gap-2 text-stone-600"><span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>🎭 <strong>Discrétion</strong> : 0 = capture</div>
+            <div class="flex items-center gap-2 text-stone-600"><span class="w-1.5 h-1.5 rounded-full bg-red-600"></span>👑 <strong>Popularité</strong> : foule calme</div>
+            <div class="flex items-center gap-2 text-stone-600"><span class="w-1.5 h-1.5 rounded-full bg-green-700"></span>🕊️ <strong>Humanité</strong> : pas de sang</div>
+            <div class="flex items-center gap-2 text-stone-600"><span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>⚔️ <strong>Courage</strong> : affronter</div>
+          </div>
+        </div>
+
+        <div class="text-center animate-fade-up-d4">
+          <button onclick="startGame()" class="group bg-stone-800 hover:bg-stone-900 text-parch-100 font-display text-base tracking-wide px-10 py-3.5 rounded-lg border border-stone-600 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0">
+            <span class="opacity-60 group-hover:opacity-100 transition-opacity">✦</span>
+            Commencer l'Aventure
+            <span class="opacity-60 group-hover:opacity-100 transition-opacity">✦</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ====== CHAPITRE I ====== -->
+      <section class="chapter hidden" id="ch-bloc1">
+        <div class="rounded-lg overflow-hidden shadow-md border border-stone-300/40 mb-6">
+          <img src="02_voyage_nuit.jpg" alt="Le voyage nocturne" class="w-full h-auto object-cover">
+        </div>
+        <div class="mb-1">
+          <span class="text-[10px] uppercase tracking-[3px] text-royal-red font-semibold">Chapitre I</span>
+        </div>
+        <h2 class="font-display text-2xl font-bold text-stone-800 mb-1">Le Départ de Paris</h2>
+        <div class="w-16 h-0.5 bg-royal-gold/40 rounded mb-6"></div>
+
+        <div class="bg-parch-100/60 border border-stone-200 rounded-lg p-6 mb-6 shadow-sm space-y-4 text-[15px] leading-7 text-stone-700">
+          <p>La nuit est tombée sur Paris. Dans les couloirs sombres du palais des Tuileries, vous rassemblez votre famille en silence. Marie-Antoinette serre contre elle le petit Dauphin endormi. Madame Élisabeth, votre sœur, prie à voix basse.</p>
+          <p>Le plan a été préparé par le comte <strong class="text-stone-900">Axel de Fersen</strong>, fidèle parmi les fidèles. Une berline vous attend près du guichet de Marigny. <strong class="text-royal-red">Mais le danger est immense</strong> : La Fayette a posté des gardes nationaux partout.</p>
+          <p>Fersen vous murmure : <em class="text-royal-blue">« Sire, il est temps. Deux options s'offrent à vous. »</em></p>
+        </div>
+
+        <p class="text-center text-sm text-stone-500 italic font-display mb-4">Comment quittez-vous les Tuileries ?</p>
+        <div class="space-y-3">
+          <button onclick="goTo('ch-bloc2a',{discret:+15,courage:+5},'Passage secret')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left">
+            <span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">A</span>
+            <span class="p-4 flex-1">
+              <span class="text-sm text-stone-800 block mb-1.5">Emprunter le passage secret sous le palais</span>
+              <span class="flex gap-1.5 flex-wrap"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Discrétion +15</span><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Courage +5</span></span>
+            </span>
+            <span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span>
+          </button>
+          <button onclick="goTo('ch-bloc2b',{discret:-5,courage:+10},'Sortie déguisés')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left">
+            <span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">B</span>
+            <span class="p-4 flex-1">
+              <span class="text-sm text-stone-800 block mb-1.5">Sortir déguisés en domestiques par la porte principale</span>
+              <span class="flex gap-1.5 flex-wrap"><span class="text-[10px] px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200">Discrétion −5</span><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Courage +10</span></span>
+            </span>
+            <span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ====== CHAPITRE II-A ====== -->
+      <section class="chapter hidden" id="ch-bloc2a">
+        <div class="rounded-lg overflow-hidden shadow-md border border-stone-300/40 mb-6">
+          <img src="02_voyage_nuit.jpg" alt="Le voyage nocturne" class="w-full h-auto object-cover">
+        </div>
+        <span class="text-[10px] uppercase tracking-[3px] text-royal-red font-semibold">Chapitre II</span>
+        <h2 class="font-display text-2xl font-bold text-stone-800 mb-1">Le Passage Secret</h2>
+        <div class="w-16 h-0.5 bg-royal-gold/40 rounded mb-6"></div>
+        <div class="bg-parch-100/60 border border-stone-200 rounded-lg p-6 mb-6 shadow-sm space-y-4 text-[15px] leading-7 text-stone-700">
+          <p>Vous empruntez un étroit passage souterrain qui mène sous les jardins. L'air est humide, les murs suintent. La reine retient un cri quand une araignée tombe sur son épaule.</p>
+          <p>Après vingt longues minutes, vous émergez près du guichet de Marigny. <strong class="text-stone-900">La berline de Fersen est là</strong>, dissimulée sous les arbres.</p>
+          <p>Fersen vous prévient : <em class="text-royal-blue">« Sire, la berline est immense — elle attirera l'attention. Je peux trouver deux voitures plus petites, mais cela prendra une heure. »</em></p>
+        </div>
+        <p class="text-center text-sm text-stone-500 italic font-display mb-4">Quel véhicule choisissez-vous ?</p>
+        <div class="space-y-3">
+          <button onclick="goTo('ch-bloc3',{discret:-10},'La grande berline')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left">
+            <span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">A</span>
+            <span class="p-4 flex-1">
+              <span class="text-sm text-stone-800 block mb-1.5">Prendre la grande berline — chaque minute compte</span>
+              <span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200">Discrétion −10</span></span>
+            </span>
+            <span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span>
+          </button>
+          <button onclick="goTo('ch-bloc3',{discret:+10,courage:-5},'Petites voitures')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left">
+            <span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">B</span>
+            <span class="p-4 flex-1">
+              <span class="text-sm text-stone-800 block mb-1.5">Attendre les deux voitures plus discrètes</span>
+              <span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Discrétion +10</span><span class="text-[10px] px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200">Courage −5</span></span>
+            </span>
+            <span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ====== CHAPITRE II-B ====== -->
+      <section class="chapter hidden" id="ch-bloc2b">
+        <div class="rounded-lg overflow-hidden shadow-md border border-stone-300/40 mb-6">
+          <img src="01_depart_paris.jpg" alt="La sortie déguisée" class="w-full h-auto object-cover">
+        </div>
+        <span class="text-[10px] uppercase tracking-[3px] text-royal-red font-semibold">Chapitre II</span>
+        <h2 class="font-display text-2xl font-bold text-stone-800 mb-1">La Sortie des Audacieux</h2>
+        <div class="w-16 h-0.5 bg-royal-gold/40 rounded mb-6"></div>
+        <div class="bg-parch-100/60 border border-stone-200 rounded-lg p-6 mb-6 shadow-sm space-y-4 text-[15px] leading-7 text-stone-700">
+          <p>Vous enfilez les vêtements d'un valet. Marie-Antoinette porte la tenue sombre d'une gouvernante. Les enfants sont emmitouflés dans des couvertures ordinaires.</p>
+          <p>Un garde national vous dévisage. <em class="text-royal-blue">« Hé ! Toi ! »</em> Vous vous figez. <strong class="text-royal-red">Le temps s'arrête.</strong> Puis : <em class="text-royal-blue">« Tu as oublié ta lanterne, imbécile. »</em></p>
+          <p>La berline attend au coin. <strong class="text-stone-900">Fersen vous presse</strong> : <em class="text-royal-blue">« Vite, Sire. L'aube ne nous attendra pas. »</em></p>
+        </div>
+        <p class="text-center text-sm text-stone-500 italic font-display mb-4">La berline est prête — que décidez-vous ?</p>
+        <div class="space-y-3">
+          <button onclick="goTo('ch-bloc3',{discret:-10},'La grande berline')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left">
+            <span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">A</span>
+            <span class="p-4 flex-1">
+              <span class="text-sm text-stone-800 block mb-1.5">Monter dans la grande berline royale</span>
+              <span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200">Discrétion −10</span></span>
+            </span>
+            <span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span>
+          </button>
+          <button onclick="goTo('ch-bloc3',{discret:+10,courage:-5},'Petites voitures')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left">
+            <span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">B</span>
+            <span class="p-4 flex-1">
+              <span class="text-sm text-stone-800 block mb-1.5">Demander des voitures plus modestes</span>
+              <span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Discrétion +10</span><span class="text-[10px] px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200">Courage −5</span></span>
+            </span>
+            <span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ====== CHAPITRE III ====== -->
+      <section class="chapter hidden" id="ch-bloc3">
+        <div class="rounded-lg overflow-hidden shadow-md border border-stone-300/40 mb-6">
+          <img src="02_voyage_nuit.jpg" alt="Le voyage nocturne" class="w-full h-auto object-cover">
+        </div>
+        <span class="text-[10px] uppercase tracking-[3px] text-royal-red font-semibold">Chapitre III</span>
+        <h2 class="font-display text-2xl font-bold text-stone-800 mb-1">Le Voyage dans la Nuit</h2>
+        <div class="w-16 h-0.5 bg-royal-gold/40 rounded mb-6"></div>
+        <div class="bg-parch-100/60 border border-stone-200 rounded-lg p-6 mb-6 shadow-sm space-y-4 text-[15px] leading-7 text-stone-700">
+          <p>Le cortège s'élance dans la nuit noire. Les routes de France défilent sous les roues. À Bondy, on change les chevaux. À Meaux, la reine s'endort enfin.</p>
+          <p>À Sainte-Menehould, le maître de poste <strong class="text-stone-900">Jean-Baptiste Drouet</strong> compare votre visage à l'assignat qu'il tient en main. Ses yeux s'écarquillent. <em class="text-royal-red font-semibold not-italic">Il sait.</em></p>
+          <p>Drouet enfourche un cheval et galope vers Varennes. <strong class="text-royal-red">La course contre la montre commence.</strong></p>
+        </div>
+        <p class="text-center text-sm text-stone-500 italic font-display mb-4">On vous a reconnu — que faites-vous ?</p>
+        <div class="space-y-3">
+          <button onclick="goTo('ch-bloc4a',{discret:+10,courage:+5},'Chemins de traverse')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left">
+            <span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">A</span>
+            <span class="p-4 flex-1">
+              <span class="text-sm text-stone-800 block mb-1.5">Changer d'itinéraire par les chemins de traverse</span>
+              <span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Discrétion +10</span><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Courage +5</span></span>
+            </span>
+            <span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span>
+          </button>
+          <button onclick="goTo('ch-bloc4b',{discret:-10,courage:+10},'Foncer vers Varennes')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left">
+            <span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">B</span>
+            <span class="p-4 flex-1">
+              <span class="text-sm text-stone-800 block mb-1.5">Foncer à toute vitesse vers Varennes</span>
+              <span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200">Discrétion −10</span><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Courage +10</span></span>
+            </span>
+            <span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ====== CHAPITRE IV-A ====== -->
+      <section class="chapter hidden" id="ch-bloc4a">
+        <div class="rounded-lg overflow-hidden shadow-md border border-stone-300/40 mb-6">
+          <img src="02_voyage_nuit.jpg" alt="Chemins de traverse" class="w-full h-auto object-cover">
+        </div>
+        <span class="text-[10px] uppercase tracking-[3px] text-royal-red font-semibold">Chapitre IV</span>
+        <h2 class="font-display text-2xl font-bold text-stone-800 mb-1">Les Chemins de Traverse</h2>
+        <div class="w-16 h-0.5 bg-royal-gold/40 rounded mb-6"></div>
+        <div class="bg-parch-100/60 border border-stone-200 rounded-lg p-6 mb-6 shadow-sm space-y-4 text-[15px] leading-7 text-stone-700">
+          <p>La berline s'enfonce dans des sentiers boueux. Les branches griffent les parois du carrosse. Soudain, <strong class="text-royal-red">une roue se brise</strong> dans une ornière !</p>
+          <p>Pendant ce temps, Drouet file vers Varennes par la route principale. <em class="text-royal-blue">Vous avez gagné de la discrétion, mais perdu un temps précieux.</em></p>
+          <p>La roue réparée, vous arrivez aux abords de Varennes. Il est presque minuit.</p>
+        </div>
+        <p class="text-center text-sm text-stone-500 italic font-display mb-4">Comment entrez-vous dans Varennes ?</p>
+        <div class="space-y-3">
+          <button onclick="goTo('ch-bloc5a',{discret:+10,human:+5},'Contourner la ville')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left">
+            <span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">A</span>
+            <span class="p-4 flex-1">
+              <span class="text-sm text-stone-800 block mb-1.5">Contourner Varennes par les champs</span>
+              <span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Discrétion +10</span><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Humanité +5</span></span>
+            </span>
+            <span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span>
+          </button>
+          <button onclick="goTo('ch-bloc5b',{discret:-5,courage:+10},'Traverser au galop')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left">
+            <span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">B</span>
+            <span class="p-4 flex-1">
+              <span class="text-sm text-stone-800 block mb-1.5">Traverser Varennes au galop</span>
+              <span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200">Discrétion −5</span><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Courage +10</span></span>
+            </span>
+            <span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ====== CHAPITRE IV-B ====== -->
+      <section class="chapter hidden" id="ch-bloc4b">
+        <div class="rounded-lg overflow-hidden shadow-md border border-stone-300/40 mb-6">
+          <img src="03_foule_varennes.jpg" alt="La course vers Varennes" class="w-full h-auto object-cover">
+        </div>
+        <span class="text-[10px] uppercase tracking-[3px] text-royal-red font-semibold">Chapitre IV</span>
+        <h2 class="font-display text-2xl font-bold text-stone-800 mb-1">La Course vers Varennes</h2>
+        <div class="w-16 h-0.5 bg-royal-gold/40 rounded mb-6"></div>
+        <div class="bg-parch-100/60 border border-stone-200 rounded-lg p-6 mb-6 shadow-sm space-y-4 text-[15px] leading-7 text-stone-700">
+          <p>Le cocher fouette les chevaux. La berline bondit sur la route. <strong class="text-stone-900">Les chevaux sont épuisés.</strong></p>
+          <p>Varennes apparaît. Mais <em class="text-royal-red not-italic font-semibold">un barrage de charrettes bloque le pont !</em> Drouet vous a devancé. Des lumières s'allument aux fenêtres.</p>
+        </div>
+        <p class="text-center text-sm text-stone-500 italic font-display mb-4">Le pont est barricadé — que faites-vous ?</p>
+        <div class="space-y-3">
+          <button onclick="goTo('ch-bloc5b',{courage:+15,discret:-10},'Forcer le barrage')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left">
+            <span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">A</span>
+            <span class="p-4 flex-1">
+              <span class="text-sm text-stone-800 block mb-1.5">Forcer le barrage — la liberté est de l'autre côté</span>
+              <span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Courage +15</span><span class="text-[10px] px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200">Discrétion −10</span></span>
+            </span>
+            <span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span>
+          </button>
+          <button onclick="goTo('ch-bloc5a',{human:+10,popular:+5},'Parlementer')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left">
+            <span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">B</span>
+            <span class="p-4 flex-1">
+              <span class="text-sm text-stone-800 block mb-1.5">Parlementer avec les habitants</span>
+              <span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Humanité +10</span><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Popularité +5</span></span>
+            </span>
+            <span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ====== CHAPITRE V-A ====== -->
+      <section class="chapter hidden" id="ch-bloc5a">
+        <div class="rounded-lg overflow-hidden shadow-md border border-stone-300/40 mb-6">
+          <img src="03_foule_varennes.jpg" alt="La foule de Varennes" class="w-full h-auto object-cover">
+        </div>
+        <span class="text-[10px] uppercase tracking-[3px] text-royal-red font-semibold">Chapitre V</span>
+        <h2 class="font-display text-2xl font-bold text-stone-800 mb-1">Face au Peuple</h2>
+        <div class="w-16 h-0.5 bg-royal-gold/40 rounded mb-6"></div>
+        <div class="bg-parch-100/60 border border-stone-200 rounded-lg p-6 mb-6 shadow-sm space-y-4 text-[15px] leading-7 text-stone-700">
+          <p>Le tocsin sonne ! Les habitants sortent armés de fourches et de piques. Le procureur <strong class="text-stone-900">Jean-Baptiste Sauce</strong> vous demande vos papiers.</p>
+          <p>Un vieil homme lance : <em class="text-royal-blue">« C'est le roi ! J'ai servi à Versailles ! »</em> Sauce vous regarde droit dans les yeux.</p>
+        </div>
+        <p class="text-center text-sm text-stone-500 italic font-display mb-4">Que répondez-vous ?</p>
+        <div class="space-y-3">
+          <button onclick="goTo('ch-bloc6a',{discret:+5,human:-5},'Nier son identité')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left">
+            <span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">A</span>
+            <span class="p-4 flex-1">
+              <span class="text-sm text-stone-800 block mb-1.5">Nier — « Je suis la baronne de Korff »</span>
+              <span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Discrétion +5</span><span class="text-[10px] px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200">Humanité −5</span></span>
+            </span>
+            <span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span>
+          </button>
+          <button onclick="goTo('ch-bloc6b',{popular:+15,courage:+10,discret:-20},'Révéler son identité')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left">
+            <span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">B</span>
+            <span class="p-4 flex-1">
+              <span class="text-sm text-stone-800 block mb-1.5">« Oui, je suis votre roi. »</span>
+              <span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Popularité +15</span><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Courage +10</span><span class="text-[10px] px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200">Discrétion −20</span></span>
+            </span>
+            <span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ====== CHAPITRE V-B ====== -->
+      <section class="chapter hidden" id="ch-bloc5b">
+        <div class="rounded-lg overflow-hidden shadow-md border border-stone-300/40 mb-6">
+          <img src="04_arrestation_varennes.jpg" alt="Forçage du passage" class="w-full h-auto object-cover">
+        </div>
+        <span class="text-[10px] uppercase tracking-[3px] text-royal-red font-semibold">Chapitre V</span>
+        <h2 class="font-display text-2xl font-bold text-stone-800 mb-1">Le Forçage du Passage</h2>
+        <div class="w-16 h-0.5 bg-royal-gold/40 rounded mb-6"></div>
+        <div class="bg-parch-100/60 border border-stone-200 rounded-lg p-6 mb-6 shadow-sm space-y-4 text-[15px] leading-7 text-stone-700">
+          <p><strong class="text-royal-red">Le pont est barricadé !</strong> Vos gardes tirent leurs épées. La foule recule un instant.</p>
+          <p>Sauce arrive : <em class="text-royal-blue">« Au nom de la Nation, arrêtez-vous ! »</em> Des fusils pointent vers la berline. <strong class="text-royal-red">Marie-Antoinette pousse un cri.</strong></p>
+        </div>
+        <p class="text-center text-sm text-stone-500 italic font-display mb-4">Que leur ordonnez-vous ?</p>
+        <div class="space-y-3">
+          <button onclick="goTo('ch-bloc6c',{human:+10,popular:+10},'Ranger les armes')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left">
+            <span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">A</span>
+            <span class="p-4 flex-1">
+              <span class="text-sm text-stone-800 block mb-1.5">Ranger les armes — vous refusez le sang</span>
+              <span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Humanité +10</span><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Popularité +10</span></span>
+            </span>
+            <span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span>
+          </button>
+          <button onclick="goTo('ch-bloc6d',{popular:-25,courage:+15,human:-15},'Charger')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left">
+            <span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">B</span>
+            <span class="p-4 flex-1">
+              <span class="text-sm text-stone-800 block mb-1.5">Charger à travers la barricade</span>
+              <span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200">Popularité −25</span><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Courage +15</span><span class="text-[10px] px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200">Humanité −15</span></span>
+            </span>
+            <span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ====== CH VI-A through VIII-B & ENDINGS (condensed — same pattern) ====== -->
+      <section class="chapter hidden" id="ch-bloc6a">
+        <div class="rounded-lg overflow-hidden shadow-md border border-stone-300/40 mb-6"><img src="05_maison_sauce.jpg" alt="Chez Sauce" class="w-full h-auto"></div>
+        <span class="text-[10px] uppercase tracking-[3px] text-royal-red font-semibold">Chapitre VI</span>
+        <h2 class="font-display text-2xl font-bold text-stone-800 mb-1">Le Mensonge du Roi</h2><div class="w-16 h-0.5 bg-royal-gold/40 rounded mb-6"></div>
+        <div class="bg-parch-100/60 border border-stone-200 rounded-lg p-6 mb-6 shadow-sm space-y-4 text-[15px] leading-7 text-stone-700">
+          <p>Vous maintenez votre couverture. Sauce hésite. Mais un ancien soldat désigne un assignat : <strong class="text-royal-red">« C'est le même visage ! »</strong></p>
+          <p>On vous conduit dans la maison de Sauce, transformée en prison improvisée pour un roi.</p>
+        </div>
+        <p class="text-center text-sm text-stone-500 italic font-display mb-4">Comment réagissez-vous ?</p>
+        <div class="space-y-3">
+          <button onclick="goTo('ch-bloc7a',{popular:+10,human:+10},'Accepter avec dignité')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left"><span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">A</span><span class="p-4 flex-1"><span class="text-sm text-stone-800 block mb-1.5">Accepter avec dignité royale</span><span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Popularité +10</span><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Humanité +10</span></span></span><span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span></button>
+          <button onclick="goTo('ch-bloc7b',{courage:+15,discret:+5},'Tenter de corrompre')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left"><span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">B</span><span class="p-4 flex-1"><span class="text-sm text-stone-800 block mb-1.5">Offrir de l'or à Sauce</span><span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Courage +15</span><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Discrétion +5</span></span></span><span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span></button>
+        </div>
+      </section>
+
+      <section class="chapter hidden" id="ch-bloc6b">
+        <div class="rounded-lg overflow-hidden shadow-md border border-stone-300/40 mb-6"><img src="04_arrestation_varennes.jpg" alt="Arrestation" class="w-full h-auto"></div>
+        <span class="text-[10px] uppercase tracking-[3px] text-royal-red font-semibold">Chapitre VI</span>
+        <h2 class="font-display text-2xl font-bold text-stone-800 mb-1">Le Roi se Dévoile</h2><div class="w-16 h-0.5 bg-royal-gold/40 rounded mb-6"></div>
+        <div class="bg-parch-100/60 border border-stone-200 rounded-lg p-6 mb-6 shadow-sm space-y-4 text-[15px] leading-7 text-stone-700">
+          <p><em class="text-royal-blue">« Mes amis, oui, je suis votre roi. »</em> Un silence de mort. Des hommes retirent leur chapeau. <strong class="text-royal-red">Mais d'autres serrent leurs armes plus fort.</strong></p>
+          <p>Sauce vous invite chez lui : <em class="text-royal-blue">« Sire, les enfants ont besoin de repos. »</em></p>
+        </div>
+        <p class="text-center text-sm text-stone-500 italic font-display mb-4">Que faites-vous ?</p>
+        <div class="space-y-3">
+          <button onclick="goTo('ch-bloc7a',{popular:+10,human:+10},'Accepter')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left"><span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">A</span><span class="p-4 flex-1"><span class="text-sm text-stone-800 block mb-1.5">Accepter — le roi est aussi un père</span><span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Popularité +10</span><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Humanité +10</span></span></span><span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span></button>
+          <button onclick="goTo('ch-bloc7c',{courage:+20,popular:+5},'Haranguer la foule')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left"><span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">B</span><span class="p-4 flex-1"><span class="text-sm text-stone-800 block mb-1.5">Haranguer la foule — rallier le peuple</span><span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Courage +20</span><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Popularité +5</span></span></span><span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span></button>
+        </div>
+      </section>
+
+      <section class="chapter hidden" id="ch-bloc6c">
+        <div class="rounded-lg overflow-hidden shadow-md border border-stone-300/40 mb-6"><img src="04_arrestation_varennes.jpg" alt="Sagesse du roi" class="w-full h-auto"></div>
+        <span class="text-[10px] uppercase tracking-[3px] text-royal-red font-semibold">Chapitre VI</span>
+        <h2 class="font-display text-2xl font-bold text-stone-800 mb-1">La Sagesse du Roi</h2><div class="w-16 h-0.5 bg-royal-gold/40 rounded mb-6"></div>
+        <div class="bg-parch-100/60 border border-stone-200 rounded-lg p-6 mb-6 shadow-sm space-y-4 text-[15px] leading-7 text-stone-700">
+          <p><em class="text-royal-blue">« Rangez vos armes. Je ne veux pas qu'une seule goutte de sang français coule. »</em></p>
+          <p>La foule, stupéfaite, baisse ses armes. Sauce vous reconnaît. <em class="text-royal-blue">« Sire… venez chez moi. »</em></p>
+        </div>
+        <p class="text-center text-sm text-stone-500 italic font-display mb-4">Que faites-vous ?</p>
+        <div class="space-y-3">
+          <button onclick="goTo('ch-bloc7a',{popular:+10,human:+5},'Suivre Sauce')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left"><span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">A</span><span class="p-4 flex-1"><span class="text-sm text-stone-800 block mb-1.5">Suivre Sauce avec dignité</span><span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Popularité +10</span><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Humanité +5</span></span></span><span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span></button>
+          <button onclick="goTo('ch-bloc7b',{courage:+10,discret:+5},'Négocier')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left"><span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">B</span><span class="p-4 flex-1"><span class="text-sm text-stone-800 block mb-1.5">Négocier des récompenses</span><span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Courage +10</span><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Discrétion +5</span></span></span><span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span></button>
+        </div>
+      </section>
+
+      <section class="chapter hidden" id="ch-bloc6d">
+        <div class="rounded-lg overflow-hidden shadow-md border border-stone-300/40 mb-6"><img src="04_arrestation_varennes.jpg" alt="La charge" class="w-full h-auto"></div>
+        <span class="text-[10px] uppercase tracking-[3px] text-royal-red font-semibold">Chapitre VI</span>
+        <h2 class="font-display text-2xl font-bold text-stone-800 mb-1">La Charge Désespérée</h2><div class="w-16 h-0.5 bg-royal-gold/40 rounded mb-6"></div>
+        <div class="bg-parch-100/60 border border-stone-200 rounded-lg p-6 mb-6 shadow-sm space-y-4 text-[15px] leading-7 text-stone-700">
+          <p>Vos gardes chargent ! Des coups de feu éclatent. <strong class="text-royal-red">Un garde tombe.</strong> La berline reste coincée. En quelques minutes, vous êtes encerclé.</p>
+        </div>
+        <p class="text-center text-sm text-stone-500 italic font-display mb-4">Dernier choix</p>
+        <div class="space-y-3">
+          <button onclick="goTo('ch-fin-honteux',{human:+15,popular:-10},'Se rendre')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left"><span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">A</span><span class="p-4 flex-1"><span class="text-sm text-stone-800 block mb-1.5">Se rendre pour arrêter le bain de sang</span><span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Humanité +15</span><span class="text-[10px] px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200">Popularité −10</span></span></span><span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span></button>
+          <button onclick="goTo('ch-fin-tragique',{courage:+20,human:-20,popular:-20},'Combattre')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left"><span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">B</span><span class="p-4 flex-1"><span class="text-sm text-stone-800 block mb-1.5">Combattre jusqu'au bout — mourir en roi</span><span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Courage +20</span><span class="text-[10px] px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200">Humanité −20</span><span class="text-[10px] px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200">Popularité −20</span></span></span><span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span></button>
+        </div>
+      </section>
+
+      <!-- CH VII-A, VII-B, VII-C -->
+      <section class="chapter hidden" id="ch-bloc7a">
+        <div class="rounded-lg overflow-hidden shadow-md border border-stone-300/40 mb-6"><img src="05_maison_sauce.jpg" alt="Maison Sauce" class="w-full h-auto"></div>
+        <span class="text-[10px] uppercase tracking-[3px] text-royal-red font-semibold">Chapitre VII</span>
+        <h2 class="font-display text-2xl font-bold text-stone-800 mb-1">La Maison Sauce</h2><div class="w-16 h-0.5 bg-royal-gold/40 rounded mb-6"></div>
+        <div class="bg-parch-100/60 border border-stone-200 rounded-lg p-6 mb-6 shadow-sm space-y-4 text-[15px] leading-7 text-stone-700">
+          <p>Madame Sauce apporte du lait pour les enfants. La reine murmure : <em class="text-royal-blue">« Mon Dieu, en sommes-nous réduits à cela ? »</em></p>
+          <p><strong class="text-stone-900">Deux émissaires de l'Assemblée</strong> arrivent à l'aube. Mais les hussards de Bouillé approchent aussi. <strong class="text-royal-red">C'est une course.</strong></p>
+        </div>
+        <p class="text-center text-sm text-stone-500 italic font-display mb-4">L'aube se lève — une dernière chance</p>
+        <div class="space-y-3">
+          <button onclick="goTo('ch-bloc8a',{human:+15,popular:+10,courage:-5},'Obéir au décret')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left"><span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">A</span><span class="p-4 flex-1"><span class="text-sm text-stone-800 block mb-1.5">Obéir au décret — rentrer à Paris avec dignité</span><span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Humanité +15</span><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Popularité +10</span></span></span><span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span></button>
+          <button onclick="goTo('ch-bloc8b',{courage:+20,discret:-10},'Attendre les hussards')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left"><span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">B</span><span class="p-4 flex-1"><span class="text-sm text-stone-800 block mb-1.5">Attendre les hussards de Bouillé</span><span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Courage +20</span><span class="text-[10px] px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200">Discrétion −10</span></span></span><span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span></button>
+        </div>
+      </section>
+
+      <section class="chapter hidden" id="ch-bloc7b">
+        <div class="rounded-lg overflow-hidden shadow-md border border-stone-300/40 mb-6"><img src="05_maison_sauce.jpg" alt="L'or du roi" class="w-full h-auto"></div>
+        <span class="text-[10px] uppercase tracking-[3px] text-royal-red font-semibold">Chapitre VII</span>
+        <h2 class="font-display text-2xl font-bold text-stone-800 mb-1">L'Or du Roi</h2><div class="w-16 h-0.5 bg-royal-gold/40 rounded mb-6"></div>
+        <div class="bg-parch-100/60 border border-stone-200 rounded-lg p-6 mb-6 shadow-sm space-y-4 text-[15px] leading-7 text-stone-700">
+          <p>Sauce regarde l'or, puis vous. Ses mains tremblent. Sa femme : <em class="text-royal-blue">« Prends-le ! »</em></p>
+          <p>Mais il secoue la tête : <em class="text-royal-blue">« Si je vous laisse partir, c'est moi qu'on pendra. »</em> <strong class="text-royal-red">L'or n'achète pas la liberté.</strong></p>
+        </div>
+        <p class="text-center text-sm text-stone-500 italic font-display mb-4">Que reste-t-il ?</p>
+        <div class="space-y-3">
+          <button onclick="goTo('ch-bloc8a',{human:+10,popular:+5},'Accepter son sort')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left"><span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">A</span><span class="p-4 flex-1"><span class="text-sm text-stone-800 block mb-1.5">Accepter son sort avec grâce</span><span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Humanité +10</span><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Popularité +5</span></span></span><span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span></button>
+          <button onclick="goTo('ch-bloc8b',{courage:+15,discret:-5},'Fuir par la fenêtre')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left"><span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">B</span><span class="p-4 flex-1"><span class="text-sm text-stone-800 block mb-1.5">Tenter de fuir par la fenêtre arrière</span><span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Courage +15</span><span class="text-[10px] px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200">Discrétion −5</span></span></span><span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span></button>
+        </div>
+      </section>
+
+      <section class="chapter hidden" id="ch-bloc7c">
+        <div class="rounded-lg overflow-hidden shadow-md border border-stone-300/40 mb-6"><img src="03_foule_varennes.jpg" alt="Discours du roi" class="w-full h-auto"></div>
+        <span class="text-[10px] uppercase tracking-[3px] text-royal-red font-semibold">Chapitre VII</span>
+        <h2 class="font-display text-2xl font-bold text-stone-800 mb-1">Le Discours du Roi</h2><div class="w-16 h-0.5 bg-royal-gold/40 rounded mb-6"></div>
+        <div class="bg-parch-100/60 border border-stone-200 rounded-lg p-6 mb-6 shadow-sm space-y-4 text-[15px] leading-7 text-stone-700">
+          <p><em class="text-royal-blue">« Peuple de Varennes ! Je ne fuis pas mon peuple — je fuis ceux qui veulent détruire la France ! »</em></p>
+          <p>Des voix crient « Vive le Roi ! », d'autres « Vive la Nation ! ». La foule est divisée.</p>
+        </div>
+        <p class="text-center text-sm text-stone-500 italic font-display mb-4">Votre discours a semé le doute</p>
+        <div class="space-y-3">
+          <button onclick="goTo('ch-bloc8b',{courage:+15,popular:+10},'Continuer le discours')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left"><span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">A</span><span class="p-4 flex-1"><span class="text-sm text-stone-800 block mb-1.5">Continuer — retourner la foule</span><span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Courage +15</span><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Popularité +10</span></span></span><span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span></button>
+          <button onclick="goTo('ch-bloc7a',{human:+10},'Suivre Sauce')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left"><span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">B</span><span class="p-4 flex-1"><span class="text-sm text-stone-800 block mb-1.5">Suivre Sauce — protéger la famille</span><span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Humanité +10</span></span></span><span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span></button>
+        </div>
+      </section>
+
+      <!-- CH VIII-A — Retour -->
+      <section class="chapter hidden" id="ch-bloc8a">
+        <div class="rounded-lg overflow-hidden shadow-md border border-stone-300/40 mb-6"><img src="06_retour_paris.jpg" alt="Retour à Paris" class="w-full h-auto"></div>
+        <span class="text-[10px] uppercase tracking-[3px] text-royal-red font-semibold">Épilogue</span>
+        <h2 class="font-display text-2xl font-bold text-stone-800 mb-1">Le Roi Prisonnier</h2><div class="w-16 h-0.5 bg-royal-gold/40 rounded mb-6"></div>
+        <div class="bg-parch-100/60 border border-stone-200 rounded-lg p-6 mb-6 shadow-sm space-y-4 text-[15px] leading-7 text-stone-700">
+          <p>Trois jours de route sous la chaleur. <strong class="text-stone-900">Personne n'ôte son chapeau.</strong> Marie-Antoinette découvre une mèche de cheveux blancs.</p>
+          <p>Le Dauphin demande : <em class="text-royal-blue">« Papa, pourquoi les gens ne nous aiment plus ? »</em></p>
+        </div>
+        <div class="bg-royal-blue/5 border border-royal-blue/20 rounded-lg p-6 text-center mb-6">
+          <p class="font-display text-lg text-royal-blue font-bold mb-2">⛓️ Le Roi Prisonnier</p>
+          <p class="text-sm text-stone-600 leading-relaxed">La confiance est brisée. Mais votre dignité vous vaut le respect — même parmi vos ennemis.</p>
+        </div>
+        <div class="grid grid-cols-4 gap-3 mb-6" id="final-stats-8a"></div>
+        <div class="text-center"><button onclick="restartGame()" class="bg-stone-800 hover:bg-stone-900 text-parch-100 font-display text-sm tracking-wide px-8 py-3 rounded-lg border border-stone-600 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">⚜ Recommencer ⚜</button></div>
+      </section>
+
+      <!-- CH VIII-B — Hussards -->
+      <section class="chapter hidden" id="ch-bloc8b">
+        <div class="rounded-lg overflow-hidden shadow-md border border-stone-300/40 mb-6"><img src="07_fuite_reussie.jpg" alt="Les hussards" class="w-full h-auto"></div>
+        <span class="text-[10px] uppercase tracking-[3px] text-royal-red font-semibold">Chapitre VIII</span>
+        <h2 class="font-display text-2xl font-bold text-stone-800 mb-1">Le Dernier Espoir</h2><div class="w-16 h-0.5 bg-royal-gold/40 rounded mb-6"></div>
+        <div class="bg-parch-100/60 border border-stone-200 rounded-lg p-6 mb-6 shadow-sm space-y-4 text-[15px] leading-7 text-stone-700">
+          <p><strong class="text-stone-900">Quarante hussards arrivent !</strong> <em class="text-royal-blue">« Sire, donnez l'ordre ! »</em></p>
+          <p>Mais dehors, des milliers encerclent la maison. Un canon pointe sur la porte. <strong class="text-royal-red">Si les hussards chargent, ce sera un massacre.</strong></p>
+        </div>
+        <p class="text-center text-sm text-stone-500 italic font-display mb-4">L'ultime décision</p>
+        <div class="space-y-3">
+          <button onclick="goTo('ch-fin-fuite',{courage:+20,human:-10,discret:-15},'Ordonner la libération')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left"><span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">A</span><span class="p-4 flex-1"><span class="text-sm text-stone-800 block mb-1.5">Ordonner la libération par la force</span><span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Courage +20</span><span class="text-[10px] px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200">Humanité −10</span></span></span><span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span></button>
+          <button onclick="goTo('ch-bloc8a',{human:+20,popular:+10,courage:-10},'Renoncer')" class="w-full group flex items-stretch bg-parch-100 border border-stone-200 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-400 text-left"><span class="bg-stone-800 text-parch-100 font-display text-lg px-4 flex items-center justify-center min-w-[52px] group-hover:bg-stone-700 transition-colors">B</span><span class="p-4 flex-1"><span class="text-sm text-stone-800 block mb-1.5">« Je ne veux pas qu'un seul homme meure pour moi »</span><span class="flex gap-1.5"><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Humanité +20</span><span class="text-[10px] px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">Popularité +10</span></span></span><span class="px-3 flex items-center text-stone-400 group-hover:text-stone-600 transition-colors text-lg">›</span></button>
+        </div>
+      </section>
+
+      <!-- ENDINGS -->
+      <section class="chapter hidden" id="ch-fin-fuite">
+        <div class="rounded-lg overflow-hidden shadow-md border border-stone-300/40 mb-6"><img src="07_fuite_reussie.jpg" alt="Fuite réussie" class="w-full h-auto"></div>
+        <span class="text-[10px] uppercase tracking-[3px] text-royal-red font-semibold">Épilogue</span>
+        <h2 class="font-display text-2xl font-bold text-stone-800 mb-1">L'Évasion Réussie</h2><div class="w-16 h-0.5 bg-royal-gold/40 rounded mb-6"></div>
+        <div class="bg-green-50/60 border border-green-200 rounded-lg p-6 text-center mb-6">
+          <p class="font-display text-lg text-green-800 font-bold mb-2">🏇 L'Évasion Réussie !</p>
+          <p class="text-sm text-stone-600 leading-relaxed">Vous êtes libre. Mais la France s'embrase derrière vous. L'Histoire vous jugera comme le roi qui a abandonné son peuple.</p>
+        </div>
+        <div class="grid grid-cols-4 gap-3 mb-6" id="final-stats-fin-fuite"></div>
+        <div class="text-center"><button onclick="restartGame()" class="bg-stone-800 hover:bg-stone-900 text-parch-100 font-display text-sm tracking-wide px-8 py-3 rounded-lg border border-stone-600 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">⚜ Recommencer ⚜</button></div>
+      </section>
+
+      <section class="chapter hidden" id="ch-fin-honteux">
+        <div class="rounded-lg overflow-hidden shadow-md border border-stone-300/40 mb-6"><img src="06_retour_paris.jpg" alt="Retour honteux" class="w-full h-auto"></div>
+        <span class="text-[10px] uppercase tracking-[3px] text-royal-red font-semibold">Épilogue</span>
+        <h2 class="font-display text-2xl font-bold text-stone-800 mb-1">Le Retour dans le Sang</h2><div class="w-16 h-0.5 bg-royal-gold/40 rounded mb-6"></div>
+        <div class="bg-red-50/60 border border-red-200 rounded-lg p-6 text-center mb-6">
+          <p class="font-display text-lg text-red-800 font-bold mb-2">⛓️ Le Retour dans le Sang</p>
+          <p class="text-sm text-stone-600 leading-relaxed">La violence scelle votre destin. Le 21 janvier 1793, vous montez à l'échafaud.</p>
+        </div>
+        <div class="grid grid-cols-4 gap-3 mb-6" id="final-stats-fin-honteux"></div>
+        <div class="text-center"><button onclick="restartGame()" class="bg-stone-800 hover:bg-stone-900 text-parch-100 font-display text-sm tracking-wide px-8 py-3 rounded-lg border border-stone-600 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">⚜ Recommencer ⚜</button></div>
+      </section>
+
+      <section class="chapter hidden" id="ch-fin-tragique">
+        <div class="rounded-lg overflow-hidden shadow-md border border-stone-300/40 mb-6"><img src="04_arrestation_varennes.jpg" alt="Nuit de sang" class="w-full h-auto"></div>
+        <span class="text-[10px] uppercase tracking-[3px] text-royal-red font-semibold">Épilogue</span>
+        <h2 class="font-display text-2xl font-bold text-stone-800 mb-1">La Nuit de Sang</h2><div class="w-16 h-0.5 bg-royal-gold/40 rounded mb-6"></div>
+        <div class="bg-red-50/60 border border-red-200 rounded-lg p-6 text-center mb-6">
+          <p class="font-display text-lg text-red-800 font-bold mb-2">💀 La Nuit de Sang</p>
+          <p class="text-sm text-stone-600 leading-relaxed">Ni courage véritable, ni humanité. Seulement la peur d'un homme acculé.</p>
+        </div>
+        <div class="grid grid-cols-4 gap-3 mb-6" id="final-stats-fin-tragique"></div>
+        <div class="text-center"><button onclick="restartGame()" class="bg-stone-800 hover:bg-stone-900 text-parch-100 font-display text-sm tracking-wide px-8 py-3 rounded-lg border border-stone-600 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">⚜ Recommencer ⚜</button></div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ===== RIGHT SIDEBAR — Stats & Inventory ===== -->
+  <aside class="w-72 bg-stone-900 border-l border-stone-700/60 flex flex-col shrink-0 hidden xl:flex">
+    <!-- Stats -->
+    <div class="p-5 space-y-4 border-b border-stone-700/40">
+      <div class="flex items-center justify-between">
+        <span class="text-xs text-stone-400 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>DISCRÉTION</span>
+        <span class="text-xs text-parch-200 font-display" id="r-num-discret">0</span>
+      </div>
+      <div class="h-1.5 bg-stone-800 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-blue-700 to-blue-500 rounded-full transition-all duration-700" id="r-fill-discret" style="width:33%"></div></div>
+
+      <div class="flex items-center justify-between">
+        <span class="text-xs text-stone-400 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>POPULARITÉ</span>
+        <span class="text-xs text-parch-200 font-display" id="r-num-popular">0</span>
+      </div>
+      <div class="h-1.5 bg-stone-800 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-red-700 to-red-500 rounded-full transition-all duration-700" id="r-fill-popular" style="width:33%"></div></div>
+
+      <div class="flex items-center justify-between">
+        <span class="text-xs text-stone-400 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>HUMANITÉ</span>
+        <span class="text-xs text-parch-200 font-display" id="r-num-human">0</span>
+      </div>
+      <div class="h-1.5 bg-stone-800 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-green-700 to-green-500 rounded-full transition-all duration-700" id="r-fill-human" style="width:33%"></div></div>
+
+      <div class="flex items-center justify-between">
+        <span class="text-xs text-stone-400 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>COURAGE</span>
+        <span class="text-xs text-parch-200 font-display" id="r-num-courage">0</span>
+      </div>
+      <div class="h-1.5 bg-stone-800 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-amber-700 to-amber-500 rounded-full transition-all duration-700" id="r-fill-courage" style="width:33%"></div></div>
+    </div>
+
+    <!-- Progress bar tricolore -->
+    <div class="px-5 py-3 border-b border-stone-700/40">
+      <div class="flex h-1 rounded-full overflow-hidden">
+        <div class="flex-1 bg-blue-700"></div>
+        <div class="w-1 bg-white"></div>
+        <div class="flex-1 bg-red-700"></div>
+      </div>
+    </div>
+
+    <!-- Inventory grid -->
+    <div class="p-5 flex-1">
+      <h3 class="text-xs text-stone-400 uppercase tracking-widest mb-3">Inventaire</h3>
+      <div class="grid grid-cols-4 gap-2">
+        <div class="aspect-square bg-stone-800 rounded-lg border border-stone-700/50 flex items-center justify-center text-lg opacity-60 hover:opacity-100 transition-opacity cursor-default" title="Faux passeport">📜</div>
+        <div class="aspect-square bg-stone-800 rounded-lg border border-stone-700/50 flex items-center justify-center text-lg opacity-60 hover:opacity-100 transition-opacity cursor-default" title="Bourse d'or">💰</div>
+        <div class="aspect-square bg-stone-800 rounded-lg border border-stone-700/50 flex items-center justify-center text-lg opacity-60 hover:opacity-100 transition-opacity cursor-default" title="Sceau royal">⚜️</div>
+        <div class="aspect-square bg-stone-800 rounded-lg border border-stone-700/50 flex items-center justify-center text-lg opacity-30">?</div>
+        <div class="aspect-square bg-stone-800 rounded-lg border border-stone-700/50 flex items-center justify-center text-lg opacity-30">?</div>
+        <div class="aspect-square bg-stone-800 rounded-lg border border-stone-700/50 flex items-center justify-center text-lg opacity-30">?</div>
+        <div class="aspect-square bg-stone-800 rounded-lg border border-stone-700/50 flex items-center justify-center text-lg opacity-30">?</div>
+        <div class="aspect-square bg-stone-800 rounded-lg border border-stone-700/50 flex items-center justify-center text-lg opacity-30">?</div>
+      </div>
+    </div>
+
+    <!-- Decoration bottom -->
+    <div class="p-5 text-center border-t border-stone-700/40">
+      <span class="text-3xl opacity-30">⚜</span>
+    </div>
+  </aside>
+
+</div>
+
+<!-- ======== BOTTOM NAV ======== -->
+<footer class="bg-stone-900/95 border-t border-stone-700/40 px-6 py-2 flex justify-center gap-8 text-xs text-stone-500 sticky bottom-0 z-50 backdrop-blur-sm">
+  <span class="hover:text-parch-200 transition-colors cursor-pointer">Page</span>
+  <span class="hover:text-parch-200 transition-colors cursor-pointer">Cartographie</span>
+  <span class="hover:text-parch-200 transition-colors cursor-pointer">Journal</span>
+  <span class="hover:text-parch-200 transition-colors cursor-pointer">Aide</span>
+</footer>
+
+<!-- ======== NOTIFICATION ======== -->
+<div id="statNotif" class="fixed top-16 right-4 bg-stone-800 text-parch-200 border border-stone-600 rounded-lg px-4 py-2.5 text-xs font-display z-[60] opacity-0 translate-x-8 transition-all duration-300 pointer-events-none shadow-lg"></div>
+
+<script>
+const S={discret:0,popular:0,human:0,courage:0,path:[],cur:'start'};
+const cap=v=>Math.max(-50,Math.min(100,v));
+
+function startGame(){show('ch-bloc1');S.path=['Prologue'];updPath()}
+
+function goTo(id,fx,label){
+  if(fx){
+    ['discret','popular','human','courage'].forEach(k=>{
+      if(fx[k]!==undefined) S[k]=cap(S[k]+fx[k]);
+    });
+    updBars();
+    const t=Object.entries(fx).map(([k,v])=>(v>0?'▲':'▼')+' '+(v>0?'+':'')+v+' '+k).join('  ');
+    const n=document.getElementById('statNotif');
+    n.textContent=t;n.classList.remove('opacity-0','translate-x-8');n.classList.add('opacity-100','translate-x-0');
+    clearTimeout(n._t);n._t=setTimeout(()=>{n.classList.add('opacity-0','translate-x-8');n.classList.remove('opacity-100','translate-x-0')},2500);
+  }
+  show(id);
+  if(label){S.path.push(label);updPath()}
+  const fd=document.getElementById('final-stats-'+id.replace('ch-bloc','').replace('ch-',''));
+  if(fd&&!fd.children.length) fillFinal(fd);
+}
+
+function show(id){
+  document.querySelectorAll('.chapter').forEach(c=>{c.classList.add('hidden');c.classList.remove('active')});
+  const t=document.getElementById(id);
+  if(t){t.classList.remove('hidden');t.classList.add('active');S.cur=id;document.getElementById('mainContent').scrollTo({top:0,behavior:'smooth'})}
+}
+
+function updBars(){
+  ['discret','popular','human','courage'].forEach(k=>{
+    const p=Math.max(0,Math.min(100,((S[k]+50)/150)*100));
+    const f=document.getElementById('r-fill-'+k);if(f)f.style.width=p+'%';
+    const n=document.getElementById('r-num-'+k);if(n)n.textContent=S[k];
+  });
+}
+
+function updPath(){
+  const el=document.getElementById('sidebar-path');
+  if(!el)return;
+  el.innerHTML=S.path.length?S.path.map((s,i)=>`<span class="text-stone-${i===S.path.length-1?'800':'400'} ${i===S.path.length-1?'font-semibold':''}">${i>0?' › ':''}${s}</span>`).join(''):'<p class="italic">Votre aventure commence…</p>';
+}
+
+function fillFinal(c){
+  [{l:'Discrétion',v:S.discret},{l:'Popularité',v:S.popular},{l:'Humanité',v:S.human},{l:'Courage',v:S.courage}].forEach(s=>{
+    c.innerHTML+=`<div class="bg-parch-100 border border-stone-200 rounded-lg p-3 text-center shadow-sm"><div class="text-[10px] text-stone-500 uppercase tracking-wider mb-1">${s.l}</div><div class="font-display text-xl ${s.v>=0?'text-green-700':'text-red-700'}">${s.v>0?'+':''}${s.v}</div></div>`;
+  });
+}
+
+function restartGame(){
+  S.discret=S.popular=S.human=S.courage=0;S.path=[];
+  document.querySelectorAll('[id^="final-stats"]').forEach(e=>e.innerHTML='');
+  updBars();updPath();show('ch-start');
+}
+
+updBars();
+</script>
+</body>
+</html>
