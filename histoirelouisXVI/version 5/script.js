@@ -11,6 +11,22 @@ const state = {
 const MAX = 100;
 const statCap = v => Math.max(-50, Math.min(MAX, v));
 
+// ==================== PARTICULES DE POUSSIERE ====================
+function createDustParticles() {
+  const count = 12;
+  for (let i = 0; i < count; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'dust-particle';
+    particle.style.left = Math.random() * 100 + 'vw';
+    particle.style.animationDuration = (12 + Math.random() * 18) + 's';
+    particle.style.animationDelay = (Math.random() * 15) + 's';
+    particle.style.width = (2 + Math.random() * 3) + 'px';
+    particle.style.height = particle.style.width;
+    particle.style.opacity = 0.2 + Math.random() * 0.4;
+    document.body.appendChild(particle);
+  }
+}
+
 // ==================== NAVIGATION ====================
 function startGame() {
   showChapter('ch-bloc1');
@@ -24,16 +40,36 @@ function goTo(chapterId, effects, label) {
   if (label) state.path.push(label);
   updateBreadcrumb();
 
-  // Remplir les stats finales si c'est une fin.
   const finalDiv = document.getElementById('final-stats-' + chapterId.replace('ch-bloc', ''));
   if (finalDiv && finalDiv.children.length === 0) populateFinalStats(finalDiv);
 }
 
 function showChapter(id) {
-  document.querySelectorAll('.chapter').forEach(chapter => chapter.classList.remove('active'));
+  const current = document.querySelector('.chapter.active');
   const target = document.getElementById(id);
+  if (!target) return;
 
-  if (target) {
+  if (current && current.id !== id) {
+    current.classList.add('exiting');
+    current.classList.remove('active');
+
+    current.addEventListener('animationend', function handler() {
+      current.classList.remove('exiting');
+      current.style.display = 'none';
+      current.removeEventListener('animationend', handler);
+    }, { once: true });
+
+    setTimeout(() => {
+      target.style.display = '';
+      target.classList.add('active');
+      state.current = id;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 350);
+  } else {
+    if (current) {
+      current.classList.remove('active');
+    }
+    target.style.display = '';
     target.classList.add('active');
     state.current = id;
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -48,21 +84,29 @@ function applyEffects(effects) {
   if (effects.discret !== undefined) {
     state.discret = statCap(state.discret + effects.discret);
     changes.push(fmt('Discrétion', effects.discret));
+    animateStatNum('num-discret', effects.discret);
+    pulseBar('fill-discret');
   }
 
   if (effects.popular !== undefined) {
     state.popular = statCap(state.popular + effects.popular);
     changes.push(fmt('Popularité', effects.popular));
+    animateStatNum('num-popular', effects.popular);
+    pulseBar('fill-popular');
   }
 
   if (effects.human !== undefined) {
     state.human = statCap(state.human + effects.human);
     changes.push(fmt('Humanité', effects.human));
+    animateStatNum('num-human', effects.human);
+    pulseBar('fill-human');
   }
 
   if (effects.courage !== undefined) {
     state.courage = statCap(state.courage + effects.courage);
     changes.push(fmt('Courage', effects.courage));
+    animateStatNum('num-courage', effects.courage);
+    pulseBar('fill-courage');
   }
 
   updateBars();
@@ -71,6 +115,23 @@ function applyEffects(effects) {
 
 function fmt(name, val) {
   return (val > 0 ? '▲ ' : '▼ ') + name + ' ' + (val > 0 ? '+' : '') + val;
+}
+
+function animateStatNum(id, delta) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const cls = delta > 0 ? 'bump-up' : 'bump-down';
+  el.classList.add(cls);
+  setTimeout(() => el.classList.remove(cls), 400);
+}
+
+function pulseBar(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.remove('pulse');
+  void el.offsetWidth;
+  el.classList.add('pulse');
+  setTimeout(() => el.classList.remove('pulse'), 700);
 }
 
 // ==================== BARRES ====================
@@ -106,11 +167,13 @@ function updateBreadcrumb() {
     return;
   }
 
-  el.innerHTML = state.path.map((step, index) =>
-    index === state.path.length - 1
-      ? `<span>${step}</span>`
-      : `${step} <span class="sep">›</span> `
-  ).join('');
+  el.innerHTML = state.path.map((step, index) => {
+    const isLast = index === state.path.length - 1;
+    const cls = isLast ? ' crumb-new' : '';
+    return isLast
+      ? `<span class="${cls}">${step}</span>`
+      : `${step} <span class="sep">›</span> `;
+  }).join('');
 }
 
 // ==================== STATS FINALES ====================
@@ -135,7 +198,6 @@ function restartGame() {
   state.discret = state.popular = state.human = state.courage = 0;
   state.path = [];
 
-  // Reinitialiser les stats finales.
   document.querySelectorAll('[id^="final-stats-"]').forEach(el => {
     el.innerHTML = '';
   });
@@ -145,5 +207,6 @@ function restartGame() {
   showChapter('ch-start');
 }
 
-// Init
+// ==================== INIT ====================
 updateBars();
+createDustParticles();
