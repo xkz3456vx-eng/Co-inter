@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Échappatoire Royale - Livre dont vous êtes le héros</title>
+    <!-- Icônes Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Styles partagés et spécifiques à la page d'accueil -->
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/index.css">
+</head>
+<body>
+    <!-- Étoiles scintillantes d'arrière-plan -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Bouton de contrôle du son -->
+    <div class="sound-toggle" id="soundToggle" title="Activer/Désactiver le son">
+        <i class="fas fa-volume-up"></i>
+    </div>
+
+    <!-- Conteneur principal avec bordure dorée -->
+    <div class="container">
+        <!-- En-tête du site avec titre et sous-titre -->
+        <header>
+            <h1><span class="crown-icon">👑</span> L'Échappatoire Royale <span class="crown-icon">👑</span></h1>
+            <p class="subtitle">Un livre dont vous êtes le héros</p>
+        </header>
+
+        <!-- Menu de démarrage avec description et bouton -->
+        <div id="startMenu" class="start-menu">
+            <h2>⚜️ Bienvenue, Votre Majesté ⚜️</h2>
+            <p>
+                Vous êtes sur le point de vivre l'histoire de <strong>Louis XVI</strong>, roi de France pendant la Révolution.
+                Vos choix détermineront votre destin : survivrez-vous à la Terreur, ou finirez-vous sur l'échafaud ?
+            </p>
+            <p>
+                <strong>Plusieurs fins vous attendent :</strong><br>
+                ✨ Des fins heureuses où vous survivez<br>
+                ⚰️ Des fins tragiques où vous périssez<br>
+                📜 La fin historique authentique
+            </p>
+            <!-- Le bouton redirige vers la page du jeu -->
+            <a href="pages/game.html" class="start-btn">
+                <span><i class="fas fa-play"></i> Commencer l'Aventure</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Script des fonctions partagées (étoiles, particules, son) -->
+    <script src="scripts/common.js"></script>
+</body>
+</html>

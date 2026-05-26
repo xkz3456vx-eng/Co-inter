@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sed -n '1299,2350p' /Users/augustinmeurillon/Library/CloudStorage/OneDrive-Personnel/Websites/histoirelouisXVI/index.html)",
+      "Read(//tmp/**)",
+      "WebSearch",
+      "Bash(mkdir -p \"/Users/augustinmeurillon/Library/CloudStorage/OneDrive-Personnel/Lycée Les Potiers/Sites Web/Co-inter/histoirelouisXVI/version 5/.claude\")",
+      "Bash(npx --version)",
+      "Bash(mkdir -p \"/Users/augustinmeurillon/Library/CloudStorage/OneDrive-Personnel/Lycée Les Potiers/Sites Web/Co-inter/histoirelouisXVI/version 6\")",
+      "Bash(cp \"/Users/augustinmeurillon/Library/CloudStorage/OneDrive-Personnel/Lycée Les Potiers/Sites Web/Co-inter/histoirelouisXVI/version 5/\"*.jpg \"/Users/augustinmeurillon/Library/CloudStorage/OneDrive-Personnel/Lycée Les Potiers/Sites Web/Co-inter/histoirelouisXVI/version 6/\")"
+    ]
+  }
+}

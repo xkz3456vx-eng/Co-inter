@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Échappatoire Royale - Le Jeu</title>
+    <!-- Icônes Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Styles partagés et spécifiques au jeu -->
+    <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="../assets/css/game.css">
+</head>
+<body>
+    <!-- Étoiles scintillantes d'arrière-plan -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Bouton de contrôle du son -->
+    <div class="sound-toggle" id="soundToggle" title="Activer/Désactiver le son">
+        <i class="fas fa-volume-up"></i>
+    </div>
+
+    <!-- Conteneur principal avec bordure dorée -->
+    <div class="container">
+        <!-- En-tête du site avec titre et sous-titre -->
+        <header>
+            <h1><span class="crown-icon">👑</span> L'Échappatoire Royale <span class="crown-icon">👑</span></h1>
+            <p class="subtitle">Un livre dont vous êtes le héros</p>
+        </header>
+
+        <!-- Conteneur de l'histoire - affiché dynamiquement par game.js -->
+        <div class="story-container">
+            <div id="story-content" style="transition: opacity 0.5s ease, transform 0.5s ease, filter 0.5s ease;"></div>
+        </div>
+    </div>
+
+    <!-- Fenêtre modale d'information -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- Scripts : utilitaires communs, données des chapitres, logique du jeu -->
+    <script src="../scripts/common.js"></script>
+    <script src="../scripts/chapters.js"></script>
+    <script src="../scripts/game.js"></script>
+</body>
+</html>

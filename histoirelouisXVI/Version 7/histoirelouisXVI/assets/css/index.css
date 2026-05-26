@@ -1,0 +1,86 @@
+/*
+ * ============================================================
+ * index.css - Styles specifiques a la page d'accueil
+ * Menu de demarrage et bouton "Commencer l'Aventure"
+ * ============================================================
+ */
+
+/* === MENU DE DEMARRAGE === */
+/* Section d'accueil centree avec animation d'apparition */
+.start-menu {
+    text-align: center;
+    padding: 60px 40px;
+    animation: fadeInUp 1s ease-out;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Titre du menu avec police royale et couleur rouge */
+.start-menu h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5em;
+    color: var(--royal-red);
+    margin-bottom: 30px;
+    animation: slideIn 1s ease-out 0.3s both;
+}
+
+/* Paragraphe de description avec animation decalee */
+.start-menu p {
+    font-size: 1.3em;
+    margin-bottom: 40px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    animation: slideIn 1s ease-out 0.6s both;
+}
+
+/* === BOUTON DE DEMARRAGE === */
+/* Bouton rouge royal avec bordure doree et effets de survol */
+.start-btn {
+    display: inline-block;
+    text-decoration: none;
+    background: linear-gradient(135deg, var(--royal-red) 0%, #660000 100%);
+    color: white;
+    border: 3px solid var(--gold);
+    padding: 20px 60px;
+    font-size: 1.5em;
+    font-family: 'Cinzel', serif;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 15px var(--shadow);
+    animation: slideIn 1s ease-out 0.9s both;
+}
+
+/* Effet d'onde circulaire au survol du bouton */
+.start-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+/* Expansion de l'onde au survol */
+.start-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Elevation et grossissement au survol */
+.start-btn:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 10px 30px var(--shadow), 0 0 20px var(--gold);
+}
+
+/* Le texte du bouton reste au-dessus de l'effet d'onde */
+.start-btn span {
+    position: relative;
+    z-index: 1;
+}

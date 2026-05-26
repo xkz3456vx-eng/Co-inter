@@ -1,0 +1,346 @@
+/*
+ * ============================================================
+ * common.css - Styles partages entre toutes les pages du site
+ * L'Echappatoire Royale - Livre dont vous etes le heros
+ * ============================================================
+ */
+
+/* === IMPORT DES POLICES === */
+/* Cinzel pour les titres royaux, Crimson Text pour le texte narratif */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+/* === RESET ET VARIABLES CSS === */
+/* Reinitialisation des marges et definition du theme royal */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Variables de couleurs du theme monarchique */
+:root {
+    --royal-blue: #002868;
+    --royal-red: #8B0000;
+    --gold: #FFD700;
+    --dark-gold: #B8860B;
+    --parchment: #F4F1E8;
+    --dark-parchment: #E8E4D9;
+    --shadow: rgba(0, 0, 0, 0.3);
+}
+
+/* === CORPS DE LA PAGE === */
+/* Fond degrade anime bleu-rouge royal avec effet de mouvement */
+body {
+    font-family: 'Crimson Text', serif;
+    background: linear-gradient(135deg, var(--royal-blue) 0%, #1e3c72 50%, var(--royal-red) 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    color: #333;
+    line-height: 1.8;
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Animation du degrade de fond en boucle */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* === ETOILES ET PARTICULES D'ARRIERE-PLAN === */
+/* Conteneur des etoiles scintillantes en position fixe */
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Chaque etoile individuelle avec animation de scintillement */
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 3s infinite;
+}
+
+/* Animation de scintillement des etoiles */
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Particules tombantes type flocons de neige */
+.particle {
+    position: fixed;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: fall linear infinite;
+    z-index: 1;
+}
+
+/* Animation de chute des particules avec rotation */
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* === CONTENEUR PRINCIPAL === */
+/* Cadre parchemin avec bordure doree et ombre portee */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: var(--parchment);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px var(--shadow), inset 0 0 100px rgba(255, 215, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+    animation: containerAppear 1s ease-out;
+    border: 3px solid var(--gold);
+}
+
+/* Animation d'apparition du conteneur avec effet 3D */
+@keyframes containerAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.9) rotateX(10deg);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) rotateX(0deg);
+    }
+}
+
+/* Texture de papier ancien en surimpression */
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.02) 2px, rgba(0,0,0,.02) 4px),
+        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,.02) 2px, rgba(0,0,0,.02) 4px);
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/* === EN-TETE DU SITE === */
+/* Banniere rouge royal avec degrade sombre */
+header {
+    background: linear-gradient(135deg, var(--royal-red) 0%, #660000 100%);
+    color: #fff;
+    padding: 50px 30px;
+    text-align: center;
+    border-bottom: 5px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Effet lumineux tournant derriere le titre */
+header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 70%);
+    animation: rotateGlow 20s linear infinite;
+}
+
+/* Animation de rotation du halo lumineux */
+@keyframes rotateGlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Titre principal avec police Cinzel et ombre doree */
+h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 3.5em;
+    margin-bottom: 15px;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7), 0 0 20px var(--gold);
+    position: relative;
+    z-index: 1;
+    animation: titleGlow 2s ease-in-out infinite alternate;
+}
+
+/* Animation de pulsation lumineuse du titre */
+@keyframes titleGlow {
+    from { text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7), 0 0 20px var(--gold); }
+    to { text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7), 0 0 30px var(--gold), 0 0 40px rgba(255, 215, 0, 0.5); }
+}
+
+/* Icones de couronne animees a cote du titre */
+.crown-icon {
+    display: inline-block;
+    animation: crownFloat 3s ease-in-out infinite;
+}
+
+/* Animation de flottement et rotation des couronnes */
+@keyframes crownFloat {
+    0%, 100% { transform: translateY(0px) rotate(-5deg); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+}
+
+/* Sous-titre en italique avec animation d'entree */
+.subtitle {
+    font-style: italic;
+    font-size: 1.4em;
+    position: relative;
+    z-index: 1;
+    animation: fadeIn 2s ease-out;
+}
+
+/* Animation de fondu d'entree par le bas */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Animation d'entree par le bas avec fondu */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animation de glissement lateral */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* === BOUTON DE SON === */
+/* Bouton circulaire fixe en bas a droite avec effet pulsation */
+.sound-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--royal-red) 0%, #660000 100%);
+    border: 3px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.5em;
+    color: white;
+    z-index: 100;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    animation: soundPulse 2s ease-in-out infinite;
+}
+
+/* Animation de pulsation du bouton son */
+@keyframes soundPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3); }
+    50% { transform: scale(1.05); box-shadow: 0 5px 30px rgba(255, 215, 0, 0.5); }
+}
+
+/* Effet au survol du bouton son */
+.sound-toggle:hover {
+    transform: scale(1.1) rotate(10deg);
+}
+
+/* === NOTIFICATIONS === */
+/* Bandeau de notification en haut a droite avec animation d'entree/sortie */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    padding: 20px 30px;
+    border-radius: 10px;
+    border-left: 5px solid var(--gold);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    animation: notifSlideIn 0.5s ease-out, notifSlideOut 0.5s ease-out 2.5s forwards;
+    max-width: 300px;
+}
+
+/* Animation d'entree de la notification par la droite */
+@keyframes notifSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Animation de sortie de la notification vers la droite */
+@keyframes notifSlideOut {
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+/* === CLASSE UTILITAIRE === */
+/* Masquer un element */
+.hidden {
+    display: none;
+}
+
+/* === EFFET DE SURVOL TEXTE === */
+/* Surlignage dore anime au survol */
+.highlight {
+    background: linear-gradient(120deg, transparent 0%, var(--gold) 50%, transparent 100%);
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    transition: background-position 0.5s;
+    padding: 0 5px;
+}
+
+/* Deplacement du fond au survol */
+.highlight:hover {
+    background-position: 0 0;
+}
+
+/* === DEFILEMENT FLUIDE === */
+/* Active le scroll fluide sur toute la page */
+html {
+    scroll-behavior: smooth;
+}
+
+/* === RESPONSIVE - MOBILE === */
+/* Adaptations pour les ecrans de moins de 768px */
+@media (max-width: 768px) {
+    /* Reduire le padding du body sur mobile */
+    body {
+        padding: 10px;
+    }
+
+    /* Reduire la taille du titre principal */
+    h1 {
+        font-size: 2em;
+    }
+}

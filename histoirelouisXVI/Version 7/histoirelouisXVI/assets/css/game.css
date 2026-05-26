@@ -1,0 +1,971 @@
+/*
+ * ============================================================
+ * game.css - Styles specifiques a la page de jeu
+ * Chapitres, choix, statistiques, ecrans de fin, modal
+ * ============================================================
+ */
+
+/* === BARRE DE STATISTIQUES === */
+/* Grille de statistiques avec fond sombre et bordure doree */
+.stats-bar {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    border-bottom: 3px solid var(--gold);
+    animation: slideDown 0.8s ease-out;
+}
+
+/* Animation de descente de la barre de stats */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Carte individuelle de statistique avec fond semi-transparent */
+.stat-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Effet de halo rotatif derriere chaque carte */
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 70%);
+    transform: rotate(0deg);
+    transition: transform 0.6s;
+}
+
+/* Elevation et bordure doree au survol de la carte */
+.stat-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--gold);
+    box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+}
+
+/* Rotation du halo au survol */
+.stat-card:hover::before {
+    transform: rotate(180deg);
+}
+
+/* Icone de la statistique en or avec pulsation */
+.stat-icon {
+    font-size: 2em;
+    color: var(--gold);
+    margin-bottom: 10px;
+    animation: iconPulse 2s ease-in-out infinite;
+    position: relative;
+    z-index: 1;
+}
+
+/* Animation de pulsation des icones */
+@keyframes iconPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Label de la statistique en blanc majuscule */
+.stat-label {
+    font-weight: bold;
+    color: white;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Valeur numerique en or et gras */
+.stat-value {
+    font-size: 1.5em;
+    color: var(--gold);
+    font-weight: bold;
+    position: relative;
+    z-index: 1;
+}
+
+/* === BARRES DE PROGRESSION === */
+/* Conteneur de la barre avec fond semi-transparent */
+.progress-container {
+    background: rgba(255, 255, 255, 0.2);
+    height: 10px;
+    border-radius: 5px;
+    margin-top: 8px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+/* Barre de remplissage degrade or avec transition fluide */
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--dark-gold) 100%);
+    transition: width 1s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Effet de brillance anime sur la barre de progression */
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: shimmer 2s infinite;
+}
+
+/* Animation du reflet lumineux */
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* === CONTENEUR D'HISTOIRE === */
+/* Zone principale d'affichage du texte narratif */
+.story-container {
+    padding: 50px;
+    min-height: 500px;
+    position: relative;
+}
+
+/* === EN-TETE DE CHAPITRE === */
+/* Zone centree avec le numero, titre et date du chapitre */
+.chapter-header {
+    text-align: center;
+    margin-bottom: 40px;
+    animation: fadeInScale 0.8s ease-out;
+}
+
+/* Animation de zoom avec fondu */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Numero du chapitre en majuscules dorees */
+.chapter-number {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2em;
+    color: var(--dark-gold);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+}
+
+/* Titre du chapitre avec bordure doree inferieure */
+.chapter-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2.8em;
+    color: var(--royal-red);
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid var(--gold);
+    position: relative;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Decorateur fleur de lys sous le titre */
+.chapter-title::after {
+    content: '\2767';
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--parchment);
+    padding: 0 20px;
+    color: var(--gold);
+    font-size: 1.5em;
+}
+
+/* Icone du chapitre avec rebond */
+.chapter-icon {
+    font-size: 1.2em;
+    margin-right: 15px;
+    display: inline-block;
+    animation: iconBounce 2s ease-in-out infinite;
+}
+
+/* Animation de rebond vertical */
+@keyframes iconBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Date du chapitre en italique gris */
+.chapter-date {
+    font-style: italic;
+    color: #666;
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+/* === TEXTE DE L'HISTOIRE === */
+/* Cadre blanc avec ombre et guillemets decoratifs */
+.story-text {
+    font-size: 1.25em;
+    margin-bottom: 40px;
+    text-align: justify;
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1), inset 0 0 50px rgba(255, 215, 0, 0.05);
+    border: 2px solid var(--dark-parchment);
+    position: relative;
+    animation: none !important;
+}
+
+/* Guillemets decoratifs ouvrants et fermants */
+.story-text::before,
+.story-text::after {
+    content: '\275D';
+    position: absolute;
+    font-size: 4em;
+    color: rgba(139, 0, 0, 0.1);
+    font-family: Georgia, serif;
+}
+
+/* Position du guillemet ouvrant en haut a gauche */
+.story-text::before {
+    top: 10px;
+    left: 10px;
+}
+
+/* Position du guillemet fermant en bas a droite */
+.story-text::after {
+    content: '\275E';
+    bottom: 10px;
+    right: 10px;
+}
+
+/* Paragraphes du texte narratif avec interligne genereux */
+.story-text p {
+    margin-bottom: 20px;
+    line-height: 1.9;
+    position: relative;
+    opacity: 0;
+    animation: paragraphReveal 0.5s ease-out forwards;
+}
+
+/* Apparition progressive des paragraphes avec delais decales */
+.story-text p:nth-child(1) { animation-delay: 0.3s; }
+.story-text p:nth-child(2) { animation-delay: 0.5s; }
+.story-text p:nth-child(3) { animation-delay: 0.7s; }
+.story-text p:nth-child(4) { animation-delay: 0.9s; }
+.story-text p:nth-child(5) { animation-delay: 1.1s; }
+.story-text p:nth-child(6) { animation-delay: 1.3s; }
+.story-text p:nth-child(7) { animation-delay: 1.5s; }
+.story-text p:nth-child(8) { animation-delay: 1.7s; }
+.story-text p:nth-child(9) { animation-delay: 1.9s; }
+.story-text p:nth-child(10) { animation-delay: 2.1s; }
+
+/* Animation de revelation progressive des paragraphes */
+@keyframes paragraphReveal {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Apparition des listes et blocs avec delai supplementaire */
+.story-text ul, .story-text ol, .story-text div[style] {
+    opacity: 0;
+    animation: paragraphReveal 0.5s ease-out 2.0s forwards;
+}
+
+/* Lettrine decorative du premier paragraphe */
+.story-text p:first-letter {
+    font-size: 3em;
+    font-weight: bold;
+    float: left;
+    line-height: 0.9;
+    margin: 5px 10px 0 0;
+    color: var(--royal-red);
+}
+
+/* Texte en gras colore en rouge royal */
+.story-text strong {
+    color: var(--royal-red);
+    font-weight: 600;
+}
+
+/* === IMAGE D'ILLUSTRATION === */
+/* Image centree avec bordure doree et ombre */
+.chapter-image {
+    width: 100%;
+    max-width: 600px;
+    margin: 30px auto;
+    display: block;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 5px solid var(--gold);
+    animation: imageZoom 1s ease-out;
+}
+
+/* Animation de zoom d'apparition de l'image */
+@keyframes imageZoom {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* === CONTENEUR DE CHOIX === */
+/* Zone des choix avec animation d'apparition differee */
+.choices-container {
+    margin-top: 50px;
+    animation: choicesAppear 1s ease-out 0.8s both;
+}
+
+/* Animation d'apparition des choix */
+@keyframes choicesAppear {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Titre de la section choix en majuscules rouges */
+.choices-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8em;
+    color: var(--royal-red);
+    text-align: center;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Grille responsive des cartes de choix */
+.choices {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/* === CARTES DE CHOIX === */
+/* Carte cliquable avec degrade et effets de survol elabores */
+.choice-card {
+    background: linear-gradient(135deg, white 0%, var(--dark-parchment) 100%);
+    border: 3px solid var(--dark-gold);
+    border-radius: 15px;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    animation: choiceSlide 0.6s ease-out backwards;
+}
+
+/* Delais d'animation decales pour chaque carte */
+.choice-card:nth-child(1) { animation-delay: 0.9s; }
+.choice-card:nth-child(2) { animation-delay: 1s; }
+.choice-card:nth-child(3) { animation-delay: 1.1s; }
+.choice-card:nth-child(4) { animation-delay: 1.2s; }
+
+/* Animation de glissement lateral des cartes */
+@keyframes choiceSlide {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Effet de reflet dore qui traverse la carte au survol */
+.choice-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+    transition: left 0.6s;
+}
+
+/* Deplacement du reflet au survol */
+.choice-card:hover::before {
+    left: 100%;
+}
+
+/* Elevation et ombre doree au survol */
+.choice-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(139, 0, 0, 0.3), 0 0 20px rgba(255, 215, 0, 0.5);
+    border-color: var(--gold);
+}
+
+/* Retour visuel rapide au clic sur les choix */
+.choice-card:active {
+    transform: scale(0.97) !important;
+    transition: transform 0.1s !important;
+}
+
+/* En-tete bleu de la carte de choix */
+.choice-header {
+    background: linear-gradient(135deg, var(--royal-blue) 0%, #1e3c72 100%);
+    color: white;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Icone du choix avec rotation subtile */
+.choice-icon {
+    font-size: 2.5em;
+    animation: iconRotate 3s linear infinite;
+}
+
+/* Animation de micro-rotation de l'icone */
+@keyframes iconRotate {
+    0%, 90%, 100% { transform: rotate(0deg); }
+    95% { transform: rotate(10deg); }
+}
+
+/* Numero du choix en or avec police Cinzel */
+.choice-number {
+    font-family: 'Cinzel', serif;
+    font-size: 2em;
+    font-weight: bold;
+    color: var(--gold);
+}
+
+/* Zone de contenu de la carte de choix */
+.choice-content {
+    padding: 25px;
+}
+
+/* Texte descriptif du choix */
+.choice-text {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+/* Conteneur des badges de difficulte */
+.choice-badges {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Badge de categorie avec pulsation */
+.badge {
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    animation: badgePulse 2s ease-in-out infinite;
+}
+
+/* Animation de pulsation des badges */
+@keyframes badgePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Badge historique : fond dore avec texte rouge */
+.badge.historical {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--dark-gold) 100%);
+    color: var(--royal-red);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+/* Badge dangereux : fond rouge avec texte blanc */
+.badge.dangerous {
+    background: linear-gradient(135deg, #ff6b6b 0%, #c92a2a 100%);
+    color: white;
+}
+
+/* Badge pacifique : fond vert avec texte blanc */
+.badge.peaceful {
+    background: linear-gradient(135deg, #51cf66 0%, #2f9e44 100%);
+    color: white;
+}
+
+/* Badge risque : fond orange avec texte blanc */
+.badge.risky {
+    background: linear-gradient(135deg, #ff922b 0%, #f76707 100%);
+    color: white;
+}
+
+/* Fleche de navigation a droite de la carte */
+.choice-arrow {
+    text-align: right;
+    padding: 0 25px 20px;
+    font-size: 1.5em;
+    color: var(--royal-red);
+    transition: transform 0.3s;
+}
+
+/* Deplacement de la fleche au survol */
+.choice-card:hover .choice-arrow {
+    transform: translateX(10px);
+}
+
+/* === ECRANS DE FIN === */
+/* Zone centree pour afficher les fins du jeu */
+.ending-screen {
+    text-align: center;
+    padding: 50px;
+    animation: endingReveal 1.5s ease-out;
+}
+
+/* Animation d'apparition dramatique de la fin */
+@keyframes endingReveal {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) rotate(-5deg);
+    }
+    50% {
+        transform: scale(1.05) rotate(2deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+/* Grande icone de la fin avec rebond */
+.ending-icon {
+    font-size: 6em;
+    margin-bottom: 30px;
+    animation: endingIconBounce 1s ease-out 0.5s both;
+}
+
+/* Animation de rebond de l'icone de fin */
+@keyframes endingIconBounce {
+    0% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    60% {
+        transform: translateY(20px);
+    }
+    80% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Cadre de la fin avec coins arrondis et animations */
+.ending-box {
+    background: white;
+    padding: 50px;
+    border-radius: 20px;
+    margin: 30px auto;
+    max-width: 800px;
+    position: relative;
+    overflow: hidden;
+    animation: boxGrow 1s ease-out 0.8s both;
+}
+
+/* Animation de croissance verticale du cadre */
+@keyframes boxGrow {
+    from {
+        opacity: 0;
+        transform: scaleY(0);
+    }
+    to {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+}
+
+/* Cadre de bonne fin : bordure verte avec ombre verte */
+.ending-box.good {
+    border: 5px solid #51cf66;
+    box-shadow: 0 10px 40px rgba(81, 207, 102, 0.4), inset 0 0 100px rgba(81, 207, 102, 0.1);
+}
+
+/* Cadre de mauvaise fin : bordure rouge avec ombre rouge */
+.ending-box.bad {
+    border: 5px solid #ff6b6b;
+    box-shadow: 0 10px 40px rgba(255, 107, 107, 0.4), inset 0 0 100px rgba(255, 107, 107, 0.1);
+}
+
+/* Cadre de fin historique : bordure doree avec ombre doree */
+.ending-box.historical {
+    border: 5px solid var(--gold);
+    box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4), inset 0 0 100px rgba(255, 215, 0, 0.1);
+}
+
+/* Titre de la fin avec animation de vague */
+.ending-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    animation: titleWave 1s ease-out 1s both;
+}
+
+/* Animation de glissement du titre de fin */
+@keyframes titleWave {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Couleur du titre selon le type de fin */
+.ending-box.good .ending-title { color: #2f9e44; }
+.ending-box.bad .ending-title { color: #c92a2a; }
+.ending-box.historical .ending-title { color: var(--dark-gold); }
+
+/* Texte descriptif de la fin avec fondu */
+.ending-text {
+    font-size: 1.3em;
+    line-height: 2;
+    margin-bottom: 30px;
+    animation: textFadeIn 1s ease-out 1.3s both;
+}
+
+/* Animation de fondu avec defloutage */
+@keyframes textFadeIn {
+    from {
+        opacity: 0;
+        filter: blur(10px);
+    }
+    to {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+/* Grille des statistiques de fin */
+.ending-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    margin: 40px 0;
+    animation: statsFall 1s ease-out 1.6s both;
+}
+
+/* Animation de chute des statistiques */
+@keyframes statsFall {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Carte individuelle de statistique de fin */
+.ending-stat {
+    padding: 20px;
+    background: var(--dark-parchment);
+    border-radius: 10px;
+    border: 2px solid var(--dark-gold);
+}
+
+/* Label de la statistique en rouge majuscule */
+.ending-stat-label {
+    font-weight: bold;
+    color: var(--royal-red);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    letter-spacing: 1px;
+}
+
+/* Valeur de la statistique en bleu royal */
+.ending-stat-value {
+    font-size: 2em;
+    color: var(--royal-blue);
+    font-family: 'Cinzel', serif;
+}
+
+/* === BOUTONS D'ACTION === */
+/* Conteneur flexible des boutons avec animation */
+.action-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    animation: buttonsPop 1s ease-out 1.9s both;
+}
+
+/* Animation d'apparition des boutons */
+@keyframes buttonsPop {
+    from {
+        opacity: 0;
+        transform: scale(0);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Style de base des boutons d'action */
+.action-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2em;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Effet d'onde au survol des boutons */
+.action-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+/* Expansion de l'onde au survol */
+.action-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Elevation au survol */
+.action-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Texte du bouton au-dessus de l'effet */
+.action-btn span {
+    position: relative;
+    z-index: 1;
+}
+
+/* Bouton recommencer : fond rouge royal */
+.restart-btn {
+    background: linear-gradient(135deg, var(--royal-red) 0%, #660000 100%);
+    color: white;
+}
+
+/* Bouton continuer : fond bleu royal */
+.continue-btn {
+    background: linear-gradient(135deg, var(--royal-blue) 0%, #1e3c72 100%);
+    color: white;
+}
+
+/* Bouton partager : fond vert */
+.share-btn {
+    background: linear-gradient(135deg, #51cf66 0%, #2f9e44 100%);
+    color: white;
+}
+
+/* === MODAL D'INFORMATION === */
+/* Fond sombre semi-transparent couvrant tout l'ecran */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+/* Animation de fondu du fond du modal */
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Contenu du modal centre avec bordure doree */
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--parchment);
+    padding: 40px;
+    border-radius: 20px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border: 3px solid var(--gold);
+    animation: modalSlideIn 0.5s ease-out;
+}
+
+/* Animation de glissement du contenu modal */
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Bouton de fermeture du modal avec rotation au survol */
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 2em;
+    cursor: pointer;
+    color: var(--royal-red);
+    transition: all 0.3s;
+}
+
+/* Rotation et grossissement au survol du bouton fermer */
+.modal-close:hover {
+    transform: rotate(90deg) scale(1.2);
+    color: #ff6b6b;
+}
+
+/* === EFFET MACHINE A ECRIRE === */
+/* Texte qui s'affiche lettre par lettre avec curseur */
+.typewriter {
+    overflow: hidden;
+    border-right: 3px solid var(--royal-red);
+    white-space: nowrap;
+    animation: typing 3s steps(40, end), blink 0.75s step-end infinite;
+}
+
+/* Animation de saisie progressive */
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+/* Animation du curseur clignotant */
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+
+/* === EFFET DE CHARGEMENT === */
+/* Zone de chargement centree */
+.loading {
+    text-align: center;
+    padding: 100px;
+}
+
+/* Spinner circulaire anime */
+.loading-spinner {
+    width: 80px;
+    height: 80px;
+    border: 8px solid var(--dark-parchment);
+    border-top: 8px solid var(--gold);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 30px;
+}
+
+/* Animation de rotation du spinner */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* === OPTIMISATION DES PERFORMANCES === */
+/* Signaler au navigateur les proprietes qui vont changer */
+#story-content {
+    will-change: opacity, transform;
+}
+
+/* === RESPONSIVE - MOBILE === */
+/* Adaptations pour les ecrans de moins de 768px */
+@media (max-width: 768px) {
+    /* Reduire le padding du conteneur d'histoire */
+    .story-container {
+        padding: 20px;
+    }
+
+    /* Reduire la taille du texte narratif */
+    .story-text {
+        padding: 20px;
+        font-size: 1.1em;
+    }
+
+    /* Reduire la taille du titre de chapitre */
+    .chapter-title {
+        font-size: 1.8em;
+    }
+
+    /* Passer les choix en colonne unique */
+    .choices {
+        grid-template-columns: 1fr;
+    }
+
+    /* Passer les stats en colonne unique */
+    .stats-bar {
+        grid-template-columns: 1fr;
+    }
+
+    /* Passer les boutons en colonne */
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    /* Boutons pleine largeur sur mobile */
+    .action-btn {
+        width: 100%;
+    }
+}
