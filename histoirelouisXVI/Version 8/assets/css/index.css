@@ -1,0 +1,142 @@
+/* ============================================================
+   index.css — Styles spécifiques à la page d'accueil (prologue)
+   La Fuite de Varennes — Dont vous êtes le héros
+   ============================================================ */
+
+/* === ZONE DE DÉMARRAGE === */
+/* Centrage du contenu du prologue avec padding généreux */
+.start-area { text-align: center; padding: 28px 10px 16px; }
+
+/* Introduction narrative en italique, centrée et animée */
+.start-area .story-intro {
+  font-family: var(--f-title);
+  font-style: italic;
+  font-size: 1.2em;
+  line-height: 1.95;
+  max-width: 620px;
+  margin: 0 auto 38px;
+  color: var(--ink);
+  animation: paragraphFade 0.8s ease-out 0.5s both;
+  opacity: 0;
+}
+
+/* Animation de fondu d'entrée des paragraphes */
+@keyframes paragraphFade {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Noms propres en rouge dans l'introduction */
+.start-area .story-intro strong { color: var(--red); }
+/* Dates en bleu royal dans l'introduction */
+.start-area .story-intro em { color: var(--blue-royal); font-style: normal; }
+
+/* === ORNEMENT DÉCORATIF === */
+/* Séparateur de fleurs de lys animé entre les blocs */
+.ornament {
+  text-align: center;
+  color: var(--gold);
+  font-size: 1.35em;
+  margin: 30px 0 30px;
+  letter-spacing: 10px;
+  opacity: 0.75;
+  animation: ornamentPulse 4s ease-in-out infinite alternate;
+}
+
+/* Pulsation de l'ornement avec variation d'écartement */
+@keyframes ornamentPulse {
+  from { opacity: 0.55; letter-spacing: 10px; }
+  to   { opacity: 0.95; letter-spacing: 14px; }
+}
+
+/* === LÉGENDE DU SYSTÈME DE POINTS === */
+/* Encadré parchemin explicatif des quatre statistiques */
+.counter-legend {
+  background: linear-gradient(180deg, rgba(255,250,236,0.6), rgba(246,238,215,0.4));
+  border: 1px solid rgba(169,132,47,0.4);
+  border-radius: 4px;
+  padding: 22px 28px;
+  margin: 0 auto 40px;
+  max-width: 520px;
+  text-align: left;
+  position: relative;
+  box-shadow: inset 0 0 40px rgba(220,200,156,0.35);
+  animation: paragraphFade 0.6s ease-out 0.8s both;
+  opacity: 0;
+}
+
+/* Titre de la légende en police d'affichage */
+.counter-legend h3 {
+  font-family: var(--f-display);
+  color: var(--red);
+  font-size: 1.55em;
+  margin-bottom: 14px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+/* Liste des statistiques sans puce */
+.counter-legend ul { list-style: none; font-size: 0.92em; line-height: 2; }
+.counter-legend li { padding-left: 2px; }
+/* Noms des statistiques en bleu royal */
+.counter-legend strong { color: var(--blue-royal); }
+
+/* === BOUTON DE DÉMARRAGE === */
+/* Bouton rouge royal avec reflet et animations d'entrée et de pulsation */
+.start-btn {
+  display: inline-block;
+  text-decoration: none;
+  background: radial-gradient(ellipse at 50% 0%, #8c1f1b 0%, var(--red) 45%, var(--red-deep) 100%);
+  color: var(--gold-bright);
+  border: 2px solid var(--gold);
+  border-radius: 7px;
+  padding: 20px 64px;
+  font-family: var(--f-display);
+  font-size: 1.7em;
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.34,1.5,0.64,1), box-shadow 0.4s ease;
+  letter-spacing: 2px;
+  position: relative;
+  overflow: hidden;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+  box-shadow: 0 6px 26px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,200,120,0.22), inset 0 -4px 8px rgba(0,0,0,0.4);
+  animation: startBtnAppear 0.8s cubic-bezier(0.34,1.5,0.64,1) 1.2s both, startBtnGlow 3s ease-in-out 2s infinite alternate;
+  opacity: 0;
+}
+
+/* Entrée du bouton avec rebond */
+@keyframes startBtnAppear {
+  from { opacity: 0; transform: translateY(20px) scale(0.9); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Pulsation lumineuse du bouton en boucle */
+@keyframes startBtnGlow {
+  from { box-shadow: 0 6px 26px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,200,120,0.22), inset 0 -4px 8px rgba(0,0,0,0.4); }
+  to   { box-shadow: 0 6px 26px rgba(0,0,0,0.5), 0 0 30px rgba(169,132,47,0.3), inset 0 2px 4px rgba(255,200,120,0.22), inset 0 -4px 8px rgba(0,0,0,0.4); }
+}
+
+/* Reflet de lumière glissant au survol */
+.start-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 35%, rgba(255,240,200,0.18) 50%, transparent 65%);
+  transform: translateX(-110%);
+  transition: transform 0.6s;
+}
+
+/* Élévation et renforcement de l'ombre au survol */
+.start-btn:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 14px 38px rgba(0,0,0,0.6), 0 0 34px rgba(169,132,47,0.35), inset 0 2px 4px rgba(255,200,120,0.25), inset 0 -4px 8px rgba(0,0,0,0.45);
+}
+
+/* Déclenchement du reflet au survol */
+.start-btn:hover::before { transform: translateX(210%); }
+
+/* === ZONE DE DÉPART — CONTENU === */
+/* Padding du conteneur du prologue */
+.start-area .content {
+  padding: 56px 60px 64px;
+}
