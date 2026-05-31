@@ -1,0 +1,439 @@
+/* ============================================================
+   common.css — Styles partagés entre toutes les pages
+   La Fuite de Varennes — Version 9 (parchemin clair / grimoire)
+   ============================================================ */
+
+/* === RESET ET VARIABLES CSS === */
+/* Réinitialisation des marges et définition du thème grimoire clair */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* Encres et parchemins (tons clairs et chauds) */
+  --ink:        #3a2614;
+  --ink-soft:   #5b4326;
+  --parch:      #f4e8cc;
+  --parch-2:    #ecdcb8;
+  --parch-deep: #e0cb9c;
+  --parch-pale: #fbf4df;
+
+  /* Pigments historiques */
+  --red:        #7c1a17;
+  --red-deep:   #5a0f0d;
+  --gold:       #a9842f;
+  --gold-light: #cda94e;
+  --gold-bright:#e3c674;
+  --blue-royal: #1f3160;
+  --green:      #3a5a23;
+
+  /* Cuir sombre des bandeaux (en-tête, barre de stats) */
+  --leather:      #3a2410;
+  --leather-deep: #241407;
+
+  --shadow:     rgba(60,38,16,0.4);
+
+  /* Familles de polices grimoire */
+  --f-display:  'MedievalSharp', cursive;
+  --f-title:    'Cinzel', serif;
+  --f-body:     'EB Garamond', serif;
+}
+
+/* === CORPS DE LA PAGE === */
+/* Fond papier vieilli clair et chaud, évoquant un vieux grimoire ouvert */
+body {
+  background:
+    radial-gradient(ellipse at 50% -10%, #f3e6c4 0%, #e6d2a6 55%, #d4bd8f 100%);
+  font-family: var(--f-body);
+  color: var(--ink);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 46px 16px 80px;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Texture de grain et halos chauds en surimpression sur le fond clair */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 28% 22%, rgba(180,128,40,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 78% 80%, rgba(124,26,23,0.08) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 50%, transparent 60%, rgba(90,60,20,0.18) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  background-blend-mode: multiply;
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Lueur chaude ambiante animée (douce lumière de chandelle diurne) */
+body::after {
+  content: '';
+  position: fixed;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%;
+  height: 60%;
+  background: radial-gradient(ellipse, rgba(255,224,150,0.18) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: candleAmbient 8s ease-in-out infinite alternate;
+}
+
+/* Animation de vacillement de la lumière chaude */
+@keyframes candleAmbient {
+  0%   { opacity: 0.4; transform: translateX(-50%) scale(1); }
+  33%  { opacity: 0.7; transform: translateX(-48%) scale(1.02); }
+  66%  { opacity: 0.5; transform: translateX(-52%) scale(0.98); }
+  100% { opacity: 0.8; transform: translateX(-50%) scale(1.01); }
+}
+
+/* === PARTICULES DE POUSSIÈRE === */
+/* Petites motes de poussière sépia flottantes générées par JavaScript */
+.dust-particle {
+  position: fixed;
+  width: 3px;
+  height: 3px;
+  background: radial-gradient(circle, rgba(120,80,30,0.55), transparent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+  animation: dustFloat linear infinite;
+}
+
+/* Animation de flottement des particules de bas en haut */
+@keyframes dustFloat {
+  0%   { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
+  10%  { opacity: 0.6; transform: translateY(85vh) translateX(10px) scale(1); }
+  50%  { opacity: 0.35; transform: translateY(45vh) translateX(-15px) scale(0.8); }
+  90%  { opacity: 0.18; transform: translateY(5vh) translateX(8px) scale(0.5); }
+  100% { transform: translateY(-5vh) translateX(0) scale(0); opacity: 0; }
+}
+
+/* === LE LIVRE === */
+/* Conteneur principal avec animation d'ouverture en perspective */
+.book {
+  max-width: 840px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  animation: bookOpen 1.3s cubic-bezier(0.22,1,0.36,1) both;
+}
+
+/* Animation d'ouverture du livre avec effet 3D */
+@keyframes bookOpen {
+  from { opacity: 0; transform: perspective(1400px) rotateX(10deg) translateY(46px); }
+  to   { opacity: 1; transform: perspective(1400px) rotateX(0)    translateY(0); }
+}
+
+/* === LA PAGE / PARCHEMIN === */
+/* Fond parchemin clair avec textures, taches d'encre, bords brûlés et bordure dorée */
+.page {
+  position: relative;
+  overflow: hidden;
+  border-radius: 3px;
+  background-color: var(--parch);
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(150,110,50,0.12) 0%, transparent 9%),
+    radial-gradient(circle at 88% 26%, rgba(150,110,50,0.10) 0%, transparent 11%),
+    radial-gradient(circle at 76% 88%, rgba(120,80,30,0.11) 0%, transparent 10%),
+    radial-gradient(circle at 22% 82%, rgba(120,80,30,0.09) 0%, transparent 12%),
+    radial-gradient(ellipse at 50% 0%, rgba(255,250,232,0.65) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 100%, rgba(110,72,26,0.22) 0%, transparent 55%),
+    linear-gradient(150deg, var(--parch-pale) 0%, var(--parch) 42%, var(--parch-2) 100%);
+  box-shadow:
+    0 0 0 2px var(--gold),
+    0 0 0 5px #3a2410,
+    0 0 0 7px rgba(169,132,47,0.55),
+    0 30px 70px -20px rgba(40,24,4,0.55),
+    0 6px 24px rgba(40,24,4,0.35),
+    inset 0 0 120px rgba(120,80,24,0.22),
+    inset 0 0 40px rgba(90,56,16,0.18);
+}
+
+/* Texture de fibres de papier ancien en surimpression */
+.page::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.13' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' opacity='0.06'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Vignette de bords brûlés/assombris autour du parchemin */
+.page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, transparent 62%, rgba(80,48,12,0.20) 100%);
+  pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: multiply;
+}
+
+/* Les enfants directs de .page passent au-dessus des textures */
+.page > * { position: relative; z-index: 3; }
+
+/* === COINS ORNEMENTAUX === */
+/* Décorations SVG dorées aux quatre angles du parchemin */
+.corner { position: absolute; width: 62px; height: 62px; z-index: 16; opacity: 0.92; transition: opacity 0.4s, transform 0.4s; }
+.corner svg { width: 100%; height: 100%; filter: drop-shadow(0 1px 1px rgba(60,38,16,0.35)); }
+.corner-tl { top: 14px;  left: 14px; }
+.corner-tr { top: 14px;  right: 14px;  transform: scaleX(-1); }
+.corner-bl { bottom: 14px; left: 14px; transform: scaleY(-1); }
+.corner-br { bottom: 14px; right: 14px; transform: scale(-1,-1); }
+
+/* Animation des coins au survol de la page */
+.page:hover .corner { opacity: 1; }
+.page:hover .corner-tl { transform: translate(-2px, -2px); }
+.page:hover .corner-tr { transform: scaleX(-1) translate(-2px, -2px); }
+.page:hover .corner-bl { transform: scaleY(-1) translate(-2px, -2px); }
+.page:hover .corner-br { transform: scale(-1,-1) translate(-2px, -2px); }
+
+/* === EN-TÊTE / FRONTISPICE === */
+/* Bandeau de cuir sépia profond avec titre doré et sceau en bas */
+.header {
+  background:
+    radial-gradient(ellipse at 50% 120%, rgba(169,132,47,0.28) 0%, transparent 60%),
+    linear-gradient(180deg, var(--leather-deep) 0%, var(--leather) 55%, var(--leather-deep) 100%);
+  padding: 52px 60px 40px;
+  text-align: center;
+  position: relative;
+  border-bottom: 2px solid var(--gold);
+  box-shadow: inset 0 -28px 40px -28px rgba(0,0,0,0.7);
+  overflow: hidden;
+}
+
+/* Ligne dorée horizontale animée en haut de l'en-tête */
+.header::before {
+  content: '';
+  position: absolute;
+  left: 50%; top: 26px;
+  transform: translateX(-50%);
+  width: 220px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+  box-shadow: 0 3px 0 -1px rgba(169,132,47,0.4);
+  animation: lineExpand 2s ease-out 0.8s both;
+}
+
+/* Expansion de la ligne dorée à l'ouverture */
+@keyframes lineExpand {
+  from { width: 0; opacity: 0; }
+  to   { width: 220px; opacity: 1; }
+}
+
+/* Sceau circulaire animé au bas de l'en-tête */
+.header::after {
+  content: '\269C';
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.7em;
+  color: var(--gold-bright);
+  width: 52px; height: 52px;
+  line-height: 50px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #8c1f1b, #5a0f0d 70%);
+  box-shadow:
+    0 0 0 2px rgba(169,132,47,0.7),
+    0 4px 12px rgba(40,24,4,0.5),
+    inset 0 2px 4px rgba(255,200,120,0.25),
+    inset 0 -3px 6px rgba(0,0,0,0.5);
+  text-shadow: 0 1px 1px rgba(0,0,0,0.6);
+  animation: sealAppear 0.8s cubic-bezier(0.34,1.5,0.64,1) 1.2s both;
+  z-index: 20;
+}
+
+/* Animation d'apparition tournante du sceau */
+@keyframes sealAppear {
+  from { transform: translateX(-50%) scale(0) rotate(-180deg); opacity: 0; }
+  to   { transform: translateX(-50%) scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* Titre principal en MedievalSharp avec reflet doré et animation de révélation */
+.header h1 {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: clamp(2.4em, 6.5vw, 4em);
+  color: var(--gold-bright);
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+  text-shadow:
+    0 0 24px rgba(205,169,78,0.4),
+    0 2px 2px rgba(0,0,0,0.85);
+  animation: glowTitle 5s ease-in-out infinite alternate, titleReveal 1.5s ease-out 0.3s both;
+}
+
+/* Pulsation lumineuse du titre en boucle */
+@keyframes glowTitle {
+  from { text-shadow: 0 0 16px rgba(205,169,78,0.3), 0 2px 2px rgba(0,0,0,0.85); }
+  to   { text-shadow: 0 0 34px rgba(227,198,116,0.65), 0 0 60px rgba(205,169,78,0.2), 0 2px 2px rgba(0,0,0,0.85); }
+}
+
+/* Révélation du titre avec expansion des lettres */
+@keyframes titleReveal {
+  from { opacity: 0; letter-spacing: 20px; transform: translateY(-10px); }
+  to   { opacity: 1; letter-spacing: 2px; transform: translateY(0); }
+}
+
+/* Sous-titre en Cinzel italique avec apparition décalée */
+.header .subtitle {
+  font-family: var(--f-title);
+  font-style: italic;
+  color: rgba(227,198,116,0.82);
+  font-size: 1em;
+  letter-spacing: 1.5px;
+  animation: subtitleFade 1s ease-out 1s both;
+}
+
+/* Fondu d'entrée du sous-titre */
+@keyframes subtitleFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* === IMAGES — PLANCHES GRAVÉES === */
+/* Cadre photo avec bordure dorée, ombre et effet de survol */
+.story-image {
+  margin: 0 -60px 34px;
+  position: relative;
+  overflow: hidden;
+  border-top: 2px solid var(--gold);
+  border-bottom: 2px solid var(--gold);
+  box-shadow: 0 8px 28px rgba(40,24,4,0.30), inset 0 0 0 1px rgba(60,38,16,0.25);
+}
+
+/* Encadrement intérieur doré apparaissant au survol */
+.story-image::after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(227,198,116,0.45);
+  pointer-events: none;
+  z-index: 3;
+  transition: inset 0.6s ease, border-color 0.6s;
+}
+
+.story-image:hover::after {
+  inset: 12px;
+  border-color: rgba(227,198,116,0.7);
+}
+
+/* Image avec filtre sépia évoquant une gravure ancienne */
+.story-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: sepia(26%) contrast(1.06) brightness(0.98) saturate(0.92);
+  transition: filter 0.8s ease, transform 0.8s ease;
+}
+
+/* Légère clarification et zoom au survol */
+.story-image:hover img {
+  filter: sepia(12%) contrast(1.1) brightness(1.03) saturate(1);
+  transform: scale(1.03);
+}
+
+/* Vignettage chaud sur les bords de l'image */
+.story-image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(60,38,12,0.26) 100%);
+  pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: multiply;
+}
+
+/* Animation de dévoilement horizontal de l'image */
+.chapter.active .story-image {
+  animation: imageReveal 0.8s ease-out 0.1s both;
+}
+
+@keyframes imageReveal {
+  from { opacity: 0; clip-path: inset(0 100% 0 0); }
+  to   { opacity: 1; clip-path: inset(0 0 0 0); }
+}
+
+/* Légende glissante en bas de l'image au survol */
+.image-caption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(36,20,7,0.90));
+  padding: 38px 22px 14px;
+  font-family: var(--f-title);
+  font-style: italic;
+  font-size: 0.82em;
+  color: rgba(227,198,116,0.94);
+  letter-spacing: 0.5px;
+  text-align: center;
+  z-index: 4;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  transform: translateY(100%);
+  transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
+}
+
+/* Affichage de la légende au survol */
+.story-image:hover .image-caption {
+  transform: translateY(0);
+}
+
+/* Légende toujours visible sur mobile */
+@media (max-width: 640px) {
+  .image-caption { transform: translateY(0); }
+}
+
+/* === SCROLLBAR PERSONNALISÉE === */
+/* Barre de défilement aux couleurs du parchemin */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #d8c094;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--gold), #7a5a1a);
+  border-radius: 5px;
+  border: 2px solid #d8c094;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+}
+
+/* === RESPONSIVE — MOBILE === */
+/* Réductions de padding pour les petits écrans */
+@media (max-width: 640px) {
+  body { padding: 24px 8px 50px; }
+  .header { padding: 36px 26px 28px; }
+  .header h1 { letter-spacing: 1px; }
+  .story-image { margin: 0 -26px 26px; }
+  .corner { width: 44px; height: 44px; }
+}
+
+/* === FOCUS ACCESSIBLE === */
+/* Contour visible pour la navigation au clavier */
+.choice-btn:focus-visible,
+.start-btn:focus-visible,
+.restart-btn:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* === RÉDUCTION DES ANIMATIONS === */
+/* Désactive les animations pour les utilisateurs sensibles au mouvement */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
